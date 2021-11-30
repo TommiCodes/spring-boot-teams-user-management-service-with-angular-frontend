@@ -6,7 +6,6 @@ import com.usermanagement.requests.CreateTeamRequest;
 import com.usermanagement.requests.CreateUserRequest;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
-import com.usermanagement.service.UserTeamService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,6 @@ public class Initializer implements CommandLineRunner {
 
     private final UserService userService;
     private final TeamService teamService;
-    private final UserTeamService userTeamService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -58,15 +56,12 @@ public class Initializer implements CommandLineRunner {
         Team chelsea = teamService.create(createChelsea);
 
         // Add Users to Teams
-        userTeamService.addUserToTeam(manu.getId(), arnold.getId());
-        userTeamService.addUserToTeam(manu.getId(), dorian.getId());
-        userTeamService.addUserToTeam(chelsea.getId(), dorian.getId());
+        userService.addTeamToUser(manu.getId(), arnold.getId());
+        userService.addTeamToUser(manu.getId(), dorian.getId());
+        userService.addTeamToUser(chelsea.getId(), dorian.getId());
 
         // Remove user from team
-        userTeamService.removeUserFromTeam(manu.getId(), arnold.getId());
-
-        // show user
-        userTeamService.getTeamsForUser(dorian.getId());
+        userService.removeTeamFromUser(manu.getId(), arnold.getId());
 
     }
 }

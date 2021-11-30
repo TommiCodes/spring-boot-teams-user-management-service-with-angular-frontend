@@ -15,14 +15,16 @@ public class UserTeam {
     @EmbeddedId
     private UserTeamKey id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Use EAGER, so the User gets Loaded "into" the UserTeam
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("userId")
-    @JoinColumn(name = "users_id")
-    private User users;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Use EAGER, so the Team gets Loaded "into" the UserTeam
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("teamId")
-    @JoinColumn(name = "teams_id")
-    private Team teams;
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 }

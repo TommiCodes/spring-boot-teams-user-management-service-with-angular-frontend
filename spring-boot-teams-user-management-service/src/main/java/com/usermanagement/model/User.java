@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true, exclude = "teams")
@@ -39,9 +40,10 @@ public class User extends RepresentationModel<User> {
     @Column(nullable = false)
     private String password;
 
+    // use JsonIgnore, to eliminate circular Json Mapping
     @JsonIgnore
     @ToString.Exclude
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private Set<UserTeam> teams;
+    @OneToMany(mappedBy = "user")
+    private List<UserTeam> teams;
 
 }

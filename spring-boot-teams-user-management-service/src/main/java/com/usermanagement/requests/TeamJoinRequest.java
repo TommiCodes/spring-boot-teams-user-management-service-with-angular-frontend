@@ -5,8 +5,9 @@ import lombok.Data;
 
 @Builder
 @Data
-public class CreateTeamRequest {
+public class TeamJoinRequest {
 
-    String name;
+    Long teamId;
+    Long userId;
 
 }

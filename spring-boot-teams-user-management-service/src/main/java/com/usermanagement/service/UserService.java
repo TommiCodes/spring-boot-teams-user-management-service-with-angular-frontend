@@ -1,22 +1,49 @@
 package com.usermanagement.service;
 
+import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
+import com.usermanagement.model.UserTeam;
+import com.usermanagement.model.UserTeamKey;
 import com.usermanagement.repository.UserRepository;
+import com.usermanagement.repository.UserTeamRepository;
 import com.usermanagement.requests.CreateUserRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 @Transactional
 public class UserService {
 
+    private final TeamService teamService;
+    private final UserTeamService userTeamService;
+
     private final UserRepository userRepository;
 
     public User get(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
+    }
+
+    public User addTeamToUser(Long teamId, Long userId) {
+        Team team = teamService.get(teamId);
+        User user = get(userId);
+        UserTeam userTeam = userTeamService.build(user, team);
+
+        return userTeamService.save(userTeam).getUser();
+    }
+
+    public void removeTeamFromUser(Long teamId, Long userId) {
+        Team team = teamService.get(teamId);
+        User user = get(userId);
+        UserTeam userTeam = userTeamService.build(user, team);
+
+        userTeamService.delete(userTeam);
     }
 
     public User create(CreateUserRequest createUserRequest) {
@@ -41,6 +68,21 @@ public class UserService {
                 .build();
 
         return userRepository.save(user);
+    }
+
+    public Page<Team> findAllTeamsForUser(Long userId, Pageable pageable) {
+        User user = get(userId);
+
+        // find the paged UserTeams
+        Page<UserTeam> userTeamPage = this.userTeamService.findAllByUserId(user.getId(), pageable);
+        // get the pageable
+        Pageable userTeamPageable = userTeamPage.getPageable();
+
+        // get the teams from the UserTeamsPage
+        List<Team> teamList = userTeamPage.stream().map(UserTeam::getTeam).toList();
+
+        // make a Page<Team> and return it
+        return new PageImpl<>(teamList, userTeamPageable, teamList.size());
     }
 
 }
