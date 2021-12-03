@@ -47,13 +47,13 @@ public class Initializer implements CommandLineRunner {
                 .name("Manu FC")
                 .build();
 
-        Team manu = teamService.create(createManu);
+        Team manu = teamService.createJoinRequest(createManu);
 
         CreateTeamRequest createChelsea = CreateTeamRequest.builder()
                 .name("Chelsea")
                 .build();
 
-        Team chelsea = teamService.create(createChelsea);
+        Team chelsea = teamService.createJoinRequest(createChelsea);
 
         // Add Users to Teams
         userService.addTeamToUser(manu.getId(), arnold.getId());

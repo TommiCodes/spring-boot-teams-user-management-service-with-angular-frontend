@@ -6,7 +6,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true, exclude = "users")
 @AllArgsConstructor
@@ -29,5 +28,11 @@ public class Team extends RepresentationModel<Team> {
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<UserTeam> users;
+
+    // Bidirectional OneToMany
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "team")
+    private List<JoinRequest> joinRequests;
 
 }

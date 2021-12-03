@@ -1,11 +1,8 @@
 package com.usermanagement.model.processors;
 
 import com.usermanagement.controller.TeamController;
-import com.usermanagement.controller.UserController;
 import com.usermanagement.model.Team;
-import com.usermanagement.model.User;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +22,7 @@ public class TeamProcessor implements RepresentationModelProcessor<EntityModel<T
         // add our custom links
         model.add(linkTo(methodOn(TeamController.class).get(model.getContent().getId(), null)).withSelfRel());
         model.add(linkTo(methodOn(TeamController.class).findAllUsersForTeam(model.getContent().getId(), null, null)).withRel("users"));
+        model.add(linkTo(methodOn(TeamController.class).findJoinRequestsForTeam(model.getContent().getId(),  null,null, null)).withRel("joinRequests"));
 
         return model;
     }

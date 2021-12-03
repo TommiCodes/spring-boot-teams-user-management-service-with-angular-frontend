@@ -6,9 +6,8 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true, exclude = "teams")
+@EqualsAndHashCode(callSuper = true, exclude = { "teams", "joinRequest" } )
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -39,6 +38,11 @@ public class User extends RepresentationModel<User> {
     @JsonIgnore
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @Getter(onMethod_=@JsonIgnore)
+    private List<JoinRequest> joinRequest;
 
     // use JsonIgnore, to eliminate circular Json Mapping
     @JsonIgnore
