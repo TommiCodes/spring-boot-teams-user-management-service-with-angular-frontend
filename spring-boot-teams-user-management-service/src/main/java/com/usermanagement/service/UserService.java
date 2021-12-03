@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -30,12 +32,17 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
     }
 
-    public User addTeamToUser(Long teamId, Long userId) {
+    public void addTeamToUser(Long teamId, Long userId) {
         Team team = teamService.get(teamId);
         User user = get(userId);
         UserTeam userTeam = userTeamService.build(user, team);
 
-        return userTeamService.save(userTeam).getUser();
+        // check if user already in team
+        if (get(teamId).getTeams().contains(userTeam)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User already in team");
+        }
+
+        userTeamService.save(userTeam);
     }
 
     public void removeTeamFromUser(Long teamId, Long userId) {
