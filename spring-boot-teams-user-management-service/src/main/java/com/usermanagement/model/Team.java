@@ -2,6 +2,7 @@ package com.usermanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -31,8 +32,10 @@ public class Team extends RepresentationModel<Team> {
 
     // Bidirectional OneToMany
     @JsonIgnore
+    // Spring Data, customize Url Path and Relation Name
+    @RestResource(rel = "joinRequests", path = "join-requests")
     @ToString.Exclude
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     private List<JoinRequest> joinRequests;
 
 }

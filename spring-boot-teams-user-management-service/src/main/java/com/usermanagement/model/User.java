@@ -2,6 +2,7 @@ package com.usermanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -39,10 +40,12 @@ public class User extends RepresentationModel<User> {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @ToString.Exclude
+    // Spring Data, customize Url Path and Relation Name
+    @RestResource(rel = "joinRequests", path = "join-requests")
     @Getter(onMethod_=@JsonIgnore)
-    private List<JoinRequest> joinRequest;
+    private List<JoinRequest> joinRequests;
 
     // use JsonIgnore, to eliminate circular Json Mapping
     @JsonIgnore

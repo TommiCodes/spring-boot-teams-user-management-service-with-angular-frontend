@@ -4,11 +4,8 @@ import com.usermanagement.model.JoinRequest;
 import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
-import com.usermanagement.model.enums.JoinStatus;
-import com.usermanagement.repository.JoinRequestRepository;
 import com.usermanagement.repository.TeamRepository;
 import com.usermanagement.requests.CreateTeamRequest;
-import com.usermanagement.requests.JoinTeamRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,7 +22,6 @@ public class TeamService {
 
     private final TeamRepository teamRepository;
     private final UserTeamService userTeamService;
-    private final JoinRequestService joinRequestService;
 
     public Team createJoinRequest(CreateTeamRequest createTeamRequest) {
         Team team = Team.builder()
@@ -52,16 +48,6 @@ public class TeamService {
 
         // make a Page<Team> and return it
         return new PageImpl<>(userList, userTeamPageable, userList.size());
-    }
-
-    public void createJoinRequest(Long teamId, User user) {
-        Team team = get(teamId);
-        joinRequestService.save(JoinRequest.builder()
-                        .joinStatus(JoinStatus.INQUIRY)
-                        .team(team)
-                        .user(user)
-                        .build()
-        );
     }
 
 }
