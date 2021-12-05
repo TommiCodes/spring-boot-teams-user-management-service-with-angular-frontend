@@ -32,6 +32,10 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
     }
 
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
     public void addTeamToUser(Long teamId, Long userId) {
         Team team = teamService.get(teamId);
         User user = get(userId);

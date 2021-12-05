@@ -21,8 +21,14 @@ import org.springframework.web.bind.annotation.*;
 public class TeamController {
 
     private final TeamService teamService;
-    private final UserService userService;
     private final JoinRequestService joinRequestService;
+
+    // enrich with Specifications
+    @GetMapping("/teams")
+    public ResponseEntity<?> findAllTeams(Pageable pageable, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
+        Page<Team> teamPage = teamService.findAll(pageable);
+        return ResponseEntity.ok(pagedResourcesAssembler.toModel(teamPage, persistentEntityResourceAssembler));
+    }
 
     @GetMapping("/teams/{id}")
     public ResponseEntity<?> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {

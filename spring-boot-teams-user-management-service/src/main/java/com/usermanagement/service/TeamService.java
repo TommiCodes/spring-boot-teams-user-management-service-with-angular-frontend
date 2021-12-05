@@ -1,6 +1,5 @@
 package com.usermanagement.service;
 
-import com.usermanagement.model.JoinRequest;
 import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
@@ -23,13 +22,19 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final UserTeamService userTeamService;
 
-    public Team createJoinRequest(CreateTeamRequest createTeamRequest) {
+    public Team create(CreateTeamRequest createTeamRequest) {
         Team team = Team.builder()
                 .name(createTeamRequest.getName())
                 .build();
 
         return teamRepository.save(team);
     }
+
+    // enrich with Specifications
+    public Page<Team> findAll(Pageable pageable) {
+        return teamRepository.findAll(pageable);
+    }
+
 
     public Team get(Long id) {
         return teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Not fround"));

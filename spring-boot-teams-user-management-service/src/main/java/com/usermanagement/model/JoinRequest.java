@@ -1,7 +1,6 @@
 package com.usermanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.usermanagement.model.enums.JoinStatus;
 import lombok.*;
 import org.springframework.data.rest.core.annotation.RestResource;
