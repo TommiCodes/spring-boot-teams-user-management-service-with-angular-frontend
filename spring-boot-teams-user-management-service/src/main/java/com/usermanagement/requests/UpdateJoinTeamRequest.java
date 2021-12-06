@@ -1,16 +1,17 @@
 package com.usermanagement.requests;
 
+import com.usermanagement.model.enums.JoinStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Data
-public class JoinTeamRequest {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateJoinTeamRequest {
 
-    private Long userId;
+    private JoinStatus joinStatus;
 
 }

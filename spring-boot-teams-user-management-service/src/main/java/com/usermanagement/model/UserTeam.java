@@ -1,8 +1,12 @@
 package com.usermanagement.model;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,6 +14,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "user_team")
+@EntityListeners(AuditingEntityListener.class)
 public class UserTeam {
 
     @EmbeddedId
@@ -26,5 +31,23 @@ public class UserTeam {
     @MapsId("teamId")
     @JoinColumn(name = "team_id")
     private Team team;
+
+    /////////////////////////
+    // Auditing Properties //
+    /////////////////////////
+    // TODO: Implement with auditor aware
+/*    @CreatedBy
+    private String createdBy;
+
+    @LastModifiedBy
+    private String lastModifiedBy;*/
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDateTime;
+
+    @LastModifiedDate
+    @Column
+    private LocalDateTime lastModifiedDateTime;
 
 }

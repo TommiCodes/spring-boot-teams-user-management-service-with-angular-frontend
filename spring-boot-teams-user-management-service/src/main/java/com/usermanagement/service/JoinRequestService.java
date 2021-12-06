@@ -6,7 +6,9 @@ import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
 import com.usermanagement.model.enums.JoinStatus;
 import com.usermanagement.repository.JoinRequestRepository;
+import com.usermanagement.requests.UpdateJoinTeamRequest;
 import lombok.AllArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -57,6 +59,17 @@ public class JoinRequestService {
     public Page<JoinRequest> findJoinRequestsForTeam(Long teamId, Pageable pageable) {
         Team team = teamService.get(teamId);
         return joinRequestRepository.findAllByTeam(team, pageable);
+    }
+
+    public void handle(Long id, UpdateJoinTeamRequest updateJoinTeamRequest) {
+        JoinRequest joinRequest = joinRequestRepository.getById(id);
+
+        if (joinRequest.getJoinStatus() != JoinStatus.INQUIRY) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Join Request alrady accepted/declined.");
+        }
+
+        joinRequest.setJoinStatus(updateJoinTeamRequest.getJoinStatus());
+        joinRequestRepository.save(joinRequest);
     }
 
 }

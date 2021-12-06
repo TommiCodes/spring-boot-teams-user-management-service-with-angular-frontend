@@ -44,9 +44,9 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/teams")
-    public ResponseEntity<?> findAllTeamsForUser(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler assembler) {
+    public ResponseEntity<?> findAllTeamsForUser(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler assembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
         Page<Team> teamList = userService.findAllTeamsForUser(id, pageable);
-        return ResponseEntity.ok(assembler.toModel(teamList));
+        return ResponseEntity.ok(assembler.toModel(teamList, persistentEntityResourceAssembler));
     }
 
 }

@@ -3,10 +3,9 @@ package com.usermanagement.controller;
 import com.usermanagement.model.JoinRequest;
 import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
-import com.usermanagement.requests.JoinTeamRequest;
+import com.usermanagement.requests.CreateJoinTeamRequest;
 import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
-import com.usermanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +22,7 @@ public class TeamController {
     private final TeamService teamService;
     private final JoinRequestService joinRequestService;
 
-    // enrich with Specifications
+    // TODO: enrich with Specifications
     @GetMapping("/teams")
     public ResponseEntity<?> findAllTeams(Pageable pageable, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
         Page<Team> teamPage = teamService.findAll(pageable);
@@ -43,8 +42,8 @@ public class TeamController {
     }
 
     @PostMapping("/teams/{id}/send-join-request")
-    public ResponseEntity<?> sendJoinRequestForTeam(@PathVariable Long id, @RequestBody JoinTeamRequest joinTeamRequest) {
-        joinRequestService.save(id, joinTeamRequest.getUserId());
+    public ResponseEntity<?> sendJoinRequestForTeam(@PathVariable Long id, @RequestBody CreateJoinTeamRequest createJoinTeamRequest) {
+        joinRequestService.save(id, createJoinTeamRequest.getUserId());
         return ResponseEntity.ok("Join Request created");
     }
 
