@@ -1,9 +1,6 @@
 package com.usermanagement.service;
 
-import com.usermanagement.model.Team;
-import com.usermanagement.model.User;
-import com.usermanagement.model.UserTeam;
-import com.usermanagement.model.UserTeamKey;
+import com.usermanagement.model.*;
 import com.usermanagement.repository.UserTeamRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +13,7 @@ public class UserTeamService {
 
     private final UserTeamRepository userTeamRepository;
 
-    public UserTeam build(User user, Team team) {
+    public UserTeam build(User user, Team team, Role role) {
         UserTeamKey userTeamKey = UserTeamKey.builder()
                 .userId(user.getId())
                 .teamId(team.getId())
@@ -26,6 +23,7 @@ public class UserTeamService {
                 .id(userTeamKey)
                 .user(user)
                 .team(team)
+                .role(role)
                 .build();
     }
 
@@ -35,6 +33,10 @@ public class UserTeamService {
 
     public Page<UserTeam> findAllByTeamId(Long teamId, Pageable pageable) {
         return userTeamRepository.findAllByTeamId(teamId, pageable);
+    }
+
+    public UserTeam getById(UserTeamKey userTeamKey) {
+        return userTeamRepository.getById(userTeamKey);
     }
 
     public UserTeam save(UserTeam userTeam) {

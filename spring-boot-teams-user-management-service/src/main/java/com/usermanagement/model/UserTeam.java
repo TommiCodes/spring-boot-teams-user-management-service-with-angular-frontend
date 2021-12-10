@@ -32,6 +32,9 @@ public class UserTeam {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    @OneToOne
+    private Role role;
+
     /////////////////////////
     // Auditing Properties //
     /////////////////////////

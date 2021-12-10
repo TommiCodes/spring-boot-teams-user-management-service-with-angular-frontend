@@ -1,11 +1,8 @@
 package com.usermanagement.service;
 
-import com.usermanagement.model.Team;
-import com.usermanagement.model.User;
-import com.usermanagement.model.UserTeam;
-import com.usermanagement.model.UserTeamKey;
+import com.usermanagement.model.*;
+import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
-import com.usermanagement.repository.UserTeamRepository;
 import com.usermanagement.requests.CreateUserRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,6 +24,11 @@ public class UserService {
     private final UserTeamService userTeamService;
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
     public User get(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
@@ -39,7 +41,10 @@ public class UserService {
     public void addTeamToUser(Long teamId, Long userId) {
         Team team = teamService.get(teamId);
         User user = get(userId);
-        UserTeam userTeam = userTeamService.build(user, team);
+        // Role id = 2 is always the MEMBER Role
+        Role role = roleRepository.getById(2L);
+
+        UserTeam userTeam = userTeamService.build(user, team, role);
 
         // check if user already in team
         if (get(teamId).getTeams().contains(userTeam)) {
@@ -52,7 +57,13 @@ public class UserService {
     public void removeTeamFromUser(Long teamId, Long userId) {
         Team team = teamService.get(teamId);
         User user = get(userId);
-        UserTeam userTeam = userTeamService.build(user, team);
+
+        UserTeamKey userTeamKey = UserTeamKey.builder()
+                .teamId(team.getId())
+                .userId(user.getId())
+                .build();
+
+        UserTeam userTeam = userTeamService.getById(userTeamKey);
 
         userTeamService.delete(userTeam);
     }

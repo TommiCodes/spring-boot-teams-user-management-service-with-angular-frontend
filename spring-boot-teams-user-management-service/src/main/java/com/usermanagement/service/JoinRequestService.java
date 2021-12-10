@@ -1,11 +1,9 @@
 package com.usermanagement.service;
 
-import com.usermanagement.model.JoinRequest;
-import com.usermanagement.model.Team;
-import com.usermanagement.model.User;
-import com.usermanagement.model.UserTeam;
+import com.usermanagement.model.*;
 import com.usermanagement.model.enums.JoinStatus;
 import com.usermanagement.repository.JoinRequestRepository;
+import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.requests.UpdateJoinTeamRequest;
 import lombok.AllArgsConstructor;
 import org.hibernate.sql.Update;
@@ -28,9 +26,13 @@ public class JoinRequestService {
     private final TeamService teamService;
     private final UserTeamService userTeamService;
 
+    private final RoleRepository roleRepository;
+
     public JoinRequest save(Long teamId, Long userId) {
         User user = userService.get(userId);
         Team team = teamService.get(teamId);
+        Role role = roleRepository.getById(1L);
+
 
         // build join Request
         JoinRequest joinRequest = JoinRequest.builder()
@@ -40,7 +42,7 @@ public class JoinRequestService {
                 .build();
 
         // Check if user already in team
-        UserTeam userTeam = userTeamService.build(joinRequest.getUser(), joinRequest.getTeam());
+        UserTeam userTeam = userTeamService.build(joinRequest.getUser(), joinRequest.getTeam(), role);
 
         if (user.getTeams().contains(userTeam)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already in team");
