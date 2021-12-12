@@ -53,20 +53,6 @@ public class Initializer implements CommandLineRunner {
         User arnold = userService.create(createArnold);
         User dorian = userService.create(createDorian);
 
-        // Init Team
-
-        CreateTeamRequest createManu = CreateTeamRequest.builder()
-                .name("Manu FC")
-                .build();
-
-        Team manu = teamService.create(createManu);
-
-        CreateTeamRequest createChelsea = CreateTeamRequest.builder()
-                .name("Chelsea")
-                .build();
-
-        Team chelsea = teamService.create(createChelsea);
-
         // Create Roles and Privileges
         Privilege teamMemberPrivilege = new Privilege();
         teamMemberPrivilege.setPrivilege(Privileges.MEMBER);
@@ -93,13 +79,29 @@ public class Initializer implements CommandLineRunner {
         memberRole.setPrivileges(List.of(teamMemberPrivilege));
         roleRepository.save(memberRole);
 
+        // Init Team
+
+        CreateTeamRequest createManu = CreateTeamRequest.builder()
+                .name("Manu FC")
+                .build();
+
+        teamService.create(createManu, arnold);
+
+        CreateTeamRequest createChelsea = CreateTeamRequest.builder()
+                .name("Chelsea")
+                .build();
+
+        teamService.create(createChelsea, dorian);
+
         // Add Users to Teams
+/*
         userService.addTeamToUser(manu.getId(), arnold.getId());
         userService.addTeamToUser(manu.getId(), dorian.getId());
         userService.addTeamToUser(chelsea.getId(), dorian.getId());
 
+*/
         // Remove user from team
-        userService.removeTeamFromUser(manu.getId(), arnold.getId());
+/*        userService.removeTeamFromUser(manu.getId(), arnold.getId());*/
 
     }
 }

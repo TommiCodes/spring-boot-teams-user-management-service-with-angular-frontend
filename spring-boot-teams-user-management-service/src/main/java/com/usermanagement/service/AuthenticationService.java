@@ -43,6 +43,7 @@ public class AuthenticationService {
 
         String jwtToken = jwtTokenProvider.createToken(user);
         RefreshToken refreshToken = createRefreshToken(user.getId());
+
         return JwtAuthenticationResponse
                 .builder()
                 .accessToken(jwtToken)

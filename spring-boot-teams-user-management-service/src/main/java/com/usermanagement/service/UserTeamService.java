@@ -39,8 +39,8 @@ public class UserTeamService {
         return userTeamRepository.getById(userTeamKey);
     }
 
-    public UserTeam save(UserTeam userTeam) {
-        return this.userTeamRepository.save(userTeam);
+    public void save(UserTeam userTeam) {
+        this.userTeamRepository.save(userTeam);
     }
 
     public void delete(UserTeam userTeam) {
