@@ -38,7 +38,9 @@ public class TeamController {
 
     @PostMapping("/teams")
     public ResponseEntity<?> createTeam(@RequestBody CreateTeamRequest createTeamRequest) {
+        // Get the "subject" from the security context holder (it's the id as string in our case)
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        // get the user by id (the user who wants to create the team), so he will get admin rights for the team
         User admin = userService.get(Long.parseLong(userId, 10));
         teamService.create(createTeamRequest, admin);
         return ResponseEntity.ok("Created");
