@@ -3,7 +3,7 @@ package com.usermanagement.config.security;
 import com.usermanagement.model.Privilege;
 import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
-import com.usermanagement.service.UserService;
+import com.usermanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,23 +15,20 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
+    // Transactional - to get Lazy Collections
     @Transactional
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 
-        User user = userService.get(Long.parseLong(userId, 10));
-
-        if (Objects.isNull(user)) {
-            throw new UsernameNotFoundException("User: " + userId + " not found");
-        }
+        User user = userRepository.findById(Long.parseLong(userId, 10))
+                .orElseThrow(() -> new UsernameNotFoundException("User: " + userId + " not found."));
 
         // TODO: Ggf. mit logik erweitern
         return org.springframework.security.core.userdetails.User.withUsername(userId).password(user.getPassword())

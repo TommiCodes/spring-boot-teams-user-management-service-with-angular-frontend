@@ -1,7 +1,6 @@
 package com.usermanagement.config.security;
 
 import com.usermanagement.model.Privilege;
-import com.usermanagement.model.Role;
 import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
 import io.jsonwebtoken.Claims;
@@ -40,8 +39,7 @@ public class JwtTokenProvider {
 
         claims.put("email", user.getEmail());
 
-        claims.put("auth", getPrivileges(user.getTeams()).stream()
-                .map(Privilege::getPrivilege).collect(Collectors.toList()));
+        claims.put("auth", getAuthorities(user.getTeams()));
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -85,12 +83,17 @@ public class JwtTokenProvider {
         }
     }
 
-    private List<Privilege> getPrivileges(List<UserTeam> userTeams) {
-        List<Privilege> privilegeList = new ArrayList<>();
+    private List<String> getAuthorities(List<UserTeam> userTeams) {
+        List<String> authorities = new ArrayList<>();
+
         for (UserTeam userTeam : userTeams) {
-            privilegeList.addAll(userTeam.getRole().getPrivileges());
+
+            for (Privilege privilege : userTeam.getRole().getPrivileges()) {
+                authorities.add("TEAM:" + userTeam.getTeam().getId() + "::" + "AUTHORITY:" + privilege.getPrivilege());
+            }
         }
-        return privilegeList;
+
+        return authorities;
     }
 
 }

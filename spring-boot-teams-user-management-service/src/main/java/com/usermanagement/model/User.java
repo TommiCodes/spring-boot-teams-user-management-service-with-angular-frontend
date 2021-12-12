@@ -77,5 +77,4 @@ public class User extends RepresentationModel<User> {
     @Column
     private LocalDateTime lastModifiedDateTime;
 
-
 }

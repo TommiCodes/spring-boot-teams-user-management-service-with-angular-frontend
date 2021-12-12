@@ -7,29 +7,40 @@ import com.usermanagement.repository.RefreshTokenRepository;
 import com.usermanagement.repository.UserRepository;
 import com.usermanagement.requests.JwtAuthenticationResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class AuthenticationService {
 
-    private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Login in a user by email and password.
      * Password is checked against the password hash in the database
      */
-    public JwtAuthenticationResponse login(String email, String plainPassword) {
-        User user = userService.findByEmail(email);
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getId(), plainPassword));
+    public JwtAuthenticationResponse login(User user, String plainPassword) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getId(), plainPassword));
+        } catch (AuthenticationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Invalid username/password supplied");
+        }
+
         String jwtToken = jwtTokenProvider.createToken(user);
         RefreshToken refreshToken = createRefreshToken(user.getId());
         return JwtAuthenticationResponse
@@ -61,6 +72,10 @@ public class AuthenticationService {
             throw new RuntimeException("Refresh token was expired. Please make a new login request");
         }
         return token;
+    }
+
+    public String hashPassword(String plaingPassword) {
+        return passwordEncoder.encode(plaingPassword);
     }
 
 }

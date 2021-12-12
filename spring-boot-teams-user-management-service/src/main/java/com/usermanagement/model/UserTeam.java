@@ -33,6 +33,7 @@ public class UserTeam {
     private Team team;
 
     @OneToOne
+/*    @ToString.Exclude*/
     private Role role;
 
     /////////////////////////

@@ -69,11 +69,11 @@ public class Initializer implements CommandLineRunner {
 
         // Create Roles and Privileges
         Privilege teamMemberPrivilege = new Privilege();
-        teamMemberPrivilege.setPrivilege(Privileges.TEAM_MEMBER);
+        teamMemberPrivilege.setPrivilege(Privileges.MEMBER);
         privilegeRepository.save(teamMemberPrivilege);
 
         Privilege teamAdminPrivilege = new Privilege();
-        teamAdminPrivilege.setPrivilege(Privileges.TEAM_ADMIN);
+        teamAdminPrivilege.setPrivilege(Privileges.ADMIN);
         privilegeRepository.save(teamAdminPrivilege);
 
         List<Privilege> adminPrivileges = Arrays.asList(

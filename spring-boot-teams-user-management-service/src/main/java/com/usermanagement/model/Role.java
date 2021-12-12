@@ -2,11 +2,15 @@ package com.usermanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usermanagement.model.enums.Roles;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "ROLES")
@@ -19,7 +23,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private Roles role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),

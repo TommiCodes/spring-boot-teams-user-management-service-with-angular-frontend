@@ -5,6 +5,7 @@ import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
 import com.usermanagement.requests.CreateUserRequest;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,19 +16,21 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class UserService {
 
     private final TeamService teamService;
     private final UserTeamService userTeamService;
+    private final AuthenticationService authenticationService;
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    @Transactional
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));
     }
 
     public User get(Long id) {
@@ -80,12 +83,14 @@ public class UserService {
             throw new RuntimeException("Username is already in use.");
         }
 
+        String hashedPassword = authenticationService.hashPassword(createUserRequest.getPassword());
+
         // Create User
         User user = User.builder()
                 .email(createUserRequest.getEmail())
                 .firstname(createUserRequest.getFirstname())
                 .lastname(createUserRequest.getLastname())
-                .password(createUserRequest.getPassword())
+                .password(hashedPassword)
                 .username(createUserRequest.getUsername())
                 .build();
 

@@ -3,6 +3,7 @@ package com.usermanagement.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usermanagement.model.enums.Privileges;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -19,7 +20,8 @@ public class Privilege {
     @Enumerated(EnumType.STRING)
     private Privileges privilege;
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
     @JsonIgnore
+    @ToString.Exclude
     private Collection<Role> roles;
 }
