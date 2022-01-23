@@ -3,7 +3,9 @@ package com.usermanagement.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usermanagement.model.enums.JoinStatus;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -44,12 +46,16 @@ public class JoinRequest extends RepresentationModel<JoinRequest> {
     private Team team;
 
 
-    // TODO: Implement with auditor aware
-/*    @CreatedBy
-    private String createdBy;
+    /////////////////////////
+    // Auditing Properties //
+    /////////////////////////
 
+    // gets the String from our AuditorAware (config)
+    @CreatedBy
+    private String createdBy;
+    // gets the String from our AuditorAware (config)
     @LastModifiedBy
-    private String lastModifiedBy;*/
+    private String lastModifiedBy;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

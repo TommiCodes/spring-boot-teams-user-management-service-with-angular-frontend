@@ -30,7 +30,7 @@ public class UserController {
         return ResponseEntity.ok(pagedResourcesAssembler.toModel(usersPage, persistentEntityResourceAssembler));
     }
 
-    // TODO: Change to created
+    // TODO: Change to created http response
     @PostMapping("/users")
     public ResponseEntity<User> create(@RequestBody CreateUserRequest createUserRequest) {
         User user = userService.create(createUserRequest);

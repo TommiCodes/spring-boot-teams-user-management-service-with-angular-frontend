@@ -19,15 +19,15 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class JoinRequestService {
-
-    private final JoinRequestRepository joinRequestRepository;
-
+    // Services
     private final UserService userService;
     private final TeamService teamService;
     private final UserTeamService userTeamService;
-
+    // Repositories
     private final RoleRepository roleRepository;
+    private final JoinRequestRepository joinRequestRepository;
 
+    // save a joinrequest from a user to a team to the database
     public JoinRequest save(Long teamId, Long userId) {
         User user = userService.get(userId);
         Team team = teamService.get(teamId);
@@ -58,11 +58,13 @@ public class JoinRequestService {
         return joinRequestRepository.save(joinRequest);
     }
 
+    // find all join Request for a team - paged
     public Page<JoinRequest> findJoinRequestsForTeam(Long teamId, Pageable pageable) {
         Team team = teamService.get(teamId);
         return joinRequestRepository.findAllByTeam(team, pageable);
     }
 
+    // handle a join request
     public void handle(Long id, UpdateJoinTeamRequest updateJoinTeamRequest) {
         JoinRequest joinRequest = joinRequestRepository.getById(id);
 
@@ -70,7 +72,13 @@ public class JoinRequestService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Join Request alrady accepted/declined.");
         }
 
+        // add the user to the team
+        userService.addTeamToUser(joinRequest.getTeam().getId(), joinRequest.getUser().getId());
+
+        // update joinStatus of the joinRequest
         joinRequest.setJoinStatus(updateJoinTeamRequest.getJoinStatus());
+
+        // save the updated join request to the db
         joinRequestRepository.save(joinRequest);
     }
 

@@ -16,8 +16,6 @@ import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,12 +50,25 @@ public class TeamController {
         return ResponseEntity.ok(assembler.toModel(team));
     }
 
+    @PostMapping("/teams/{id}/leave")
+    public ResponseEntity<?> leaveTeam(@PathVariable Long id) {
+        // Get the "subject" from the security context holder (it's the id as string in our case)
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        // get the user by id (the user who wants to create the team), so he will get admin rights for the team
+        User user = userService.get(Long.parseLong(userId, 10));
+        Team team = teamService.get(id);
+
+        userService.removeTeamFromUser(team.getId(), user.getId());
+        return ResponseEntity.ok("User left team");
+    }
+
     @GetMapping("/teams/{id}/users")
     public ResponseEntity<?> findAllUsersForTeam(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler assembler) {
         Page<User> userPage = teamService.findAllUsersForTeam(id, pageable);
         return ResponseEntity.ok(assembler.toModel(userPage));
     }
 
+    // TODO: Get User from JWT
     @PostMapping("/teams/{id}/send-join-request")
     public ResponseEntity<?> sendJoinRequestForTeam(@PathVariable Long id, @RequestBody CreateJoinTeamRequest createJoinTeamRequest) {
         joinRequestService.save(id, createJoinTeamRequest.getUserId());

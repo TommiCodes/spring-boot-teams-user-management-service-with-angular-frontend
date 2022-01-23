@@ -26,9 +26,9 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
-    private final RefreshTokenRepository refreshTokenRepository;
-
     private final PasswordEncoder passwordEncoder;
+
+    private final RefreshTokenRepository refreshTokenRepository;
 
     /**
      * Login in a user by email and password.
@@ -75,6 +75,7 @@ public class AuthenticationService {
         return token;
     }
 
+    // hash password
     public String hashPassword(String plaingPassword) {
         return passwordEncoder.encode(plaingPassword);
     }

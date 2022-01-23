@@ -48,12 +48,13 @@ public class Team extends RepresentationModel<Team> {
     /////////////////////////
     // Auditing Properties //
     /////////////////////////
-    // TODO: Implement with auditor aware
-/*    @CreatedBy
-    private String createdBy;
 
+    // gets the String from our AuditorAware (config)
+    @CreatedBy
+    private String createdBy;
+    // gets the String from our AuditorAware (config)
     @LastModifiedBy
-    private String lastModifiedBy;*/
+    private String lastModifiedBy;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

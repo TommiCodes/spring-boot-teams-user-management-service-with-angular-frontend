@@ -7,7 +7,6 @@ import org.springframework.hateoas.config.EnableHypermediaSupport;
 
 @SpringBootApplication
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
-@EnableJpaAuditing
 public class UserManagementServiceApplication {
 
 	public static void main(String[] args) {

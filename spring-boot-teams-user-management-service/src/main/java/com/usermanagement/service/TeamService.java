@@ -20,10 +20,10 @@ import java.util.List;
 @Service
 @Transactional
 public class TeamService {
-
-    private final TeamRepository teamRepository;
+    // Services
     private final UserTeamService userTeamService;
-
+    // Repositories
+    private final TeamRepository teamRepository;
     private final RoleRepository roleRepository;
 
     public void create(CreateTeamRequest createTeamRequest, User admin) {
@@ -38,15 +38,19 @@ public class TeamService {
         userTeamService.save(userTeam);
     }
 
-    // enrich with Specifications
+    // find all teams - paged
+    // TODO: enrich with Specifications
     public Page<Team> findAll(Pageable pageable) {
         return teamRepository.findAll(pageable);
     }
 
+    // get a team by id
     public Team get(Long id) {
         return teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Not fround"));
     }
 
+
+    // find All Users for a team by team.id - paged
     public Page<User> findAllUsersForTeam(Long teamId, Pageable pageable) {
         Team team = get(teamId);
 

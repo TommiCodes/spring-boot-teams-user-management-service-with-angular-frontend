@@ -20,26 +20,30 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService {
-
+    // Services
     private final TeamService teamService;
     private final UserTeamService userTeamService;
     private final AuthenticationService authenticationService;
-
+    // Repositories
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    // find User by user.email
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));
     }
 
+    // get User by Id
     public User get(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
     }
 
+    // find all users - paged
     public Page<User> findAll(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 
+    //
     public void addTeamToUser(Long teamId, Long userId) {
         Team team = teamService.get(teamId);
         User user = get(userId);

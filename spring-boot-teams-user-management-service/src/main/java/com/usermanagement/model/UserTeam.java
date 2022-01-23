@@ -1,7 +1,9 @@
 package com.usermanagement.model;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -39,12 +41,13 @@ public class UserTeam {
     /////////////////////////
     // Auditing Properties //
     /////////////////////////
-    // TODO: Implement with auditor aware
-/*    @CreatedBy
-    private String createdBy;
 
+    // gets the String from our AuditorAware (config)
+    @CreatedBy
+    private String createdBy;
+    // gets the String from our AuditorAware (config)
     @LastModifiedBy
-    private String lastModifiedBy;*/
+    private String lastModifiedBy;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
