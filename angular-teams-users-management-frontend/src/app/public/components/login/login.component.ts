@@ -1,8 +1,8 @@
-import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,8 @@ export class LoginComponent {
       return;
     }
     this.authService.login(this.loginForm.value).pipe(
-      tap(() => this.router.navigate(['../../private/dashboard']))
+      // route to protected/dashboard, if login was successfull
+      tap(() => this.router.navigate(['../../protected/dashboard']))
     ).subscribe();
   }
 
