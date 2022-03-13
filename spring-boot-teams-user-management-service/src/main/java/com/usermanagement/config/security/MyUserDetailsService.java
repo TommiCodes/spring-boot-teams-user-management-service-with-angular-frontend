@@ -27,13 +27,17 @@ public class MyUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 
-        User user = userRepository.findById(Long.parseLong(userId, 10))
+        User user = userRepository
+                .findById(Long.parseLong(userId, 10))
                 .orElseThrow(() -> new UsernameNotFoundException("User: " + userId + " not found."));
 
         // TODO: Ggf. mit logik erweitern
-        return org.springframework.security.core.userdetails.User.withUsername(userId).password(user.getPassword())
+        return org.springframework.security.core.userdetails.User
+                .withUsername(userId)
+                .password(user.getPassword())
                 .authorities(getAuthorities(user.getTeams())).accountExpired(false).accountLocked(false)
-                .credentialsExpired(false).disabled(false).build();
+                .credentialsExpired(false).disabled(false)
+                .build();
     }
 
     private List<? extends  GrantedAuthority> getAuthorities(List<UserTeam> userTeamList) {

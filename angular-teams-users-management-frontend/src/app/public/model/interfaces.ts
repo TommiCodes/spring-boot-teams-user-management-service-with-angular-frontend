@@ -11,15 +11,6 @@ export interface RefreshToken {
 }
 
 /*
-Interface for the Login Response (can look different, based on your backend api)
-*/
-export interface LoginResponse {
-  accessToken: string;
-  refreshToken: RefreshToken;
-  tokenType: string;
-}
-
-/*
 Interface for the Login Request (can look different, based on your backend api)
 */
 export interface LoginRequest {
@@ -44,4 +35,11 @@ Interface for the Register Response (can look different, based on your backend a
 export interface RegisterResponse {
   status: number;
   message: string;
+}
+
+
+export interface AuthenticationResponse {
+  accessToken: string;
+  refreshToken: RefreshToken;
+  tokenType: string;
 }

@@ -1,6 +1,6 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { CustomValidators } from '../../custom-validator';
+import { Component } from '@angular/core';
+import { CustomValidators } from '../../helpers/custom-validator';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';

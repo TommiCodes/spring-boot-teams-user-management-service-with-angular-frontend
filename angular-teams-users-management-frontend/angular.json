@@ -76,7 +76,8 @@
               "browserTarget": "angular-teams-users-management-frontend:build:production"
             },
             "development": {
-              "browserTarget": "angular-teams-users-management-frontend:build:development"
+              "browserTarget": "angular-teams-users-management-frontend:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
