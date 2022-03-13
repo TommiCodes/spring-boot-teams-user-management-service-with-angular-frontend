@@ -35,7 +35,7 @@ public class Initializer implements CommandLineRunner {
         // Init User
 
         CreateUserRequest createArnold = CreateUserRequest.builder()
-                .username("Test")
+                .username("ArnoldTester")
                 .firstname("Arnold")
                 .lastname("Schwarzenegger")
                 .password("PasswordToHash")
@@ -43,7 +43,7 @@ public class Initializer implements CommandLineRunner {
                 .build();
 
         CreateUserRequest createDorian = CreateUserRequest.builder()
-                .username("Tester")
+                .username("DorianTester")
                 .firstname("Dorian")
                 .lastname("Yates")
                 .password("PasswordToHash")

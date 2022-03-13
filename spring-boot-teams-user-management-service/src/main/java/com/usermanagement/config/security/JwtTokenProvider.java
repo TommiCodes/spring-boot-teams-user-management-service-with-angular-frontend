@@ -39,8 +39,10 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(Long.toString(user.getId()));
 
         claims.put("email", user.getEmail());
-
         claims.put("auth", getAuthorities(user.getTeams()));
+        claims.put("firstname", user.getFirstname());
+        claims.put("lastname", user.getLastname());
+        claims.put("username", user.getUsername());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

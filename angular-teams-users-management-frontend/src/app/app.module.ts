@@ -1,3 +1,4 @@
+import { UserState } from './root-states/user.state';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -8,6 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsDataPluginModule } from '@angular-ru/ngxs';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 // specify the key where the token is stored in the local storage
 export const LOCALSTORAGE_TOKEN_KEY = 'teams_management_app';
@@ -35,7 +40,11 @@ export function tokenGetter() {
         tokenGetter: tokenGetter,
         allowedDomains: ['localhost:3000', 'localhost:8080']
       }
-    })
+    }),
+    NgxsModule.forRoot([UserState]),
+    NgxsDataPluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,4 @@
+import { UserState } from './../../../root-states/user.state';
 import { LOCALSTORAGE_TOKEN_KEY } from './../../../app.module';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,12 +16,14 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private snackbar: MatSnackBar,
-    private jwtService: JwtHelperService
+    private jwtService: JwtHelperService,
+    private userState: UserState
   ) { }
 
   login(loginRequest: LoginRequest): Observable<AuthenticationResponse> {
     return this.http.post<AuthenticationResponse>('/api/auth/login', loginRequest).pipe(
       tap((res: AuthenticationResponse) => localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, res.accessToken)),
+      tap((res: AuthenticationResponse) => this.userState.setState(this.jwtService.decodeToken(res.accessToken))),
       tap(() => this.snackbar.open('Login Successfull', 'Close', {
         duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
       }))
