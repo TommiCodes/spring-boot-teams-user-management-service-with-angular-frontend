@@ -8,6 +8,9 @@ import { LOCALSTORAGE_TOKEN_KEY } from 'src/app/app.module';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
+
+  isExpanded = false;
+
   constructor(private router: Router) {}
 
   logout() {

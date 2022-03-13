@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <p>Protected Dashboard works.</p>
 
   <a [routerLink]="['../../public/login']">Go back to Login</a>
@@ -9,4 +9,56 @@
   <button mat-raised-button (click)="logout()">
     Logout (remove token from localstorage)
   </button>
-</div>
+</div> -->
+
+<mat-sidenav-container autosize style="width: 100%">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    opened="true"
+    [class.sidenav-expanded]="isExpanded"
+    [class.sidenav-not-expanded]="!isExpanded"
+  >
+    <mat-nav-list>
+      <mat-list-item (click)="isExpanded = !isExpanded">
+        <mat-icon
+          mat-list-icon
+          class="chevron-button sidenav-button"
+          [ngClass]="{ rotated: isExpanded }"
+          >chevron_right</mat-icon
+        >
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'/protected/dashboard'">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Dashboard</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'teams'">
+        <mat-icon mat-list-icon>important_devices</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">My Teams</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'users'">
+        <mat-icon mat-list-icon>supervisor_account</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">UserManagement</span>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item [routerLink]="'my-profile'">
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">My Profile</span>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <h4>Protected Dashboard</h4>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- tbd footer -->

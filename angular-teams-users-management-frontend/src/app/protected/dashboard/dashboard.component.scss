@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+mat-sidenav-container {
+  .sidenav-expanded {
+    width: 200px;
+  }
+
+  .sidenav-not-expanded {
+    width: 60px;
+  }
+  
+  .menu-item {
+    margin-left: 8px;
+  }
+}
+
+.content {
+  display: flex;
+  width: 100%;
+
+}
