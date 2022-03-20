@@ -33,54 +33,22 @@ public class Initializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         // Init User
-
-        CreateUserRequest createArnold = CreateUserRequest.builder()
-                .username("ArnoldTester")
-                .firstname("Arnold")
-                .lastname("Schwarzenegger")
-                .password("PasswordToHash")
-                .email("arnold@schwarzenegger.com")
-                .build();
-
-        CreateUserRequest createDorian = CreateUserRequest.builder()
-                .username("DorianTester")
-                .firstname("Dorian")
-                .lastname("Yates")
-                .password("PasswordToHash")
-                .email("dorian@yates.com")
-                .build();
-
-        User arnold = userService.create(createArnold);
-        User dorian = userService.create(createDorian);
+        User arnold = createUser("ArnoldTester", "Arnold", "Schwarzenegger", "PasswordToHash", "arnold@schwarzenegger.com");
+        User dorian = createUser("DorianTester", "Dorian", "Yates", "PasswordToHash123", "dorian@yates.com");
 
         // Create Roles and Privileges
-        Privilege teamMemberPrivilege = new Privilege();
-        teamMemberPrivilege.setPrivilege(Privileges.MEMBER);
-        privilegeRepository.save(teamMemberPrivilege);
+        Privilege teamMemberPrivilege = createPrivilege(Privileges.MEMBER);
+        Privilege teamAdminPrivilege = createPrivilege(Privileges.ADMIN);
 
-        Privilege teamAdminPrivilege = new Privilege();
-        teamAdminPrivilege.setPrivilege(Privileges.ADMIN);
-        privilegeRepository.save(teamAdminPrivilege);
-
-        List<Privilege> adminPrivileges = Arrays.asList(
-                teamMemberPrivilege,
-                teamAdminPrivilege
-        );
+        List<Privilege> adminPrivileges = Arrays.asList(teamMemberPrivilege, teamAdminPrivilege);
 
         // Admin has the Admin and the Member Privilege
-        Role adminRole = new Role();
-        adminRole.setRole(Roles.ADMIN);
-        adminRole.setPrivileges(adminPrivileges);
-        roleRepository.save(adminRole);
+        Role adminRole = createRole(Roles.ADMIN, adminPrivileges);
 
         // Member only has the MemberPrivilege
-        Role memberRole = new Role();
-        memberRole.setRole(Roles.MEMBER);
-        memberRole.setPrivileges(List.of(teamMemberPrivilege));
-        roleRepository.save(memberRole);
+        Role memberRole = createRole(Roles.MEMBER, List.of(teamMemberPrivilege));
 
         // Init Team
-
         CreateTeamRequest createManu = CreateTeamRequest.builder()
                 .name("Manu FC")
                 .build();
@@ -103,5 +71,29 @@ public class Initializer implements CommandLineRunner {
         // Remove user from team
 /*        userService.removeTeamFromUser(manu.getId(), arnold.getId());*/
 
+    }
+
+    private User createUser(String username, String firstname, String lastname, String password, String email) {
+        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+                .username(username)
+                .firstname(firstname)
+                .lastname(lastname)
+                .password(password)
+                .email(email)
+                .build();
+        return this.userService.create(createUserRequest);
+    }
+
+    private Privilege createPrivilege(Privileges privilege) {
+        Privilege p = new Privilege();
+        p.setPrivilege(privilege);
+        return  privilegeRepository.save(p);
+    }
+
+    private Role createRole(Roles role, List<Privilege> privilegesList) {
+        Role r = new Role();
+        r.setRole(role);
+        r.setPrivileges(privilegesList);
+        return roleRepository.save(r);
     }
 }
