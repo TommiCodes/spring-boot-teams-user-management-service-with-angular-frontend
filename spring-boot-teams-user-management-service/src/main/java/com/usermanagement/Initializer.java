@@ -87,7 +87,7 @@ public class Initializer implements CommandLineRunner {
     private Privilege createPrivilege(Privileges privilege) {
         Privilege p = new Privilege();
         p.setPrivilege(privilege);
-        return  privilegeRepository.save(p);
+        return privilegeRepository.save(p);
     }
 
     private Role createRole(Roles role, List<Privilege> privilegesList) {
