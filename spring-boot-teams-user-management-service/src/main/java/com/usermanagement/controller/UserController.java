@@ -37,6 +37,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+
     @GetMapping("/users/{id}")
     public ResponseEntity<?> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {
         User user = this.userService.get(id);

@@ -1,16 +1,27 @@
+import { MatCardModule } from '@angular/material/card';
+import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProtectedRoutingModule } from './protected-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
+import { ProtectedShellComponent } from './components/protected-shell/protected-shell.component';
+import { TeamsComponent } from './components/teams/teams.component';
+import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [
+    ProtectedShellComponent,
+    DashboardPageComponent,
+    TeamsComponent,
+    TeamsPageComponent,
+    UserProfileComponent,
+  ],
   imports: [
     CommonModule,
     // Import our Routes for this module
@@ -21,7 +32,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatListModule,
     MatToolbarModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCardModule
   ],
 })
 export class ProtectedModule {}

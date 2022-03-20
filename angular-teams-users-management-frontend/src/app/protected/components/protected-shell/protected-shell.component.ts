@@ -1,22 +1,18 @@
-import { UserState } from './../../root-states/user.state';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
 import { LOCALSTORAGE_TOKEN_KEY } from 'src/app/app.module';
+import { UserState } from 'src/app/root-states/user.state';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-protected-shell',
+  templateUrl: './protected-shell.component.html',
+  styleUrls: ['./protected-shell.component.scss'],
 })
-export class DashboardComponent {
-
+export class ProtectedShellComponent {
   isExpanded = false;
   username = this.userState.snapshot.username;
 
-  constructor(
-    private router: Router,
-    private userState: UserState
-  ) {}
+  constructor(private router: Router, private userState: UserState) {}
 
   logout() {
     // Removes the jwt token from the local storage, so the user gets logged out & then navigate back to the "public" routes
