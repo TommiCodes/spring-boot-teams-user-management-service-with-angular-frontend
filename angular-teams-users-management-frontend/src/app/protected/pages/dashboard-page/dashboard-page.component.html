@@ -1,4 +1,6 @@
-<p>Dashboard works</p>
-
-<h3>My profile</h3>
-<app-user-profile></app-user-profile>
+<div>
+  <div style="width: 30%; margin: 30px">
+    <h2>My Profile</h2>
+    <app-user-profile [user]="ownProfile$ | async"></app-user-profile>
+  </div>
+</div>

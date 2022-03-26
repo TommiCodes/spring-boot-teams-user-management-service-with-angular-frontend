@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ProtectedShellComponent } from './components/protected-shell/protected-shell.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
+import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
     TeamsComponent,
     TeamsPageComponent,
     UserProfileComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     CommonModule,

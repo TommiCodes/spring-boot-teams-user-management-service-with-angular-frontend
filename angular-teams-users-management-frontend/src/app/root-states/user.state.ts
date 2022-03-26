@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Computed, StateRepository } from '@angular-ru/ngxs/decorators';
 import { NgxsDataRepository } from '@angular-ru/ngxs/repositories';
-import { User } from '../model/interfaces';
 import { State } from '@ngxs/store';
-
-export interface UserAuth extends User {
-  sub: string;
-  auth: string[];
-  exp: number;
-  iat: number;
-}
+import { UserAuth } from '../model/interfaces';
 
 @StateRepository()
 @State({
@@ -18,9 +11,11 @@ export interface UserAuth extends User {
 })
 @Injectable()
 export class UserState extends NgxsDataRepository<UserAuth> {
+
   // Sub of the jwt is the id of the user
   @Computed()
-  public get id() {
-    return this.snapshot.sub;
+  public get id(): number {
+    return Number(this.snapshot.sub);
   }
+
 }

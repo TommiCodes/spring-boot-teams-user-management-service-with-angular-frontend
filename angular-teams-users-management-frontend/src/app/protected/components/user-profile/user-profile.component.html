@@ -1,5 +1,24 @@
-<p>user-profile works!</p>
+<mat-card>
+  <mat-card-title>{{ user?.username }}</mat-card-title>
 
-<mat-card> </mat-card>
-
-{{ user | async | json }}
+  <mat-card-content>
+    <dl style="display: flex; flex-direction: column">
+      <span style="display: flex">
+        <dt>Username</dt>
+        <dd>{{ user?.username }}</dd>
+      </span>
+      <span style="display: flex">
+        <dt>Firstname</dt>
+        <dd>{{ user?.firstname }}</dd>
+      </span>
+      <span style="display: flex">
+        <dt>Lastname</dt>
+        <dd>{{ user?.lastname }}</dd>
+      </span>
+      <span style="display: flex">
+        <dt>Email</dt>
+        <dd>{{ user?.email }}</dd>
+      </span>
+    </dl>
+  </mat-card-content>
+</mat-card>

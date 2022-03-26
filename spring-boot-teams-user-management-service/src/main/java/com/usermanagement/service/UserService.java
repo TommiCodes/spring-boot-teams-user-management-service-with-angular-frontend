@@ -4,6 +4,7 @@ import com.usermanagement.model.*;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
 import com.usermanagement.requests.CreateUserRequest;
+import com.usermanagement.requests.UpdateUserRequest;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -30,12 +34,24 @@ public class UserService {
 
     // find User by user.email
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
     }
 
     // get User by Id
     public User get(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
+        return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
+    }
+
+    public User update(Long id, UpdateUserRequest updateUserRequest) {
+        User user = get(id);
+
+        user.setUsername(updateUserRequest.getUsername());
+        user.setEmail(updateUserRequest.getEmail());
+        user.setFirstname(updateUserRequest.getFirstname());
+        user.setLastname(updateUserRequest.getLastname());
+        user.setPassword(updateUserRequest.getPassword());
+
+        return userRepository.save(user);
     }
 
     // find all users - paged

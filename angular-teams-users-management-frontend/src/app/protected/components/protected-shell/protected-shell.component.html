@@ -1,19 +1,12 @@
 <mat-sidenav-container autosize style="width: 100%">
-  <mat-sidenav
-    #sidenav
-    mode="side"
-    opened="true"
-    [class.sidenav-expanded]="isExpanded"
-    [class.sidenav-not-expanded]="!isExpanded"
-  >
+  <mat-sidenav #sidenav mode="side" opened="true" [class.sidenav-expanded]="isExpanded"
+    [class.sidenav-not-expanded]="!isExpanded">
+
     <mat-nav-list>
+
       <mat-list-item (click)="isExpanded = !isExpanded">
-        <mat-icon
-          mat-list-icon
-          class="chevron-button sidenav-button"
-          [ngClass]="{ rotated: isExpanded }"
-          >chevron_right</mat-icon
-        >
+        <mat-icon mat-list-icon class="chevron-button sidenav-button" [ngClass]="{ rotated: isExpanded }">chevron_right
+        </mat-icon>
       </mat-list-item>
 
       <mat-list-item [routerLink]="'/protected/dashboard'">
@@ -44,7 +37,9 @@
         <mat-icon mat-list-icon>logout</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Logout</span>
       </mat-list-item>
+
     </mat-nav-list>
+
   </mat-sidenav>
 
   <mat-sidenav-content>

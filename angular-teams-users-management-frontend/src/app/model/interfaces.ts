@@ -1,3 +1,4 @@
+import { User } from "./user.interfaces";
 
 export interface AccessTokenPayload {
   sub: string;
@@ -7,33 +8,18 @@ export interface AccessTokenPayload {
   exp: number
 }
 
-export interface User {
-  id?: number;
-  username: string;
-  email: string;
-  firstname: string;
-  lastname: string;
-  password?: string;
-  joinRequest: JoinRequest[];
-  teams: Team[];
+export interface UserAuth extends User {
+  sub: string;
+  auth: string[];
+  exp: number;
+  iat: number;
 }
 
-export interface JoinRequest {
-  id?: number;
-  joinStatus: JoinStatus;
-  user: User;
-  team: Team;
-}
 
-export enum JoinStatus {
-  'INQUIRY',
-  'ACCEPTED',
-  'DECLINED'
-}
 
-export interface Team {
-  id?: number;
-  name: string;
-  users: User[];
-  joinRequest: JoinRequest[];
+export interface Page {
+  size: number,
+  totalElements: number;
+  totalPages: number;
+  number: number;
 }
