@@ -17,6 +17,7 @@ import { User } from 'src/app/model/user.interfaces';
   providedIn: 'root',
 })
 export class AuthService {
+
   constructor(
     private http: HttpClient,
     private snackbar: MatSnackBar,

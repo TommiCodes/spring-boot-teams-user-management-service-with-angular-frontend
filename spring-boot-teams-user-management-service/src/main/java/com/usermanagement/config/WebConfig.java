@@ -36,7 +36,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/h2-console/**", "/api/h2-console/**").permitAll()
-                .antMatchers("/auth/**", "/api/auth/**", "/api/auth/login").permitAll()
+                .antMatchers("/auth/**", "/api/auth/**", "/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable()
