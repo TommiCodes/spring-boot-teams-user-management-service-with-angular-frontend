@@ -1,5 +1,6 @@
+import { snackBarConf } from 'src/app/model/consts';
 import { UserState } from './../../../root-states/user.state';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,7 +22,9 @@ export class UserService {
   }
 
   updateOwnProfile(updateUser: User): Observable<User> {
-    return this.http.put<User>(`/api/users/${this.userState.id}`, updateUser);
+    return this.http.put<User>(`/api/users/${this.userState.id}`, updateUser).pipe(
+      tap(() => this.snackbar.open('Update Profile Successfull', 'Close', snackBarConf))
+    );
   }
 
 }

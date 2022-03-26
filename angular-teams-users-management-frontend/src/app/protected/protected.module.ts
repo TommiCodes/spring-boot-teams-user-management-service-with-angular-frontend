@@ -1,3 +1,4 @@
+import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
@@ -17,6 +18,7 @@ import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { MatInputModule } from '@angular/material/input';
     MatDividerModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
 })
-export class ProtectedModule {}
+export class ProtectedModule { }

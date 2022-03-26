@@ -15,7 +15,10 @@ export interface UserAuth extends User {
   iat: number;
 }
 
-
+export interface Pageable {
+  size: number;
+  number: number;
+}
 
 export interface Page {
   size: number,
