@@ -24,7 +24,10 @@ const routes: Routes = [
       },
       {
         path: 'my-profile',
-        component: UpdateProfileComponent
+        component: UpdateProfileComponent,
+        resolve: {
+          ownProfile: OwnProfileResolver
+        }
       },
       {
         path: 'my-teams',

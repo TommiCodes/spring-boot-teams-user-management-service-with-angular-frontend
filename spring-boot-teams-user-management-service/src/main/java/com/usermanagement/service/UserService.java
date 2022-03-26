@@ -49,7 +49,7 @@ public class UserService {
         user.setEmail(updateUserRequest.getEmail());
         user.setFirstname(updateUserRequest.getFirstname());
         user.setLastname(updateUserRequest.getLastname());
-        user.setPassword(updateUserRequest.getPassword());
+        //  TODO: Also implement Passwort update
 
         return userRepository.save(user);
     }

@@ -1,3 +1,4 @@
+import { UserState } from './../../../root-states/user.state';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,15 +12,16 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private userState: UserState
   ) { }
 
   getProfileByUserId(id: number): Observable<User> {
     return this.http.get<User>(`/api/users/${id}`);
   }
 
-  updateProfile(user: User): Observable<User> {
-    return this.http.put<User>(`/api/users/${user.id}`, user);
+  updateOwnProfile(updateUser: User): Observable<User> {
+    return this.http.put<User>(`/api/users/${this.userState.id}`, updateUser);
   }
 
 }

@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
@@ -14,6 +15,8 @@ import { ProtectedShellComponent } from './components/protected-shell/protected-
 import { TeamsComponent } from './components/teams/teams.component';
 import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     // Import our Routes for this module
     ProtectedRoutingModule,
     // Angular Material Imports
@@ -35,7 +39,9 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
     MatToolbarModule,
     MatIconModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
 })
 export class ProtectedModule {}

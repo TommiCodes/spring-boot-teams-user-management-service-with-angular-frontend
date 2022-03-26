@@ -1,1 +1,47 @@
-<p>update-profile works!</p>
+<mat-card>
+  <mat-card-title>Register</mat-card-title>
+
+  <mat-card-content>
+    <form [formGroup]="profileForm" (ngSubmit)="update()">
+
+      <mat-form-field>
+        <input type="email" matInput placeholder="Email" formControlName="email">
+        <!-- Here we can display error messages/hints for the user, if one of the Validators adds an error to the email 
+         with the .touched check we only display the hints if the input was touched by the users -->
+        <mat-error
+          *ngIf="this.profileForm.get('email')?.touched && this.profileForm.get('email')?.hasError('required')">
+          Email is required</mat-error>
+        <mat-error *ngIf="this.profileForm.get('email')?.touched && this.profileForm.get('email')?.hasError('email')">
+          Email must be a valid Email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text" matInput placeholder="Username" formControlName="username">
+        <mat-error
+          *ngIf="this.profileForm.get('username')?.touched && this.profileForm.get('username')?.hasError('required')">
+          Username is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text" matInput placeholder="First Name" formControlName="firstname">
+        <mat-error
+          *ngIf="this.profileForm.get('firstname')?.touched && this.profileForm.get('firstname')?.hasError('required')">
+          First Name is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text" matInput placeholder="Last Name" formControlName="lastname">
+        <mat-error
+          *ngIf="this.profileForm.get('lastname')?.touched && this.profileForm.get('lastname')?.hasError('required')">
+          Last Name is required</mat-error>
+      </mat-form-field>
+
+      <div class="button">
+        <!-- Button is disabled(not clickable), if our Form contains Validation Errors -->
+        <button type="submit" mat-button [disabled]="!profileForm.valid">Update Profile</button>
+      </div>
+
+    </form>
+  </mat-card-content>
+
+</mat-card>
