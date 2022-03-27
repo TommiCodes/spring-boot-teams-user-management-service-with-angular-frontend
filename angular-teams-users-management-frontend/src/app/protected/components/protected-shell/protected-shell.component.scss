@@ -16,6 +16,21 @@ mat-sidenav-container {
   .menu-item {
     margin-left: 8px;
   }
+
+  mat-sidenav {
+    mat-nav-list {
+      mat-list-item {
+        .chevron-button {
+          transition: 300ms ease-in-out;
+          transform: rotate(0deg);
+        }
+
+        .chevron-button.rotated {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
 }
 
 .content {
