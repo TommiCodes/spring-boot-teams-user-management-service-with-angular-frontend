@@ -19,6 +19,6 @@
   </table>
 
   <mat-paginator [length]="teamsPagedResponse?.page?.totalElements" [pageSize]="teamsPagedResponse?.page?.size"
-    [pageSizeOptions]="[5, 10, 25]">
+    [pageSizeOptions]="[5, 10, 25]" (page)="handlePageEvent($event)">
   </mat-paginator>
 </div>

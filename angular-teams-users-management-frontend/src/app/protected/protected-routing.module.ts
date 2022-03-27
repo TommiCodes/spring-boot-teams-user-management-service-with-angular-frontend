@@ -1,3 +1,4 @@
+import { AllTeamsResolver } from './resolvers/all-teams/all-teams.resolver';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { OwnProfileResolver } from './resolvers/own-profile/own-profile.resolver';
 import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
@@ -30,8 +31,13 @@ const routes: Routes = [
         }
       },
       {
-        path: 'my-teams',
+        path: 'teams',
         component: TeamsPageComponent,
+        // If the query Params change, then the resolver should run again (here used for pagination)
+        runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
+        resolve: {
+          allTeams: AllTeamsResolver
+        }
       },
       {
         path: '**',

@@ -1,7 +1,8 @@
+import { Pageable } from './../../../model/interfaces';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { TeamsPagedResponse } from './../../../model/team.interfaces';
-import { TeamService } from './../../services/team-service/team.service';
-import { Component, OnInit } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { Component } from '@angular/core';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-teams-page',
@@ -10,13 +11,22 @@ import { map, tap } from 'rxjs';
 })
 export class TeamsPageComponent {
 
-  teamsPaged$ = this.teamService.getAllTeams({
-    number: 0,
-    size: 20
-  });
+  teamsPaged$: Observable<TeamsPagedResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['allTeams']));
 
   constructor(
-    private teamService: TeamService
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
+
+  paginate(pageable: Pageable) {
+    // If the query Params change, then our resolver will run again and load new teams into the route data
+    // here we reload the same url but with different query Params
+    this.router.navigate([], {
+      queryParams: {
+        pageSize: pageable.size,
+        pageNumber: pageable.number
+      }
+    });
+  }
 
 }

@@ -61,6 +61,18 @@ public class Initializer implements CommandLineRunner {
 
         teamService.create(createChelsea, dorian);
 
+        // Create more teams
+        teamService.create(CreateTeamRequest.builder().name("Bayern").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("Chelsea").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("Real").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("PSG").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("Marseille").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("Dortmund").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("Tottenham").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("Mailand").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("Rom").build(), dorian);
+        teamService.create(CreateTeamRequest.builder().name("City").build(), dorian);
+
         // Add Users to Teams
 /*
         userService.addTeamToUser(manu.getId(), arnold.getId());

@@ -1,4 +1,4 @@
 <div style="padding: 30px;">
   <h2>Alle Teams</h2>
-  <app-teams [teamsPagedResponse]="teamsPaged$ | async"></app-teams>
+  <app-teams [teamsPagedResponse]="teamsPaged$ | async" (paginate)="paginate($event)"></app-teams>
 </div>
