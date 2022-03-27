@@ -35,8 +35,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/h2-console/**", "/api/h2-console/**").permitAll()
-                .antMatchers("/auth/**", "/api/auth/**", "/auth/login").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/auth/**", "/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable()
@@ -59,26 +59,5 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-/*
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception
-    {
-        auth
-                .parentAuthenticationManager(authenticationManagerBean())
-                .userDetailsService(myUserDetailsService);
-    }
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder(13);
-    }
-*/
 
 }

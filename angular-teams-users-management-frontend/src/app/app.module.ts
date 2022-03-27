@@ -37,7 +37,13 @@ export function tokenGetter() {
     // Jwt Helper Module Import
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter: (request) => {
+          // If we send the login request, then we don't want to add a token from our localstorage (if there still is one from one of the last sessions)
+          if (request?.url.includes('login')) {
+            return null;
+          }
+          return localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
+        },
         allowedDomains: ['localhost:3000', 'localhost:8080']
       }
     }),
