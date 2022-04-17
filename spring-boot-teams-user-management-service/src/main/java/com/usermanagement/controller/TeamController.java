@@ -8,7 +8,6 @@ import com.usermanagement.requests.CreateTeamRequest;
 import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +28,8 @@ public class TeamController {
 
     // TODO: enrich with Specifications
     @GetMapping("/teams")
-    public ResponseEntity<?> findAllTeams(Pageable pageable, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
-        Page<Team> teamPage = teamService.findAll(pageable);
+    public ResponseEntity<?> findAllTeams(Pageable pageable, @RequestParam String name, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
+        Page<Team> teamPage = teamService.search(pageable, name);
         return ResponseEntity.ok(pagedResourcesAssembler.toModel(teamPage, persistentEntityResourceAssembler));
     }
 

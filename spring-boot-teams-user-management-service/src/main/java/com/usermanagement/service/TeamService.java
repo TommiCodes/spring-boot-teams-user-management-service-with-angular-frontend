@@ -4,6 +4,7 @@ import com.usermanagement.model.Role;
 import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
+import com.usermanagement.model.specs.TeamSpecs;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.TeamRepository;
 import com.usermanagement.requests.CreateTeamRequest;
@@ -42,6 +43,10 @@ public class TeamService {
     // TODO: enrich with Specifications
     public Page<Team> findAll(Pageable pageable) {
         return teamRepository.findAll(pageable);
+    }
+
+    public Page<Team> search(Pageable pageable, String name) {
+        return teamRepository.findAll(name != null ? TeamSpecs.nameLike(name) : null, pageable);
     }
 
     // get a team by id

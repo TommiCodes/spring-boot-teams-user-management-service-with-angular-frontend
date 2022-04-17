@@ -13,6 +13,7 @@ import com.usermanagement.requests.CreateUserRequest;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -96,7 +97,7 @@ public class Initializer implements CommandLineRunner {
         return this.userService.create(createUserRequest);
     }
 
-    private Privilege createPrivilege(Privileges privilege) {
+    private @NotNull Privilege createPrivilege(Privileges privilege) {
         Privilege p = new Privilege();
         p.setPrivilege(privilege);
         return privilegeRepository.save(p);
