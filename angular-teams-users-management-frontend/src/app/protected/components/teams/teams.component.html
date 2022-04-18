@@ -1,4 +1,9 @@
 <div>
+  <mat-form-field>
+    <input type="search" matInput placeholder="Search for Team Name" [formControl]="searchTeamName">
+  </mat-form-field>
+</div>
+<div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Id Column -->

@@ -1,9 +1,11 @@
 import { Pageable } from './../../../model/interfaces';
 import { TeamsPagedResponse } from './../../../model/team.interfaces';
 import { Team } from 'src/app/model/team.interfaces';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs';
 
 
 @Component({
@@ -11,14 +13,25 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss']
 })
-export class TeamsComponent implements OnChanges {
+export class TeamsComponent implements OnInit, OnChanges {
 
   @Input() teamsPagedResponse!: TeamsPagedResponse | null;
   @Output() paginate: EventEmitter<Pageable> = new EventEmitter<Pageable>();
+  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+
+  searchTeamName = new FormControl();
 
   displayedColumns: string[] = ['id', 'name'];
   // 'Definite Assignment Assertion' with "<property>!" to tell typescript that this variable will have a value at runtime
   dataSource: MatTableDataSource<Team> = new MatTableDataSource<Team>();
+
+  ngOnInit(): void {
+    this.searchTeamName.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      tap((teamName) => this.search.emit(teamName))
+    ).subscribe();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['teamsPagedResponse'].currentValue) {

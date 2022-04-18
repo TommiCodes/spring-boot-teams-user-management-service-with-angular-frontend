@@ -28,7 +28,7 @@ public class TeamController {
 
     // TODO: enrich with Specifications
     @GetMapping("/teams")
-    public ResponseEntity<?> findAllTeams(Pageable pageable, @RequestParam String name, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
+    public ResponseEntity<?> findAllTeams(Pageable pageable, @RequestParam(required = false) String name, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
         Page<Team> teamPage = teamService.search(pageable, name);
         return ResponseEntity.ok(pagedResourcesAssembler.toModel(teamPage, persistentEntityResourceAssembler));
     }

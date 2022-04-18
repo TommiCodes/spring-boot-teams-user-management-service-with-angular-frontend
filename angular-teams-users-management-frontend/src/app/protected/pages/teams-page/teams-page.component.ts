@@ -29,4 +29,12 @@ export class TeamsPageComponent {
     });
   }
 
+  search(name: string) {
+    this.router.navigate([], {
+      queryParams: {
+        name
+      }
+    })
+  }
+
 }

@@ -14,13 +14,14 @@ export class AllTeamsResolver implements Resolve<TeamsPagedResponse> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<TeamsPagedResponse> {
-    
+
     const pageSize: number = route.queryParamMap.get('pageSize') === null ? 20 : Number(route.queryParamMap.get('pageSize'));
     const pageNumber: number = route.queryParamMap.get('pageNumber') === null ? 0 : Number(route.queryParamMap.get('pageNumber'));
+    const teamName: string | null = route.queryParamMap.get('name');
 
     return this.teamsService.getAllTeams({
       number: pageNumber,
       size: pageSize
-    });
+    }, teamName);
   }
 }

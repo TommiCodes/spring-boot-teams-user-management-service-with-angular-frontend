@@ -2,7 +2,7 @@ import { Page, Pageable } from './../../../model/interfaces';
 import { Observable } from 'rxjs';
 import { UserState } from 'src/app/root-states/user.state';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TeamsPagedResponse } from 'src/app/model/team.interfaces';
 
@@ -25,7 +25,16 @@ export class TeamService {
     return this.http.get<TeamsPagedResponse>(`/api/users/${id}/teams`);
   }
 
-  getAllTeams(pageable: Pageable): Observable<TeamsPagedResponse> {
-    return this.http.get<TeamsPagedResponse>(`/api/teams?page=${pageable.number}&size=${pageable.size}`);
+  getAllTeams(pageable: Pageable, teamNameSearchString?: string | null): Observable<TeamsPagedResponse> {
+    let params = new HttpParams();
+
+    params = params.set('page', pageable.number)
+    params = params.set('sort', pageable.size);
+
+    if (teamNameSearchString !== null && teamNameSearchString !== undefined) {
+      params = params.set('name', teamNameSearchString);
+    }
+
+    return this.http.get<TeamsPagedResponse>(`/api/teams`, {params});
   }
 }

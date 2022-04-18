@@ -34,7 +34,7 @@ public class Initializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         // Init User
-        User arnold = createUser("ArnoldTester", "Arnold", "Schwarzenegger", "PasswordToHash", "arnold@schwarzenegger.com");
+        User arnold = createUser("ArnoldTester", "Arnold", "Schwarzenegger", "u", "arnold@schwarzenegger.com");
         User dorian = createUser("DorianTester", "Dorian", "Yates", "PasswordToHash123", "dorian@yates.com");
 
         // Create Roles and Privileges
