@@ -5,10 +5,7 @@ import com.usermanagement.model.Team_;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 public class TeamSpecs {
 
@@ -16,7 +13,7 @@ public class TeamSpecs {
       return new Specification<Team>() {
           @Override
           public Predicate toPredicate(@NotNull Root<Team> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder criteriaBuilder) {
-              return criteriaBuilder.like(root.get(Team_.name), '%' + name + '%');
+              return criteriaBuilder.like(criteriaBuilder.lower(root.get(Team_.name)), '%' + name.toLowerCase() + '%');
           }
       };
     }
