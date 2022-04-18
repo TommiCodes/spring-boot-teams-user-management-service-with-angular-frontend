@@ -1,3 +1,4 @@
+import { Page } from "./interfaces";
 import { JoinRequest } from "./join-request.interfaces";
 import { Team } from "./team.interfaces";
 
@@ -10,4 +11,16 @@ export interface User {
   password?: string;
   joinRequest: JoinRequest[];
   teams: Team[];
+}
+
+export interface UserPagedResponse {
+  _embedded: {
+    users: User[];
+  };
+  _links: {
+    self: {
+      href: string;
+    }
+  };
+  page: Page;
 }

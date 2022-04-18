@@ -21,11 +21,12 @@ export class TeamsComponent implements OnInit, OnChanges {
 
   searchTeamName = new FormControl();
 
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'actions'];
   // 'Definite Assignment Assertion' with "<property>!" to tell typescript that this variable will have a value at runtime
   dataSource: MatTableDataSource<Team> = new MatTableDataSource<Team>();
 
   ngOnInit(): void {
+    // If the users enters something to search for a team, we delay the request for 500ms and then emit a SearchEvent to our parent
     this.searchTeamName.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),

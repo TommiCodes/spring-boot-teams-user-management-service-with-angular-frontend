@@ -19,6 +19,9 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { TeamProfilePageComponent } from './pages/team-profile-page/team-profile-page.component';
+import { TeamProfileComponent } from './components/team-profile/team-profile.component';
+import { TeamUsersComponent } from './components/team-users/team-users.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     TeamsPageComponent,
     UserProfileComponent,
     UpdateProfileComponent,
+    TeamProfilePageComponent,
+    TeamProfileComponent,
+    TeamUsersComponent,
   ],
   imports: [
     CommonModule,

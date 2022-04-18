@@ -1,12 +1,15 @@
-import { AllTeamsResolver } from './resolvers/all-teams/all-teams.resolver';
+import { TeamMembersResolver } from './resolvers/team-members-resolver/team-members.resolver';
+import { TeamResolver } from './resolvers/team-resolver/team.resolver';
+import { TeamProfilePageComponent } from './pages/team-profile-page/team-profile-page.component';
+import { AllTeamsResolver } from './resolvers/all-teams-resolver/all-teams.resolver';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
-import { OwnProfileResolver } from './resolvers/own-profile/own-profile.resolver';
+import { OwnProfileResolver } from './resolvers/own-profile-resolver/own-profile.resolver';
 import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
 import { ProtectedShellComponent } from './components/protected-shell/protected-shell.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
-import { OwnTeamsResolver } from './resolvers/own-teams/own-teams.resolver';
+import { OwnTeamsResolver } from './resolvers/own-teams-resolver/own-teams.resolver';
 
 // Routes for child Module (protectedModule). Since protected module is lazy loaded in in the
 // app-routing.module the full path is `/protected/dashboard`
@@ -37,6 +40,16 @@ const routes: Routes = [
         runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
         resolve: {
           allTeams: AllTeamsResolver
+        }
+      },
+      {
+        path: 'teams/:id',
+        component: TeamProfilePageComponent,
+        // If the path Params change, then the resolver should run again (here used to load the team by his id)
+        runGuardsAndResolvers: 'pathParamsChange',
+        resolve: {
+          team: TeamResolver,
+          teamMembers: TeamMembersResolver
         }
       },
       {

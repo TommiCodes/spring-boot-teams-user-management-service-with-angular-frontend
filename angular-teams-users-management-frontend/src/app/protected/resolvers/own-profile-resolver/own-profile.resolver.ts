@@ -1,5 +1,5 @@
-import { UserState } from './../../../root-states/user.state';
-import { UserService } from './../../services/user-service/user.service';
+import { UserState } from '../../../root-states/user.state';
+import { UserService } from '../../services/user-service/user.service';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
