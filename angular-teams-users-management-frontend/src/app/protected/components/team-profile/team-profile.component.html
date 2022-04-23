@@ -1,12 +1,71 @@
-<mat-card>
-  <mat-card-title>{{ team?.name }}</mat-card-title>
+<div>
+  <div style="display:flex; flex-direction: row; justify-content: space-between;">
+    <h1> Team: {{ team?.name }}</h1>
 
-  <mat-card-content>
+    <span>
+      <button mat-button [routerLink]="'join-requests'">Join Requests</button>
+      <button mat-button (click)="sendJoinRequest()" [disabled]="teamIdsOfCurrentUser.includes(team!.id)">Send Join
+        Request</button>
+    </span>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div>
     <dl style="display: flex; flex-direction: column">
+      <h2>Properties:</h2>
       <span style="display: flex">
         <dt>Name</dt>
         <dd>{{ team?.name }}</dd>
       </span>
     </dl>
-  </mat-card-content>
-</mat-card>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- All Members of the team - displayed always -->
+  <div style="margin-block-start: 1em;">
+    <ng-container *ngTemplateOutlet="membersTable"></ng-container>
+  </div>
+
+</div>
+
+<ng-template #membersTable>
+
+  <h2>Members of {{team?.name}}:</h2>
+
+  <table mat-table [dataSource]="membersDataSource" class="mat-elevation-z8">
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let member"> {{member.id}} </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let member"> {{member.email}} </td>
+    </ng-container>
+
+    <!-- Firstname Column -->
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef> Firstname </th>
+      <td mat-cell *matCellDef="let member"> {{member.firstname}} </td>
+    </ng-container>
+
+    <!-- Lastname Column -->
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef> Lastname </th>
+      <td mat-cell *matCellDef="let member"> {{member.lastname}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="membersDisplayedCols"></tr>
+    <tr mat-row *matRowDef="let row; columns: membersDisplayedCols;"></tr>
+
+  </table>
+
+  <mat-paginator [length]="members?.page?.totalElements" [pageSize]="members?.page?.size"
+    [pageSizeOptions]="[5, 10, 25]" (page)="handlePageEvent($event)">
+  </mat-paginator>
+</ng-template>

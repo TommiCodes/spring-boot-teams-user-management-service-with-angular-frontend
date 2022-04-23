@@ -8,9 +8,16 @@ export interface AccessTokenPayload {
   exp: number
 }
 
+export type Privilege = 'MEMBER' | 'ADMIN';
+
+export interface Auth {
+  teamId: number;
+  privileges: Privilege[];
+}
+
 export interface UserAuth extends User {
   sub: string;
-  auth: string[];
+  auth: Auth[];
   exp: number;
   iat: number;
 }

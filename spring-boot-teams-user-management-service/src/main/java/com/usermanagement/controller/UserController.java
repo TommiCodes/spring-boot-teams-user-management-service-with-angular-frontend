@@ -10,9 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -34,16 +34,15 @@ public class UserController {
         User user = userService.create(createUserRequest);
         return ResponseEntity.ok(user);
     }
-
-
     @GetMapping("/users/{id}")
     public ResponseEntity<?> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {
-        User user = this.userService.get(id);
+        User user = this.userService.findById(id);
         return ResponseEntity.ok(assembler.toFullResource(user));
     }
 
+    @PreAuthorize("isOwnProfile(#id)")
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> put(@PathVariable Long id, @RequestBody UpdateUserRequest updateUserRequest, PersistentEntityResourceAssembler assembler) {
+    public ResponseEntity<?> put(@PathVariable("id") Long id, @RequestBody UpdateUserRequest updateUserRequest, PersistentEntityResourceAssembler assembler) {
         User user = this.userService.update(id, updateUserRequest);
         return ResponseEntity.ok(assembler.toFullResource(user));
     }

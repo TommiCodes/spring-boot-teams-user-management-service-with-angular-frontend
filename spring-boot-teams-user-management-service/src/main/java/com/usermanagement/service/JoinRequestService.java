@@ -6,7 +6,6 @@ import com.usermanagement.repository.JoinRequestRepository;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.requests.UpdateJoinTeamRequest;
 import lombok.AllArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -29,8 +28,8 @@ public class JoinRequestService {
 
     // save a joinrequest from a user to a team to the database
     public JoinRequest save(Long teamId, Long userId) {
-        User user = userService.get(userId);
-        Team team = teamService.get(teamId);
+        User user = userService.findById(userId);
+        Team team = teamService.findById(teamId);
         Role role = roleRepository.getById(1L);
 
 
@@ -60,7 +59,7 @@ public class JoinRequestService {
 
     // find all join Request for a team - paged
     public Page<JoinRequest> findJoinRequestsForTeam(Long teamId, Pageable pageable) {
-        Team team = teamService.get(teamId);
+        Team team = teamService.findById(teamId);
         return joinRequestRepository.findAllByTeam(team, pageable);
     }
 

@@ -34,7 +34,7 @@ public class UserTeam {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
     private Role role;
 

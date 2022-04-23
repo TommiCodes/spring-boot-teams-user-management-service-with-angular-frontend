@@ -1,3 +1,5 @@
+import { TeamJoinRequestsPageComponent } from './pages/team-join-requests-page/team-join-requests-page.component';
+import { TeamJoinRequestsResolver } from './resolvers/team-join-requests-resolver/team-join-requests.resolver';
 import { TeamMembersResolver } from './resolvers/team-members-resolver/team-members.resolver';
 import { TeamResolver } from './resolvers/team-resolver/team.resolver';
 import { TeamProfilePageComponent } from './pages/team-profile-page/team-profile-page.component';
@@ -50,6 +52,17 @@ const routes: Routes = [
         resolve: {
           team: TeamResolver,
           teamMembers: TeamMembersResolver
+        }
+      },
+      {
+        // TODO: Refactor to /admin
+        // TODO: Check if user is admin for team guard
+        path: 'teams/:id/join-requests',
+        component: TeamJoinRequestsPageComponent,
+        runGuardsAndResolvers: 'pathParamsChange',
+        resolve: {
+          team: TeamResolver,
+          joinRequests: TeamJoinRequestsResolver
         }
       },
       {

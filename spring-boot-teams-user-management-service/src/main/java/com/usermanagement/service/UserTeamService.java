@@ -5,12 +5,17 @@ import com.usermanagement.repository.UserTeamRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.transaction.Transactional;
 
 
 // Service that handles the many-to-many relationship between user and team
 @AllArgsConstructor
 @Service
+@Transactional
 public class UserTeamService {
     // Repositories
     private final UserTeamRepository userTeamRepository;
@@ -26,8 +31,8 @@ public class UserTeamService {
     }
 
     // get a relationship by UserTeamKey (user.id & team.id)
-    public UserTeam getById(UserTeamKey userTeamKey) {
-        return userTeamRepository.getById(userTeamKey);
+    public UserTeam findById(UserTeamKey userTeamKey) {
+        return userTeamRepository.findById(userTeamKey).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
     }
 
     // save a user to a team

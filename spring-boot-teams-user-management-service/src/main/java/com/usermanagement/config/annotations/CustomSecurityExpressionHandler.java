@@ -1,4 +1,4 @@
-package com.usermanagement.annotations;
+package com.usermanagement.config.annotations;
 
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserTeamService;

@@ -1,8 +1,6 @@
 package com.usermanagement.config.security;
 
-import com.usermanagement.model.Privilege;
-import com.usermanagement.model.User;
-import com.usermanagement.model.UserTeam;
+import com.usermanagement.model.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -57,6 +56,7 @@ public class JwtTokenProvider {
 
     /**
      * Instead of the username we use the ID of the user (subject)
+     *
      * @param token
      * @return
      */
@@ -86,17 +86,20 @@ public class JwtTokenProvider {
         }
     }
 
-    private List<String> getAuthorities(List<UserTeam> userTeams) {
-        List<String> authorities = new ArrayList<>();
+    private List<TeamAuthority> getAuthorities(List<UserTeam> userTeams) {
+        List<TeamAuthority> teamAuthorities = new ArrayList<>();
 
         for (UserTeam userTeam : userTeams) {
-
-            for (Privilege privilege : userTeam.getRole().getPrivileges()) {
-                authorities.add("TEAM:" + userTeam.getTeam().getId() + "::" + "AUTHORITY:" + privilege.getPrivilege());
-            }
+            teamAuthorities.add(
+                    new TeamAuthority(
+                            userTeam.getTeam().getId(),
+                            userTeam.getRole().getPrivileges().stream()
+                                    .map(Privilege::getPrivilege)
+                                    .collect(Collectors.toList()))
+            );
         }
 
-        return authorities;
+        return teamAuthorities;
     }
 
 }

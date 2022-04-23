@@ -3,7 +3,7 @@ import { JoinRequest } from "./join-request.interfaces";
 import { User } from "./user.interfaces";
 
 export interface Team {
-  id?: number;
+  id: number;
   name: string;
   users: User[];
   joinRequest: JoinRequest[];

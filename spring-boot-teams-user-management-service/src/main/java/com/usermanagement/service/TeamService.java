@@ -49,15 +49,15 @@ public class TeamService {
         return teamRepository.findAll(name != null ? TeamSpecs.nameLike(name) : null, pageable);
     }
 
-    // get a team by id
-    public Team get(Long id) {
+    // find a team by id
+    public Team findById(Long id) {
         return teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Not fround"));
     }
 
 
     // find All Users for a team by team.id - paged
     public Page<User> findAllUsersForTeam(Long teamId, Pageable pageable) {
-        Team team = get(teamId);
+        Team team = findById(teamId);
 
         // find the paged UserTeams
         Page<UserTeam> userTeamPage = userTeamService.findAllByTeamId(team.getId(), pageable);

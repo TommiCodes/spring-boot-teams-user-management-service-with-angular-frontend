@@ -5,16 +5,12 @@ import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
 import com.usermanagement.requests.CreateUserRequest;
 import com.usermanagement.requests.UpdateUserRequest;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -37,13 +33,13 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
     }
 
-    // get User by Id
-    public User get(Long id) {
+    // find User by Id
+    public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
     }
 
     public User update(Long id, UpdateUserRequest updateUserRequest) {
-        User user = get(id);
+        User user = findById(id);
 
         user.setUsername(updateUserRequest.getUsername());
         user.setEmail(updateUserRequest.getEmail());
@@ -61,15 +57,15 @@ public class UserService {
 
     //
     public void addTeamToUser(Long teamId, Long userId) {
-        Team team = teamService.get(teamId);
-        User user = get(userId);
+        Team team = teamService.findById(teamId);
+        User user = findById(userId);
         // Role id = 2 is always the MEMBER Role
         Role role = roleRepository.getById(2L);
 
         UserTeam userTeam = userTeamService.build(user, team, role);
 
         // check if user already in team
-        if (get(teamId).getTeams().contains(userTeam)) {
+        if (findById(teamId).getTeams().contains(userTeam)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already in team");
         }
 
@@ -77,15 +73,15 @@ public class UserService {
     }
 
     public void removeTeamFromUser(Long teamId, Long userId) {
-        Team team = teamService.get(teamId);
-        User user = get(userId);
+        Team team = teamService.findById(teamId);
+        User user = findById(userId);
 
         UserTeamKey userTeamKey = UserTeamKey.builder()
                 .teamId(team.getId())
                 .userId(user.getId())
                 .build();
 
-        UserTeam userTeam = userTeamService.getById(userTeamKey);
+        UserTeam userTeam = userTeamService.findById(userTeamKey);
 
         userTeamService.delete(userTeam);
     }
@@ -117,7 +113,7 @@ public class UserService {
     }
 
     public Page<Team> findAllTeamsForUser(Long userId, Pageable pageable) {
-        User user = get(userId);
+        User user = findById(userId);
 
         // find the paged UserTeams
         Page<UserTeam> userTeamPage = this.userTeamService.findAllByUserId(user.getId(), pageable);

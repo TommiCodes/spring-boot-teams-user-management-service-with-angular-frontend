@@ -10,7 +10,7 @@ import { Pageable } from 'src/app/model/interfaces';
   templateUrl: './team-profile-page.component.html',
   styleUrls: ['./team-profile-page.component.scss']
 })
-export class TeamProfilePageComponent implements OnInit {
+export class TeamProfilePageComponent {
 
   team$: Observable<Team> = this.activatedRoute.data.pipe(map((data: Data) => data['team']));
   teamMembers$: Observable<UserPagedResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['teamMembers']));
@@ -19,9 +19,6 @@ export class TeamProfilePageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
-
-  ngOnInit(): void {
-  }
 
   paginate(pageable: Pageable) {
     // If the query Params change, then our resolver will run again and load the new Team Members

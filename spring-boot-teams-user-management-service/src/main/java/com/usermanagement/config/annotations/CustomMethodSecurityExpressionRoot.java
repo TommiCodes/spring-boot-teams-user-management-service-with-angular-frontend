@@ -1,4 +1,4 @@
-package com.usermanagement.annotations;
+package com.usermanagement.config.annotations;
 
 import com.usermanagement.model.*;
 import com.usermanagement.model.enums.Privileges;
@@ -54,16 +54,19 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         return target;
     }
 
+    /* Checks if the current User is having a ADMIN Privilege for the provided team*/
     public boolean isTeamAdmin(Long teamId) {
         List<Privileges> teamPrivilegesList = this.getPrivileges(teamId);
         return teamPrivilegesList.contains(Privileges.ADMIN);
     }
 
+    /* Checks if the current User is having a MEMBER Privilege for the provided team*/
     public boolean isTeamMember(Long teamId) {
         List<Privileges> teamPrivilegesList = this.getPrivileges(teamId);
         return teamPrivilegesList.contains(Privileges.MEMBER);
     }
 
+    /* Checks if the provided userId equals the user id of the logged in user */
     public boolean isOwnProfile(Long userId) {
         UserDetails authUser = (UserDetails) this.getPrincipal();
         return Long.parseLong(authUser.getUsername()) == userId;

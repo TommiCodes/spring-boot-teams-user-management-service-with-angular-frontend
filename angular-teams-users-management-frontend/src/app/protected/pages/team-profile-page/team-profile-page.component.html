@@ -1,9 +1,4 @@
-<div>
-  <div style="width: 30%; margin: 30px">
-    <app-team-profile [team]="team$ | async">
-    </app-team-profile>
-  </div>
-  <div style="width: 80%; margin: 30px;">
-    <app-team-users [members]="teamMembers$ | async" (paginate)="paginate($event)"></app-team-users>
-  </div>
+<div class="profile-wrapper">
+  <app-team-profile [team]="team$ | async" [members]="teamMembers$ | async" (paginateMembers)="paginate($event)">
+  </app-team-profile>
 </div>

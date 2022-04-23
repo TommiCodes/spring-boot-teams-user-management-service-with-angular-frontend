@@ -21,7 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TeamProfilePageComponent } from './pages/team-profile-page/team-profile-page.component';
 import { TeamProfileComponent } from './components/team-profile/team-profile.component';
-import { TeamUsersComponent } from './components/team-users/team-users.component';
+import { TeamJoinRequestsPageComponent } from './pages/team-join-requests-page/team-join-requests-page.component';
+import { TeamJoinRequestsComponent } from './components/team-join-requests/team-join-requests.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TeamUsersComponent } from './components/team-users/team-users.component
     UpdateProfileComponent,
     TeamProfilePageComponent,
     TeamProfileComponent,
-    TeamUsersComponent,
+    TeamJoinRequestsPageComponent,
+    TeamJoinRequestsComponent,
   ],
   imports: [
     CommonModule,

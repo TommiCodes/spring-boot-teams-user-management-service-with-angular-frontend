@@ -1,11 +1,9 @@
+import { Page } from "./interfaces";
 import { Team } from "./team.interfaces";
 import { User } from "./user.interfaces";
 
-export interface JoinRequest {
-  id?: number;
-  joinStatus: JoinStatus;
-  user: User;
-  team: Team;
+export interface NewJoinRequest {
+  userId: number;
 }
 
 export enum JoinStatus {
@@ -13,3 +11,22 @@ export enum JoinStatus {
   'ACCEPTED',
   'DECLINED'
 }
+export interface JoinRequest {
+  id?: number;
+  joinStatus: JoinStatus;
+  user: User;
+  team: Team;
+}
+
+export interface JoinRequestPageResponse {
+  _embedded: {
+    joinRequests: JoinRequest[];
+  };
+  _links: {
+    self: {
+      href: string;
+    }
+  };
+  page: Page;
+}
+

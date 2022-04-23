@@ -18,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 // Enable Pre & Post Security Annotations
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebConfig extends WebSecurityConfigurerAdapter {
 
