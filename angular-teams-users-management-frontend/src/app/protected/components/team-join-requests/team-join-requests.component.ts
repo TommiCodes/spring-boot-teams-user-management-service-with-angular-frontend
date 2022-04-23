@@ -1,5 +1,6 @@
-import { JoinRequest } from 'src/app/model/join-request.interfaces';
-import { JoinRequestPageResponse } from './../../../model/join-request.interfaces';
+import { JoinRequestService } from './../../services/join-request-service/join-request.service';
+import { JoinRequest, JoinStatus } from 'src/app/model/join-request.interfaces';
+import { JoinRequestPageResponse, UpdateJoinTeamRequest } from './../../../model/join-request.interfaces';
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { Team } from 'src/app/model/team.interfaces';
 import { Pageable } from 'src/app/model/interfaces';
@@ -20,6 +21,8 @@ export class TeamJoinRequestsComponent implements OnChanges {
   membersDisplayedCols: string[] = ['id', 'user', 'joinStatus', 'team', 'actions'];
   dataSource: MatTableDataSource<JoinRequest> = new MatTableDataSource<JoinRequest>();
 
+  constructor(private joinRequestService: JoinRequestService) {}
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['joinRequests'].currentValue) {
       this.dataSource.data = this.joinRequests!._embedded.joinRequests;
@@ -33,12 +36,18 @@ export class TeamJoinRequestsComponent implements OnChanges {
     });
   }
 
-  accept() {
-    
+  accept(joinRequest: JoinRequest) {
+    const updateJoinRequest: UpdateJoinTeamRequest = {
+      joinStatus: JoinStatus.ACCEPTED
+    };
+    this.joinRequestService.handleJoinRequest(joinRequest, updateJoinRequest).subscribe();
   }
 
-  decline() {
-
+  decline(joinRequest: JoinRequest) {
+    const updateJoinRequest: UpdateJoinTeamRequest = {
+      joinStatus: JoinStatus.DECLINED
+    };
+    this.joinRequestService.handleJoinRequest(joinRequest, updateJoinRequest).subscribe();
   }
 
 }

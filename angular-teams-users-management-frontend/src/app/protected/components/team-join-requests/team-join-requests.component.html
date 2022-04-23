@@ -53,9 +53,9 @@
     <!-- Action Column, e.g. Accept the JoinRequest or Decline it -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let team">
-        <button mat-button color="primary">Accept</button>
-        <button mat-button color="warn">Decline</button>
+      <td mat-cell *matCellDef="let joinRequest">
+        <button mat-button color="primary" (click)="this.accept(joinRequest)">Accept</button>
+        <button mat-button color="warn" (click)="this.decline(joinRequest)">Decline</button>
       </td>
     </ng-container>
 

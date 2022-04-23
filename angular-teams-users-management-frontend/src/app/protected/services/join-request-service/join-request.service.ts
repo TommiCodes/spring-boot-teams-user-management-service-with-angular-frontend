@@ -1,7 +1,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Pageable } from 'src/app/model/interfaces';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { NewJoinRequest, JoinRequestPageResponse } from './../../../model/join-request.interfaces';
+import { NewJoinRequest, JoinRequestPageResponse, UpdateJoinTeamRequest, JoinRequest } from './../../../model/join-request.interfaces';
 import { catchError, Observable } from 'rxjs';
 import { UserState } from 'src/app/root-states/user.state';
 import { Injectable } from '@angular/core';
@@ -27,6 +27,10 @@ export class JoinRequestService {
         return error;
       })
     );
+  }
+
+  handleJoinRequest(joinRequest: JoinRequest ,updateRequest: UpdateJoinTeamRequest): Observable<string> {
+    return this.http.put<string>(`/api/join-requests/${joinRequest.id}`, updateRequest);
   }
 
   getJoinRequestsByTeamId(teamId: number, pageable: Pageable): Observable<JoinRequestPageResponse> {
