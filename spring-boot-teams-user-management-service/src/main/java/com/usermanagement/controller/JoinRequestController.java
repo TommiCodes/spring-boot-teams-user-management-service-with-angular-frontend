@@ -1,5 +1,6 @@
 package com.usermanagement.controller;
 
+import com.usermanagement.model.JoinRequest;
 import com.usermanagement.model.enums.JoinStatus;
 import com.usermanagement.requests.UpdateJoinTeamRequest;
 import com.usermanagement.service.JoinRequestService;
@@ -20,8 +21,8 @@ public class JoinRequestController {
     @PreAuthorize("isTeamAdmin(#id)")
     @PutMapping("/join-requests/{id}")
     public ResponseEntity<?> handleJoinRequest(@PathVariable("id") Long id, @RequestBody UpdateJoinTeamRequest updateJoinTeamRequest) {
-        joinRequestService.handle(id, updateJoinTeamRequest);
-        return updateJoinTeamRequest.getJoinStatus() == JoinStatus.DECLINED ? ResponseEntity.ok("User Join accepted") : ResponseEntity.ok("User Join declined");
+        JoinRequest joinRequest = joinRequestService.handle(id, updateJoinTeamRequest);
+        return joinRequest.getJoinStatus() == JoinStatus.ACCEPTED ? ResponseEntity.ok("User Join accepted") : ResponseEntity.ok("User Join declined");
     }
 
 }

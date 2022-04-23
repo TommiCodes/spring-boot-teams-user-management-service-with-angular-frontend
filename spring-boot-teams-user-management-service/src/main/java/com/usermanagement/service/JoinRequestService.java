@@ -64,21 +64,29 @@ public class JoinRequestService {
     }
 
     // handle a join request
-    public void handle(Long id, UpdateJoinTeamRequest updateJoinTeamRequest) {
+    public JoinRequest handle(Long id, UpdateJoinTeamRequest updateJoinTeamRequest) {
         JoinRequest joinRequest = joinRequestRepository.getById(id);
 
+        // if joinRequest in Database is not INQUIRY, then throw an Exc
         if (joinRequest.getJoinStatus() != JoinStatus.INQUIRY) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Join Request alrady accepted/declined.");
         }
 
-        // add the user to the team
-        userService.addTeamToUser(joinRequest.getTeam().getId(), joinRequest.getUser().getId());
+        // if updateJoinRequest is DECLINED, then set the joinRequest in the database to DECLINED
+        if(updateJoinTeamRequest.getJoinStatus() == JoinStatus.DECLINED) {
+            joinRequest.setJoinStatus(updateJoinTeamRequest.getJoinStatus());
+        }
 
-        // update joinStatus of the joinRequest
-        joinRequest.setJoinStatus(updateJoinTeamRequest.getJoinStatus());
+        if(updateJoinTeamRequest.getJoinStatus() == JoinStatus.ACCEPTED) {
+            // add the user to the team
+            userService.addTeamToUser(joinRequest.getTeam().getId(), joinRequest.getUser().getId());
+
+            // update joinStatus of the joinRequest
+            joinRequest.setJoinStatus(updateJoinTeamRequest.getJoinStatus());
+        }
 
         // save the updated join request to the db
-        joinRequestRepository.save(joinRequest);
+        return joinRequestRepository.save(joinRequest);
     }
 
 }

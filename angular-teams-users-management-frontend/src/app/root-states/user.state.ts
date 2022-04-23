@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Computed, StateRepository } from '@angular-ru/ngxs/decorators';
 import { NgxsDataRepository } from '@angular-ru/ngxs/repositories';
 import { State } from '@ngxs/store';
-import { UserAuth } from '../model/interfaces';
+import { Auth, UserAuth } from '../model/interfaces';
 
 @StateRepository()
 @State({
@@ -21,6 +21,11 @@ export class UserState extends NgxsDataRepository<UserAuth> {
   @Computed()
   public get teamIds(): number[] {
     return this.snapshot.auth.map(auth => auth.teamId);
+  }
+
+  @Computed()
+  public get teamPrivs(): Auth[] {
+    return this.snapshot.auth;
   }
 
 }
