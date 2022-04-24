@@ -1,4 +1,4 @@
-import { JoinRequest, JoinRequestPageResponse as JoinRequestPagedResponse } from './../../../model/join-request.interfaces';
+import { JoinRequestPageResponse as JoinRequestPagedResponse } from './../../../model/join-request.interfaces';
 import { JoinRequestService } from './../../services/join-request-service/join-request.service';
 import { UserState } from 'src/app/root-states/user.state';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
@@ -7,8 +7,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { User, UserPagedResponse } from 'src/app/model/user.interfaces';
 import { Pageable } from 'src/app/model/interfaces';
-import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-team-profile',

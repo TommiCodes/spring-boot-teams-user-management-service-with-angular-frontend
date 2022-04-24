@@ -1,3 +1,4 @@
+import { UserIsTeamAdminGuard } from './../guards/user-is-team-admin-guard/user-is-team-admin.guard';
 import { TeamJoinRequestsPageComponent } from './pages/team-join-requests-page/team-join-requests-page.component';
 import { TeamJoinRequestsResolver } from './resolvers/team-join-requests-resolver/team-join-requests.resolver';
 import { TeamMembersResolver } from './resolvers/team-members-resolver/team-members.resolver';
@@ -55,11 +56,10 @@ const routes: Routes = [
         }
       },
       {
-        // TODO: Refactor to /admin
-        // TODO: Check if user is admin for team guard
-        path: 'teams/:id/join-requests',
+        path: 'teams/:id/admin',
         component: TeamJoinRequestsPageComponent,
         runGuardsAndResolvers: 'pathParamsChange',
+        canActivate: [UserIsTeamAdminGuard],
         resolve: {
           team: TeamResolver,
           joinRequests: TeamJoinRequestsResolver

@@ -12,7 +12,7 @@ import { snackBarConf } from 'src/app/model/consts';
 })
 export class JoinRequestService {
 
-  constructor(private userState: UserState, private http: HttpClient, private snack: MatSnackBar) {}
+  constructor(private userState: UserState, private http: HttpClient, private snack: MatSnackBar) { }
 
   sendJoinRequest(teamToJoin: number): Observable<NewJoinRequest | unknown> {
     const joinRequest: NewJoinRequest = {
@@ -21,7 +21,7 @@ export class JoinRequestService {
 
     return this.http.post<NewJoinRequest>(`/api/teams/${teamToJoin}/send-join-request`, joinRequest).pipe(
       catchError((error) => {
-        if(error.status === 409) {
+        if (error.status === 409) {
           this.snack.open('Open Request to this team already exists', 'Close', snackBarConf);
         }
         return error;
@@ -29,7 +29,7 @@ export class JoinRequestService {
     );
   }
 
-  handleJoinRequest(joinRequest: JoinRequest ,updateRequest: UpdateJoinTeamRequest): Observable<string> {
+  handleJoinRequest(joinRequest: JoinRequest, updateRequest: UpdateJoinTeamRequest): Observable<string> {
     return this.http.put<string>(`/api/join-requests/${joinRequest.id}`, updateRequest);
   }
 
@@ -40,7 +40,7 @@ export class JoinRequestService {
     // Add projection param, so that Spring will return the projection, so that we can use the user and team object for the reuqest
     params = params.set('projection', 'details');
 
-    return this.http.get<JoinRequestPageResponse>(`/api/teams/${teamId}/join-requests`, {params});
+    return this.http.get<JoinRequestPageResponse>(`/api/teams/${teamId}/join-requests`, { params });
   }
 
 }
