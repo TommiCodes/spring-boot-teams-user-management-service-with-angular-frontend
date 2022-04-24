@@ -1,0 +1,26 @@
+<div class="profile-wrapper">
+
+  <mat-tab-group>
+    <mat-tab>
+      <!-- Tab Header -->
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">group_add</mat-icon>
+        Manage Join Requests
+      </ng-template>
+      <!-- Tab Content -->
+      <div style="padding-top: 30px;">
+        <app-team-join-requests [joinRequests]="teamJoinRequests$ | async" [team]="team$ | async">
+        </app-team-join-requests>
+      </div>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">group</mat-icon>
+        Manage Team Members
+      </ng-template>
+      Content 2
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

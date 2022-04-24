@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamJoinRequestsPageComponent } from './team-join-requests-page.component';
+import { TeamAdminPageComponent } from './team-join-requests-page.component';
 
 describe('TeamJoinRequestsPageComponent', () => {
-  let component: TeamJoinRequestsPageComponent;
-  let fixture: ComponentFixture<TeamJoinRequestsPageComponent>;
+  let component: TeamAdminPageComponent;
+  let fixture: ComponentFixture<TeamAdminPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TeamJoinRequestsPageComponent ]
+      declarations: [ TeamAdminPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TeamJoinRequestsPageComponent);
+    fixture = TestBed.createComponent(TeamAdminPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

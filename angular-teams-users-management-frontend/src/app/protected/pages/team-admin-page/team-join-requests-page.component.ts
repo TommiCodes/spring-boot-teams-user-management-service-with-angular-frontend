@@ -1,16 +1,16 @@
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { JoinRequestPageResponse } from './../../../model/join-request.interfaces';
+import { JoinRequestPageResponse } from '../../../model/join-request.interfaces';
 import { Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Team } from 'src/app/model/team.interfaces';
 import { Pageable } from 'src/app/model/interfaces';
 
 @Component({
-  selector: 'app-team-join-requests-page',
-  templateUrl: './team-join-requests-page.component.html',
-  styleUrls: ['./team-join-requests-page.component.scss']
+  selector: 'app-team-admin-page',
+  templateUrl: './team-admin-page.component.html',
+  styleUrls: ['./team-admin-page.component.scss']
 })
-export class TeamJoinRequestsPageComponent {
+export class TeamAdminPageComponent {
 
   teamJoinRequests$: Observable<JoinRequestPageResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['joinRequests']));
   team$: Observable<Team> = this.activatedRoute.data.pipe(map((data: Data) => data['team']));

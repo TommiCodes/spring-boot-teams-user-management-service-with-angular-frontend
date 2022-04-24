@@ -21,8 +21,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TeamProfilePageComponent } from './pages/team-profile-page/team-profile-page.component';
 import { TeamProfileComponent } from './components/team-profile/team-profile.component';
-import { TeamJoinRequestsPageComponent } from './pages/team-join-requests-page/team-join-requests-page.component';
+import { TeamAdminPageComponent } from './pages/team-admin-page/team-join-requests-page.component';
 import { TeamJoinRequestsComponent } from './components/team-join-requests/team-join-requests.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { TeamJoinRequestsComponent } from './components/team-join-requests/team-
     UpdateProfileComponent,
     TeamProfilePageComponent,
     TeamProfileComponent,
-    TeamJoinRequestsPageComponent,
+    TeamAdminPageComponent,
     TeamJoinRequestsComponent,
   ],
   imports: [
@@ -53,7 +54,8 @@ import { TeamJoinRequestsComponent } from './components/team-join-requests/team-
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule
   ],
 })
 export class ProtectedModule { }
