@@ -2,6 +2,7 @@ package com.usermanagement.service;
 
 import com.usermanagement.model.*;
 import com.usermanagement.model.enums.JoinStatus;
+import com.usermanagement.model.enums.Roles;
 import com.usermanagement.repository.JoinRequestRepository;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.requests.UpdateJoinTeamRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -30,8 +32,8 @@ public class JoinRequestService {
     public JoinRequest save(Long teamId, Long userId) {
         User user = userService.findById(userId);
         Team team = teamService.findById(teamId);
-        Role role = roleRepository.getById(1L);
-
+        // The user has the default MEMBER role
+        Role role = roleRepository.findByRole(Roles.MEMBER).orElseThrow();
 
         // build join Request
         JoinRequest joinRequest = JoinRequest.builder()
@@ -41,9 +43,7 @@ public class JoinRequestService {
                 .build();
 
         // Check if user already in team
-        UserTeam userTeam = userTeamService.build(joinRequest.getUser(), joinRequest.getTeam(), role);
-
-        if (user.getTeams().contains(userTeam)) {
+        if (user.getTeams().stream().anyMatch(ut -> Objects.equals(ut.getTeam().getId(), team.getId()))) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already in team");
         }
 

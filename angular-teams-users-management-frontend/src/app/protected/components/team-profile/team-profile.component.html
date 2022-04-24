@@ -3,7 +3,7 @@
     <h1> Team: {{ team?.name }}</h1>
 
     <span>
-      <button mat-button [disabled]="!isTeamAdmin" [routerLink]="'admin'">Administer Team</button>
+      <button mat-button [disabled]="!isTeamAdmin" [routerLink]="'admin'">Manage Team</button>
       <button mat-button (click)="sendJoinRequest()" [disabled]="teamIdsOfCurrentUser.includes(team!.id)">Send Join
         Request</button>
     </span>
