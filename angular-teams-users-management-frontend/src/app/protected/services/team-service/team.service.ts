@@ -1,3 +1,4 @@
+import { User } from 'src/app/model/user.interfaces';
 import { Team } from './../../../model/team.interfaces';
 import { Pageable } from './../../../model/interfaces';
 import { Observable } from 'rxjs';
@@ -29,6 +30,10 @@ export class TeamService {
 
   getTeamById(id: number): Observable<Team>{
     return this.http.get<Team>(`/api/teams/${id}`);
+  }
+
+  removeUserFromTeam(team: Team, user: User): Observable<string> {
+    return this.http.post<string>(`/api/teams/${team.id}/users/${user.id}/leave`, {});
   }
 
   getTeamMembersByTeamId(id: number, pageable: Pageable): Observable<UserTeamPagedResponse> {

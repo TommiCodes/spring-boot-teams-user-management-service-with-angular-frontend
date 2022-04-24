@@ -76,6 +76,8 @@ public class UserService {
         Team team = teamService.findById(teamId);
         User user = findById(userId);
 
+        // TODO: Check if user is last ADMIN and if yes, then throw()
+
         UserTeamKey userTeamKey = UserTeamKey.builder()
                 .teamId(team.getId())
                 .userId(user.getId())

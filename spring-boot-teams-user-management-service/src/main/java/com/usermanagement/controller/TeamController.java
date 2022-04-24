@@ -50,12 +50,11 @@ public class TeamController {
         return ResponseEntity.ok(assembler.toModel(team));
     }
 
-    @PostMapping("/teams/{id}/leave")
-    public ResponseEntity<?> leaveTeam(@PathVariable Long id) {
-        // Get the "subject" from the security context holder (it's the id as string in our case)
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+    @PreAuthorize("isTeamAdmin(#id)")
+    @PostMapping("/teams/{id}/users/{userId}/leave")
+    public ResponseEntity<?> leaveTeam(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
         // get the user by id (the user who wants to create the team), so he will get admin rights for the team
-        User user = userService.findById(Long.parseLong(userId, 10));
+        User user = userService.findById(userId);
         Team team = teamService.findById(id);
 
         userService.removeTeamFromUser(team.getId(), user.getId());

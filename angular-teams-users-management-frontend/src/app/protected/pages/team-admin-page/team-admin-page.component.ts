@@ -1,3 +1,4 @@
+import { TeamService } from './../../services/team-service/team.service';
 import { UserTeamPagedResponse } from './../../../model/user-team.interfaces';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { JoinRequestPageResponse } from '../../../model/join-request.interfaces';
@@ -17,7 +18,7 @@ export class TeamAdminPageComponent {
   team$: Observable<Team> = this.activatedRoute.data.pipe(map((data: Data) => data['team']));
   teamMembers$: Observable<UserTeamPagedResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['teamMembers']));
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private teamService: TeamService) { }
 
   paginate(pageable: Pageable) {
     // If the query Params change, then our resolver will run again and load the new Team Members
