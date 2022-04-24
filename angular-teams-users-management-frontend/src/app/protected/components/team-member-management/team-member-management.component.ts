@@ -1,3 +1,6 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TeamMemberEditDialogComponent } from './../team-member-edit-dialog/team-member-edit-dialog.component';
+import { Role } from './../../../model/interfaces';
 import { Router } from '@angular/router';
 import { TeamService } from './../../services/team-service/team.service';
 import { outputAst } from '@angular/compiler';
@@ -7,7 +10,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Pageable } from 'src/app/model/interfaces';
 import { Team } from 'src/app/model/team.interfaces';
 import { UserTeam, UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
-import { tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { snackBarConf } from 'src/app/model/consts';
 
 @Component({
   selector: 'app-team-member-management',
@@ -24,7 +29,9 @@ export class TeamMemberManagementComponent {
   membersDataSource: MatTableDataSource<UserTeam> = new MatTableDataSource<UserTeam>();
   membersDisplayedCols: string[] = ['id', 'email', 'firstname', 'lastname', 'role', 'actions'];
 
-  constructor(private teamService: TeamService, private router: Router) { }
+  roleList: Role[] = ['MEMBER', 'ADMIN'];
+
+  constructor(private teamService: TeamService, private router: Router, private dialog: MatDialog, private snack: MatSnackBar) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['teamMembers'].currentValue) {
@@ -43,6 +50,22 @@ export class TeamMemberManagementComponent {
     this.teamService.removeUserFromTeam(this.team!, userTeam.user).pipe(
       tap(() => this.router.navigate([]))
     ).subscribe();
+  }
+
+  openDialog(userTeam: UserTeam) {
+    const dialogRef = this.dialog.open(TeamMemberEditDialogComponent, {
+      width: '250px',
+      data: { userTeam: userTeam },
+    });
+
+    dialogRef.afterClosed().pipe(
+      switchMap((newRole: Role) => this.teamService.updateRoleOfUser(newRole, this.team!, userTeam.user).pipe(
+        tap(() => this.snack.open('User Role was updatet', 'Close', snackBarConf))
+      ))
+    ).subscribe(result => {
+      console.log('The dialog was closed');
+    });
+
   }
 
 }

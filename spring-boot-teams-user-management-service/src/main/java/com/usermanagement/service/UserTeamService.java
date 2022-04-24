@@ -36,8 +36,8 @@ public class UserTeamService {
     }
 
     // save a user to a team
-    public void save(UserTeam userTeam) {
-        this.userTeamRepository.save(userTeam);
+    public UserTeam save(UserTeam userTeam) {
+        return this.userTeamRepository.save(userTeam);
     }
 
     // remove a user from a team

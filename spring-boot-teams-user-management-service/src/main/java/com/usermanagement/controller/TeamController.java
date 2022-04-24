@@ -1,10 +1,9 @@
 package com.usermanagement.controller;
 
-import com.usermanagement.model.JoinRequest;
-import com.usermanagement.model.Team;
-import com.usermanagement.model.User;
-import com.usermanagement.model.UserTeam;
+import com.usermanagement.model.*;
+import com.usermanagement.model.enums.Roles;
 import com.usermanagement.requests.CreateTeamRequest;
+import com.usermanagement.requests.UpdateRoleRequest;
 import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
@@ -60,6 +59,14 @@ public class TeamController {
         userService.removeTeamFromUser(team.getId(), user.getId());
         return ResponseEntity.ok("User left team");
     }
+
+    @PreAuthorize("isTeamAdmin(#teamId)")
+    @PutMapping("/teams/{teamId}/users/{userId}/update-role")
+    public ResponseEntity<?> updateRoleOfUser(@PathVariable("teamId") Long teamId, @PathVariable("userId") Long userId, @RequestBody UpdateRoleRequest role) {
+        UserTeam userTeam = teamService.updateRoleOfUser(teamId, userId, role.getRole());
+        return ResponseEntity.ok(userTeam);
+    }
+
 
     @GetMapping("/teams/{id}/users")
     public ResponseEntity<?> findAllUsersForTeam(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {

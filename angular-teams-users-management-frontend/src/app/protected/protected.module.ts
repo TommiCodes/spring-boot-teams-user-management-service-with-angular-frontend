@@ -25,6 +25,9 @@ import { TeamAdminPageComponent } from './pages/team-admin-page/team-admin-page.
 import { TeamJoinRequestsComponent } from './components/team-join-requests/team-join-requests.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { TeamMemberManagementComponent } from './components/team-member-management/team-member-management.component';
+import { MatSelectModule } from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
+import { TeamMemberEditDialogComponent } from './components/team-member-edit-dialog/team-member-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import { TeamMemberManagementComponent } from './components/team-member-manageme
     TeamAdminPageComponent,
     TeamJoinRequestsComponent,
     TeamMemberManagementComponent,
+    TeamMemberEditDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +61,9 @@ import { TeamMemberManagementComponent } from './components/team-member-manageme
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule,
+    MatDialogModule
   ],
 })
 export class ProtectedModule { }

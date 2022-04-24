@@ -1,9 +1,7 @@
 package com.usermanagement.service;
 
-import com.usermanagement.model.Role;
-import com.usermanagement.model.Team;
-import com.usermanagement.model.User;
-import com.usermanagement.model.UserTeam;
+import com.usermanagement.model.*;
+import com.usermanagement.model.enums.Roles;
 import com.usermanagement.model.specs.TeamSpecs;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.TeamRepository;
@@ -39,6 +37,23 @@ public class TeamService {
         userTeamService.save(userTeam);
     }
 
+    public UserTeam updateRoleOfUser(Long teamId, Long userId, Roles r) {
+        UserTeamKey userTeamKey = UserTeamKey.builder()
+                .userId(userId)
+                .teamId(teamId)
+                .build();
+
+        // TODO: Check that at least one ADMIN is present
+
+        UserTeam userTeam = userTeamService.findById(userTeamKey);
+
+        Role role = roleRepository.findByRole(r).orElseThrow();
+
+        userTeam.setRole(role);
+
+        return userTeamService.save(userTeam);
+    }
+
     // find all teams - paged
     // TODO: enrich with Specifications
     public Page<Team> findAll(Pageable pageable) {
@@ -51,7 +66,7 @@ public class TeamService {
 
     // find a team by id
     public Team findById(Long id) {
-        return teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Not fround"));
+        return teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
     }
 
 

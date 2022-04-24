@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Edit User {{data.userTeam.user.username}}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Update Role</mat-label>
+    <mat-select (selectionChange)="updateRole($event.value)">
+      <mat-option *ngFor="let role of this.roles" [value]="role">
+        {{role}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Abort</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="this.role">Update</button>
+</div>
