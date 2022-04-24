@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamAdminPageComponent } from './team-join-requests-page.component';
+import { TeamAdminPageComponent } from './team-admin-page.component';
 
 describe('TeamJoinRequestsPageComponent', () => {
   let component: TeamAdminPageComponent;

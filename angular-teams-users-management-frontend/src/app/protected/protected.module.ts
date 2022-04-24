@@ -21,9 +21,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TeamProfilePageComponent } from './pages/team-profile-page/team-profile-page.component';
 import { TeamProfileComponent } from './components/team-profile/team-profile.component';
-import { TeamAdminPageComponent } from './pages/team-admin-page/team-join-requests-page.component';
+import { TeamAdminPageComponent } from './pages/team-admin-page/team-admin-page.component';
 import { TeamJoinRequestsComponent } from './components/team-join-requests/team-join-requests.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { TeamMemberManagementComponent } from './components/team-member-management/team-member-management.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     TeamProfileComponent,
     TeamAdminPageComponent,
     TeamJoinRequestsComponent,
+    TeamMemberManagementComponent,
   ],
   imports: [
     CommonModule,

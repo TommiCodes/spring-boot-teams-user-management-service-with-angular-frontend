@@ -7,15 +7,16 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TeamMembersResolver implements Resolve<UserPagedResponse> {
+export class TeamMembersResolver implements Resolve<UserTeamPagedResponse> {
 
   constructor(private teamsService: TeamService) { }
 
-  resolve(route: ActivatedRouteSnapshot): Observable<UserPagedResponse> {
+  resolve(route: ActivatedRouteSnapshot): Observable<UserTeamPagedResponse> {
     const pageSize: number = route.queryParamMap.get('pageSize') === null ? 20 : Number(route.queryParamMap.get('pageSize'));
     const pageNumber: number = route.queryParamMap.get('pageNumber') === null ? 0 : Number(route.queryParamMap.get('pageNumber'));
     const teamId = route.paramMap.get('id');

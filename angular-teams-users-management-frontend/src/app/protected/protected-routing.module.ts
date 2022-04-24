@@ -1,5 +1,5 @@
 import { UserIsTeamAdminGuard } from './../guards/user-is-team-admin-guard/user-is-team-admin.guard';
-import { TeamAdminPageComponent } from './pages/team-admin-page/team-join-requests-page.component';
+import { TeamAdminPageComponent } from './pages/team-admin-page/team-admin-page.component';
 import { TeamJoinRequestsResolver } from './resolvers/team-join-requests-resolver/team-join-requests.resolver';
 import { TeamMembersResolver } from './resolvers/team-members-resolver/team-members.resolver';
 import { TeamResolver } from './resolvers/team-resolver/team.resolver';
@@ -62,7 +62,8 @@ const routes: Routes = [
         canActivate: [UserIsTeamAdminGuard],
         resolve: {
           team: TeamResolver,
-          joinRequests: TeamJoinRequestsResolver
+          joinRequests: TeamJoinRequestsResolver,
+          teamMembers: TeamMembersResolver
         }
       },
       {

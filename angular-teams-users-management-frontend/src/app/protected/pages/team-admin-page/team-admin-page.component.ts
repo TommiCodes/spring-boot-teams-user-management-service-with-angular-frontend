@@ -1,6 +1,7 @@
+import { UserTeamPagedResponse } from './../../../model/user-team.interfaces';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { JoinRequestPageResponse } from '../../../model/join-request.interfaces';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Team } from 'src/app/model/team.interfaces';
 import { Pageable } from 'src/app/model/interfaces';
@@ -14,6 +15,7 @@ export class TeamAdminPageComponent {
 
   teamJoinRequests$: Observable<JoinRequestPageResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['joinRequests']));
   team$: Observable<Team> = this.activatedRoute.data.pipe(map((data: Data) => data['team']));
+  teamMembers$: Observable<UserTeamPagedResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['teamMembers']));
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 

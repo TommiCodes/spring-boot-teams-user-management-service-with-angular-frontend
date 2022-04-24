@@ -19,7 +19,9 @@
         <mat-icon class="example-tab-icon">group</mat-icon>
         Manage Team Members
       </ng-template>
-      Content 2
+      <div style="padding-top: 30px;">
+        <app-team-member-management [team]="team$ | async" [teamMembers]="teamMembers$ | async"></app-team-member-management>
+      </div>
     </mat-tab>
 
   </mat-tab-group>

@@ -3,6 +3,7 @@ package com.usermanagement.controller;
 import com.usermanagement.model.JoinRequest;
 import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
+import com.usermanagement.model.UserTeam;
 import com.usermanagement.requests.CreateTeamRequest;
 import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
@@ -62,9 +63,9 @@ public class TeamController {
     }
 
     @GetMapping("/teams/{id}/users")
-    public ResponseEntity<?> findAllUsersForTeam(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler assembler) {
-        Page<User> userPage = teamService.findAllUsersForTeam(id, pageable);
-        return ResponseEntity.ok(assembler.toModel(userPage));
+    public ResponseEntity<?> findAllUsersForTeam(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
+        Page<UserTeam> userPage = teamService.findAllUsersForTeam(id, pageable);
+        return ResponseEntity.ok(pagedResourcesAssembler.toModel(userPage, persistentEntityResourceAssembler));
     }
 
     @PostMapping("/teams/{id}/send-join-request")

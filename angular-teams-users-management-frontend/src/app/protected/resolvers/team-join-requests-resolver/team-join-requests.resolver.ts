@@ -26,6 +26,6 @@ export class TeamJoinRequestsResolver implements Resolve<JoinRequestPageResponse
       size: pageSize
     };
 
-    return this.joinRequestService.getJoinRequestsByTeamId(Number(teamId), pageable).pipe(tap(a => console.log(a)));
+    return this.joinRequestService.getJoinRequestsByTeamId(Number(teamId), pageable);
   }
 }

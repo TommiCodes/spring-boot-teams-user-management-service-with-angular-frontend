@@ -1,3 +1,4 @@
+import { UserTeam } from './../../../model/user-team.interfaces';
 import { JoinRequestPageResponse as JoinRequestPagedResponse } from './../../../model/join-request.interfaces';
 import { JoinRequestService } from './../../services/join-request-service/join-request.service';
 import { UserState } from 'src/app/root-states/user.state';
@@ -7,6 +8,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { User, UserPagedResponse } from 'src/app/model/user.interfaces';
 import { Pageable } from 'src/app/model/interfaces';
+import { UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
 
 @Component({
   selector: 'app-team-profile',
@@ -17,7 +19,7 @@ export class TeamProfileComponent implements OnInit, OnChanges{
 
   @Input() team!: Team | null;
 
-  @Input() members!: UserPagedResponse | null;
+  @Input() members!: UserTeamPagedResponse | null;
   @Output() paginateMembers: EventEmitter<Pageable> = new EventEmitter<Pageable>();
 
   @Input() joinRequests!: JoinRequestPagedResponse;
@@ -27,7 +29,7 @@ export class TeamProfileComponent implements OnInit, OnChanges{
   teamsAuths = this.userState.teamPrivs; 
   isTeamAdmin: boolean = false;
   membersDisplayedCols: string[] = ['id', 'email', 'firstname', 'lastname'];
-  membersDataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
+  membersDataSource: MatTableDataSource<UserTeam> = new MatTableDataSource<UserTeam>();
 
   constructor(private userState: UserState, private joinTeamService: JoinRequestService) { }
 
@@ -37,7 +39,7 @@ export class TeamProfileComponent implements OnInit, OnChanges{
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['members'].currentValue) {
-      this.membersDataSource.data = this.members!._embedded.users;
+      this.membersDataSource.data = this.members!._embedded.userTeams;
     }
   }
 

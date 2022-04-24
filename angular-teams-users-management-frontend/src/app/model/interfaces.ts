@@ -8,6 +8,10 @@ export interface AccessTokenPayload {
   exp: number
 }
 
+// The ADMIN Role has the privileges ADMIN & MEMBER
+// THE MEMBER Role has the privilege MEMBER
+
+export type Role = 'ADMIN' | 'MEMBER';
 export type Privilege = 'MEMBER' | 'ADMIN';
 
 export interface Auth {

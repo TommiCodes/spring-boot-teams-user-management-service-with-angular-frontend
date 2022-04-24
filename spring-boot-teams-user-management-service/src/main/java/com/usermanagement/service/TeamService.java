@@ -56,7 +56,7 @@ public class TeamService {
 
 
     // find All Users for a team by team.id - paged
-    public Page<User> findAllUsersForTeam(Long teamId, Pageable pageable) {
+    public Page<UserTeam> findAllUsersForTeam(Long teamId, Pageable pageable) {
         Team team = findById(teamId);
 
         // find the paged UserTeams
@@ -64,11 +64,8 @@ public class TeamService {
         // get the pageable
         Pageable userTeamPageable = userTeamPage.getPageable();
 
-        // get the user from the UserTeamsPage
-        List<User> userList = userTeamPage.stream().map(UserTeam::getUser).toList();
-
         // make a Page<Team> and return it
-        return new PageImpl<>(userList, userTeamPageable, userList.size());
+        return userTeamPage;
     }
 
 }

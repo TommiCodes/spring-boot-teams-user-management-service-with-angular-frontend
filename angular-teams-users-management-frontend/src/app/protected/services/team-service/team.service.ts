@@ -1,12 +1,12 @@
-import { UserPagedResponse } from './../../../model/user.interfaces';
 import { Team } from './../../../model/team.interfaces';
-import { Page, Pageable } from './../../../model/interfaces';
+import { Pageable } from './../../../model/interfaces';
 import { Observable } from 'rxjs';
 import { UserState } from 'src/app/root-states/user.state';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TeamsPagedResponse } from 'src/app/model/team.interfaces';
+import { UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -31,12 +31,14 @@ export class TeamService {
     return this.http.get<Team>(`/api/teams/${id}`);
   }
 
-  getTeamMembersByTeamId(id: number, pageable: Pageable): Observable<UserPagedResponse> {
+  getTeamMembersByTeamId(id: number, pageable: Pageable): Observable<UserTeamPagedResponse> {
     let params = new HttpParams();
     params = params.set('page', pageable.number);
     params = params.set('sort', pageable.size);
+    
+    params = params.set('projection', 'users');
 
-    return this.http.get<UserPagedResponse>(`/api/teams/${id}/users`, {params});
+    return this.http.get<UserTeamPagedResponse>(`/api/teams/${id}/users`, {params});
   }
 
   getAllTeams(pageable: Pageable, teamNameSearchString?: string | null): Observable<TeamsPagedResponse> {
