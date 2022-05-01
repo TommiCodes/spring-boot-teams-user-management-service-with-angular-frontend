@@ -1,10 +1,11 @@
+import { Pageable } from 'src/app/model/interfaces';
 import { snackBarConf } from 'src/app/model/consts';
 import { UserState } from './../../../root-states/user.state';
 import { Observable, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from 'src/app/model/user.interfaces';
+import { User, UserPagedResponse } from 'src/app/model/user.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,19 @@ export class UserService {
     return this.http.put<User>(`/api/users/${this.userState.id}`, updateUser).pipe(
       tap(() => this.snackbar.open('Update Profile Successfull', 'Close', snackBarConf))
     );
+  }
+
+  findAllUsers(pageable: Pageable, usernameSearchString?: string | null): Observable<UserPagedResponse> {
+    let params = new HttpParams();
+
+    params = params.set('page', pageable.number);
+    params = params.set('sort', pageable.size);
+
+    if (usernameSearchString !== null && usernameSearchString !== undefined) {
+      params = params.set('username', usernameSearchString);
+    }
+
+    return this.http.get<UserPagedResponse>(`/api/users`, {params});
   }
 
 }

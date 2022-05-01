@@ -1,0 +1,5 @@
+<div style="padding: 30px;">
+  <h2>All Users</h2>
+  <app-users [usersResp]="this.users$|async" (paginate)="this.onPagination($event)" (search)="onSearchUsername($event)">
+  </app-users>
+</div>

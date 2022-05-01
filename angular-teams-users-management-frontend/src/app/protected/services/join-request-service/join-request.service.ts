@@ -2,7 +2,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Pageable } from 'src/app/model/interfaces';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { NewJoinRequest, JoinRequestPageResponse, UpdateJoinTeamRequest, JoinRequest } from './../../../model/join-request.interfaces';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 import { UserState } from 'src/app/root-states/user.state';
 import { Injectable } from '@angular/core';
 import { snackBarConf } from 'src/app/model/consts';
@@ -20,6 +20,7 @@ export class JoinRequestService {
     };
 
     return this.http.post<NewJoinRequest>(`/api/teams/${teamToJoin}/send-join-request`, joinRequest).pipe(
+      tap(() => this.snack.open('Join Request sent', 'Close', snackBarConf)),
       catchError((error) => {
         if (error.status === 409) {
           this.snack.open('Open Request to this team already exists', 'Close', snackBarConf);

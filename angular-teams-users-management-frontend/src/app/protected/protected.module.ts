@@ -28,6 +28,8 @@ import { TeamMemberManagementComponent } from './components/team-member-manageme
 import { MatSelectModule } from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import { TeamMemberEditDialogComponent } from './components/team-member-edit-dialog/team-member-edit-dialog.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { TeamMemberEditDialogComponent } from './components/team-member-edit-dia
     TeamJoinRequestsComponent,
     TeamMemberManagementComponent,
     TeamMemberEditDialogComponent,
+    UsersPageComponent,
+    UsersComponent,
   ],
   imports: [
     CommonModule,

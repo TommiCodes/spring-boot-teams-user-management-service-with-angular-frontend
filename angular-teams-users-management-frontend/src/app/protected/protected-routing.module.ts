@@ -1,3 +1,5 @@
+import { UsersResolver } from './resolvers/users-resolver/users.resolver';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { UserIsTeamAdminGuard } from './../guards/user-is-team-admin-guard/user-is-team-admin.guard';
 import { TeamAdminPageComponent } from './pages/team-admin-page/team-admin-page.component';
 import { TeamJoinRequestsResolver } from './resolvers/team-join-requests-resolver/team-join-requests.resolver';
@@ -64,6 +66,14 @@ const routes: Routes = [
           team: TeamResolver,
           joinRequests: TeamJoinRequestsResolver,
           teamMembers: TeamMembersResolver
+        }
+      },
+      {
+        path: 'users',
+        component: UsersPageComponent,
+        runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
+        resolve: {
+          users: UsersResolver
         }
       },
       {
