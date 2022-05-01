@@ -21,10 +21,9 @@ public class UserController {
 
     private final UserService userService;
 
-    // TODO: add Specifications
     @GetMapping("/users")
-    public ResponseEntity<?> findAll(Pageable pageable, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
-        Page<User> usersPage = userService.findAll(pageable);
+    public ResponseEntity<?> findAll(Pageable pageable, @RequestParam(required = false) String username, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
+        Page<User> usersPage = userService.searchAll(pageable, username);
         return ResponseEntity.ok(pagedResourcesAssembler.toModel(usersPage, persistentEntityResourceAssembler));
     }
 
@@ -34,6 +33,7 @@ public class UserController {
         User user = userService.create(createUserRequest);
         return ResponseEntity.ok(user);
     }
+
     @GetMapping("/users/{id}")
     public ResponseEntity<?> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {
         User user = this.userService.findById(id);

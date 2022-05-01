@@ -8,12 +8,10 @@ import com.usermanagement.repository.TeamRepository;
 import com.usermanagement.requests.CreateTeamRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -32,7 +30,7 @@ public class TeamService {
 
         // Role id = 1 is always the ADMIN Role
         // Since the Creator of the Team is the owner he gets the admin role
-        Role role = roleRepository.getById(1L);
+        Role role = roleRepository.findById(1L).orElseThrow(() -> new RuntimeException("Not foundF"));
         UserTeam userTeam = userTeamService.build(admin, team, role);
         userTeamService.save(userTeam);
     }

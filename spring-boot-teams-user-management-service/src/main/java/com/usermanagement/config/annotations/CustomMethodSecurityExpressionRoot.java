@@ -2,6 +2,8 @@ package com.usermanagement.config.annotations;
 
 import com.usermanagement.model.*;
 import com.usermanagement.model.enums.Privileges;
+import com.usermanagement.repository.JoinRequestRepository;
+import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserTeamService;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
@@ -11,19 +13,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
-
 public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
 
     private final TeamService teamService;
     private final UserTeamService userTeamService;
+    private final JoinRequestRepository joinRequestRepository;
+
     private Object filterObject;
     private Object returnObject;
     private Object target;
 
-    public CustomMethodSecurityExpressionRoot(Authentication authentication, TeamService teamService, UserTeamService userTeamService) {
+    public CustomMethodSecurityExpressionRoot(Authentication authentication, TeamService teamService, UserTeamService userTeamService, JoinRequestRepository joinRequestRepository) {
         super(authentication);
         this.teamService = teamService;
         this.userTeamService = userTeamService;
+        this.joinRequestRepository = joinRequestRepository;
     }
     @Override
     public void setFilterObject(Object filterObject) {
@@ -70,6 +74,26 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
     public boolean isOwnProfile(Long userId) {
         UserDetails authUser = (UserDetails) this.getPrincipal();
         return Long.parseLong(authUser.getUsername()) == userId;
+    }
+
+    /* Checks if the user is the admin of the team, that is linked in the JoinRequest*/
+    public boolean isTeamAdminOfJoinRequest(Long joinRequestId) {
+        JoinRequest joinRequest = joinRequestRepository.findById(joinRequestId).orElseThrow(()-> new RuntimeException("not found"));
+        UserDetails authUser = (UserDetails) this.getPrincipal();
+
+        UserTeamKey userTeamKey = UserTeamKey.builder()
+                .teamId(joinRequest.getTeam().getId())
+                .userId(Long.parseLong(authUser.getUsername()))
+                .build();
+
+        // if no userTeam is found, then an exception gets thrown
+        UserTeam userTeam = userTeamService.findById(userTeamKey);
+
+        // if the user is not admin of the team of the joinRequest, then deny access
+        // if user is in the team and is admin, then return true
+        List<Privileges> teamPrivilegesList = this.getPrivileges(joinRequest.getTeam().getId());
+
+        return teamPrivilegesList.contains(Privileges.ADMIN);
     }
 
     private List<Privileges> getPrivileges(Long teamId) {

@@ -23,7 +23,6 @@ public class JoinRequestService {
     // Services
     private final UserService userService;
     private final TeamService teamService;
-    private final UserTeamService userTeamService;
     // Repositories
     private final RoleRepository roleRepository;
     private final JoinRequestRepository joinRequestRepository;
@@ -63,9 +62,13 @@ public class JoinRequestService {
         return joinRequestRepository.findAllByTeam(team, pageable);
     }
 
+    public JoinRequest findById(Long id) {
+        return joinRequestRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
+    }
+
     // handle a join request
     public JoinRequest handle(Long id, UpdateJoinTeamRequest updateJoinTeamRequest) {
-        JoinRequest joinRequest = joinRequestRepository.getById(id);
+        JoinRequest joinRequest = findById(id);
 
         // if joinRequest in Database is not INQUIRY, then throw an Exc
         if (joinRequest.getJoinStatus() != JoinStatus.INQUIRY) {

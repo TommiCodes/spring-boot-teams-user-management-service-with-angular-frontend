@@ -18,7 +18,8 @@ public class JoinRequestController {
 
     private final JoinRequestService joinRequestService;
 
-    // TODO: Add Custom Security Expression where is checked if the user is Admin of the team that is handling the request
+    // Add Custom Security Expression where is checked if the user is Admin of the team that is handling the request
+    @PreAuthorize("isTeamAdminOfJoinRequest(#id)")
     @PutMapping("/join-requests/{id}")
     public ResponseEntity<?> handleJoinRequest(@PathVariable("id") Long id, @RequestBody UpdateJoinTeamRequest updateJoinTeamRequest) {
         JoinRequest joinRequest = joinRequestService.handle(id, updateJoinTeamRequest);

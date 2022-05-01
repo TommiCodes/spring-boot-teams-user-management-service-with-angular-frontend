@@ -1,6 +1,7 @@
 package com.usermanagement.service;
 
 import com.usermanagement.model.*;
+import com.usermanagement.model.specs.UserSpecs;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
 import com.usermanagement.requests.CreateUserRequest;
@@ -55,12 +56,15 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    //
+    public Page<User> searchAll(Pageable pageable, String username) {
+        return userRepository.findAll(username != null ? UserSpecs.usernameLike(username) : null, pageable);
+    }
+
     public void addTeamToUser(Long teamId, Long userId) {
         Team team = teamService.findById(teamId);
         User user = findById(userId);
         // Role id = 2 is always the MEMBER Role
-        Role role = roleRepository.getById(2L);
+        Role role = roleRepository.findById(2L).orElseThrow(() -> new RuntimeException("Not found"));
 
         UserTeam userTeam = userTeamService.build(user, team, role);
 
