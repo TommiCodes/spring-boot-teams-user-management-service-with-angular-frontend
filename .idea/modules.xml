@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/spring-boot-teams-user-management-service-with-angular-frontend.iml" filepath="$PROJECT_DIR$/.idea/spring-boot-teams-user-management-service-with-angular-frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-teams-user-management-service/user-teams-management.iml" filepath="$PROJECT_DIR$/spring-boot-teams-user-management-service/user-teams-management.iml" />
+    </modules>
+  </component>
+</project>

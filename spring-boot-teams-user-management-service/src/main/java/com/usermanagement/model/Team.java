@@ -21,6 +21,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "teams")
+@RestResource()
 @EntityListeners(AuditingEntityListener.class)
 public class Team extends RepresentationModel<Team> {
 

@@ -52,12 +52,6 @@ public class TeamService {
         return userTeamService.save(userTeam);
     }
 
-    // find all teams - paged
-    // TODO: enrich with Specifications
-    public Page<Team> findAll(Pageable pageable) {
-        return teamRepository.findAll(pageable);
-    }
-
     public Page<Team> search(Pageable pageable, String name) {
         return teamRepository.findAll(name != null ? TeamSpecs.nameLike(name) : null, pageable);
     }

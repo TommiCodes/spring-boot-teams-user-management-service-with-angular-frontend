@@ -86,20 +86,24 @@ public class JwtTokenProvider {
         }
     }
 
+    /**
+     * Outcome Looks like this, so we can check in the Frontend for team and Privilege: [
+     * {
+     * "teamId": 1,
+     * "privileges": [
+     * "MEMBER",
+     * "ADMIN"
+     * ]
+     * } ...
+     * ]
+     **/
     private List<TeamAuthority> getAuthorities(List<UserTeam> userTeams) {
-        List<TeamAuthority> teamAuthorities = new ArrayList<>();
-
-        for (UserTeam userTeam : userTeams) {
-            teamAuthorities.add(
-                    new TeamAuthority(
-                            userTeam.getTeam().getId(),
-                            userTeam.getRole().getPrivileges().stream()
-                                    .map(Privilege::getPrivilege)
-                                    .collect(Collectors.toList()))
-            );
-        }
-
-        return teamAuthorities;
+        return userTeams.stream()
+                .map(userTeam -> new TeamAuthority(
+                        userTeam.getTeam().getId(),
+                        userTeam.getRole().getPrivileges().stream()
+                                .map(Privilege::getPrivilege)
+                                .collect(Collectors.toList()))).collect(Collectors.toList());
     }
 
 }
