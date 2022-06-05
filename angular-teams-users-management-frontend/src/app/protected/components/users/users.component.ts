@@ -1,7 +1,7 @@
 import { User, UserPagedResponse } from 'src/app/model/user.interfaces';
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { Pageable } from 'src/app/model/interfaces';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
@@ -17,7 +17,7 @@ export class UsersComponent implements OnInit, OnChanges {
   @Output() paginate: EventEmitter<Pageable> = new EventEmitter<Pageable>();
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
-  usernameSearchString = new FormControl();
+  usernameSearchString = new UntypedFormControl();
 
   displayedColumns: string[] = ['id', 'username', 'firstname', 'lastname', 'email'];
   // 'Definite Assignment Assertion' with "<property>!" to tell typescript that this variable will have a value at runtime

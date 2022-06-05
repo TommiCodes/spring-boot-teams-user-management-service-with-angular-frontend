@@ -1,6 +1,6 @@
 import { UserService } from './../../services/user-service/user.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Data, ActivatedRoute } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
 import { User } from 'src/app/model/user.interfaces';
@@ -14,11 +14,11 @@ export class UpdateProfileComponent implements OnInit {
 
   ownProfile$: Observable<User> = this.activatedRoute.data.pipe(map((data: Data) => data['ownProfile']));
 
-  profileForm = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    username: new FormControl(null, [Validators.required]),
-    firstname: new FormControl(null, [Validators.required]),
-    lastname: new FormControl(null, [Validators.required]),
+  profileForm = new UntypedFormGroup({
+    email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+    username: new UntypedFormControl(null, [Validators.required]),
+    firstname: new UntypedFormControl(null, [Validators.required]),
+    lastname: new UntypedFormControl(null, [Validators.required]),
   });
 
   constructor(

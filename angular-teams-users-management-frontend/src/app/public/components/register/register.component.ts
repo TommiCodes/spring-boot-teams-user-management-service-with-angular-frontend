@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { CustomValidators } from '../../helpers/custom-validator';
 import { AuthService } from '../../services/auth-service/auth.service';
@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  registerForm = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    username: new FormControl(null, [Validators.required]),
-    firstname: new FormControl(null, [Validators.required]),
-    lastname: new FormControl(null, [Validators.required]),
-    password: new FormControl(null, [Validators.required]),
-    passwordConfirm: new FormControl(null, [Validators.required])
+  registerForm = new UntypedFormGroup({
+    email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+    username: new UntypedFormControl(null, [Validators.required]),
+    firstname: new UntypedFormControl(null, [Validators.required]),
+    lastname: new UntypedFormControl(null, [Validators.required]),
+    password: new UntypedFormControl(null, [Validators.required]),
+    passwordConfirm: new UntypedFormControl(null, [Validators.required])
   },
     // add custom Validators to the form, to make sure that password and passwordConfirm are equal
     { validators: CustomValidators.passwordsMatching }

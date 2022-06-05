@@ -4,7 +4,7 @@ import { Team } from 'src/app/model/team.interfaces';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs';
 
 
@@ -19,7 +19,7 @@ export class TeamsComponent implements OnInit, OnChanges {
   @Output() paginate: EventEmitter<Pageable> = new EventEmitter<Pageable>();
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
-  searchTeamName = new FormControl();
+  searchTeamName = new UntypedFormControl();
 
   displayedColumns: string[] = ['id', 'name', 'actions'];
   // 'Definite Assignment Assertion' with "<property>!" to tell typescript that this variable will have a value at runtime

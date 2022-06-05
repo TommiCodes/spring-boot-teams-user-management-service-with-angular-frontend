@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { UserTeam } from 'src/app/model/user-team.interfaces';
 import { User } from 'src/app/model/user.interfaces';
 import { Component, Inject } from '@angular/core';
@@ -16,8 +16,8 @@ export interface DialogData {
 })
 export class TeamMemberEditDialogComponent {
 
-  roleForm: FormGroup = new FormGroup({
-    role: new FormControl(this.data.userTeam.role.role)
+  roleForm: UntypedFormGroup = new UntypedFormGroup({
+    role: new UntypedFormControl(this.data.userTeam.role.role)
   })
 
   role: Role | null = null;
