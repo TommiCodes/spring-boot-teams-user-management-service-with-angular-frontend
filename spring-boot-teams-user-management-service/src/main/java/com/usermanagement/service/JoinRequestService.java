@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -28,7 +29,7 @@ public class JoinRequestService {
     private final JoinRequestRepository joinRequestRepository;
 
     // save a joinrequest from a user to a team to the database
-    public JoinRequest save(Long teamId, Long userId) {
+    public void save(Long teamId, Long userId) {
         User user = userService.findById(userId);
         Team team = teamService.findById(teamId);
         // The user has the default MEMBER role
@@ -53,7 +54,7 @@ public class JoinRequestService {
             }
         }
 
-        return joinRequestRepository.save(joinRequest);
+        joinRequestRepository.save(joinRequest);
     }
 
     // find all join Request for a team - paged
@@ -64,6 +65,13 @@ public class JoinRequestService {
 
     public JoinRequest findById(Long id) {
         return joinRequestRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
+    }
+
+    public boolean hasUserOpenJoinRequestForTeam(Long teamId, Long userId) {
+        User user = userService.findById(userId);
+        Team team = teamService.findById(teamId);
+
+        return joinRequestRepository.existsByJoinStatusAndTeamAndUser(JoinStatus.INQUIRY, team, user);
     }
 
     // handle a join request

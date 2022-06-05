@@ -1,14 +1,14 @@
-import { UserTeam } from './../../../model/user-team.interfaces';
+import { UserTeam } from '../../../model/user-team.interfaces';
 import { JoinRequestPageResponse as JoinRequestPagedResponse } from './../../../model/join-request.interfaces';
-import { JoinRequestService } from './../../services/join-request-service/join-request.service';
+import { JoinRequestService } from '../../services/join-request-service/join-request.service';
 import { UserState } from 'src/app/root-states/user.state';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Team } from 'src/app/model/team.interfaces';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { User, UserPagedResponse } from 'src/app/model/user.interfaces';
 import { Pageable } from 'src/app/model/interfaces';
 import { UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
+import {Observable, of, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-team-profile',
@@ -26,15 +26,20 @@ export class TeamProfileComponent implements OnInit, OnChanges{
   @Output() paginateJoinRequests: EventEmitter<Pageable> = new EventEmitter<Pageable>();
 
   teamIdsOfCurrentUser = this.userState.teamIds;
-  teamsAuths = this.userState.teamPrivs; 
+  teamsAuths = this.userState.teamPrivs;
   isTeamAdmin: boolean = false;
   membersDisplayedCols: string[] = ['id', 'email', 'firstname', 'lastname'];
   membersDataSource: MatTableDataSource<UserTeam> = new MatTableDataSource<UserTeam>();
+
+  userHasOpenTeamJoinRequest: boolean = true;
 
   constructor(private userState: UserState, private joinTeamService: JoinRequestService) { }
 
   ngOnInit(): void {
     this.isTeamAdmin = this.calcIsTeamAdmin();
+    this.joinTeamService.checkIfUserHasOpenJoinRequest(this.team!.id).pipe(
+      tap((val: boolean) => this.userHasOpenTeamJoinRequest = val)
+    ).subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -52,7 +57,11 @@ export class TeamProfileComponent implements OnInit, OnChanges{
 
 
   sendJoinRequest() {
-    this.joinTeamService.sendJoinRequest(this.team!.id).subscribe();
+    this.joinTeamService.sendJoinRequest(this.team!.id).pipe(
+      switchMap(() => this.joinTeamService.checkIfUserHasOpenJoinRequest(this.team!.id).pipe(
+        tap((val: boolean) => this.userHasOpenTeamJoinRequest = val)
+      ))
+    ).subscribe();
   }
 
   calcIsTeamAdmin() {

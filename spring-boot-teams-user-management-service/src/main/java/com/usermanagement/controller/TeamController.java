@@ -85,6 +85,16 @@ public class TeamController {
         return ResponseEntity.ok("Join Request created");
     }
 
+    @GetMapping("/teams/{teamId}/join-requests/check-request-open")
+    public ResponseEntity<?> userHasOpenJoinRequestForTeam(
+            @PathVariable("teamId") Long teamId
+    ) {
+        // The user who is checking is always coming from the jwt/the Sprin Userdetails
+        UserDetails auth = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean hasUserOpenJoinRequest = joinRequestService.hasUserOpenJoinRequestForTeam(teamId, Long.parseLong(auth.getUsername()));
+        return ResponseEntity.ok(hasUserOpenJoinRequest);
+    }
+
     // TODO: add Specifications to search for the JoinRequest Status
     // PreAuthorize so that only Team Admins can see the join requests for their team
     @PreAuthorize("isTeamAdmin(#id)")

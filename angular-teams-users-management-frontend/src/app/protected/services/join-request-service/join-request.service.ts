@@ -34,6 +34,10 @@ export class JoinRequestService {
     return this.http.put<string>(`/api/join-requests/${joinRequest.id}`, updateRequest);
   }
 
+  checkIfUserHasOpenJoinRequest(teamId: number): Observable<boolean> {
+    return this.http.get<boolean>(`/api/teams/${teamId}/join-requests/check-request-open`);
+  }
+
   getJoinRequestsByTeamId(teamId: number, pageable: Pageable): Observable<JoinRequestPageResponse> {
     let params = new HttpParams();
     params = params.set('page', pageable.number);
