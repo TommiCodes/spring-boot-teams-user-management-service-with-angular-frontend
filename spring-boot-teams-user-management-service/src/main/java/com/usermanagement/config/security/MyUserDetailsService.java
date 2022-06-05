@@ -1,7 +1,5 @@
 package com.usermanagement.config.security;
 
-import com.usermanagement.model.Privilege;
-import com.usermanagement.model.TeamAuthority;
 import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
 import com.usermanagement.repository.UserRepository;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -45,19 +42,15 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     private List<? extends  GrantedAuthority> getAuthorities(List<UserTeam> userTeamList) {
-        return getGrantedAuthorities(getPrivileges(userTeamList));
+        return getGrantedAuthorities(getUserTeamRole(userTeamList));
     }
 
-    private List<String> getPrivileges(List<UserTeam> userTeams) {
-        List<Privilege> privilegeList = new ArrayList<>();
-        List<String> privilegeStringList = new ArrayList<>();
-        for (UserTeam userTeam : userTeams) {
-            privilegeList.addAll(userTeam.getRole().getPrivileges());
+    private List<String> getUserTeamRole(List<UserTeam> userTeams) {
+        List<String> userTeamRole = new ArrayList<>();
+         for (UserTeam userTeam : userTeams) {
+            userTeamRole.add(String.format("TEAM:%d_ROLE:%s", userTeam.getTeam().getId(), userTeam.getRole().getRole().name()));
         }
-        for(Privilege item : privilegeList) {
-            privilegeStringList.add(item.getPrivilege().name());
-        }
-        return privilegeStringList;
+        return userTeamRole;
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
