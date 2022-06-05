@@ -1,6 +1,7 @@
 package com.usermanagement.config.security;
 
 import com.usermanagement.model.Privilege;
+import com.usermanagement.model.TeamAuthority;
 import com.usermanagement.model.User;
 import com.usermanagement.model.UserTeam;
 import com.usermanagement.repository.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

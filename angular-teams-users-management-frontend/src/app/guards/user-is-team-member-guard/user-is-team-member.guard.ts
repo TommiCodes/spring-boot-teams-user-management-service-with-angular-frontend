@@ -7,7 +7,7 @@ import { UserState } from 'src/app/root-states/user.state';
   providedIn: 'root'
 })
 export class UserIsTeamMemberGuard implements CanActivate {
-  
+
   constructor(private userState: UserState) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
@@ -17,6 +17,7 @@ export class UserIsTeamMemberGuard implements CanActivate {
       // TODO: display Message if false
       return false;
     }
+
     const team = this.userState.teamPrivs.find(t => t.teamId === teamId);
     // TODO: display Message if false
     return team!.privileges.includes('MEMBER');

@@ -1,6 +1,6 @@
-import { JoinRequestService } from './../../services/join-request-service/join-request.service';
+import { JoinRequestService } from '../../services/join-request-service/join-request.service';
 import { JoinRequest, JoinStatus } from 'src/app/model/join-request.interfaces';
-import { JoinRequestPageResponse, UpdateJoinTeamRequest } from './../../../model/join-request.interfaces';
+import { JoinRequestPageResponse, UpdateJoinTeamRequest } from '../../../model/join-request.interfaces';
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { Team } from 'src/app/model/team.interfaces';
 import { Pageable } from 'src/app/model/interfaces';

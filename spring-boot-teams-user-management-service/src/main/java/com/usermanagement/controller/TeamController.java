@@ -1,18 +1,21 @@
 package com.usermanagement.controller;
 
 import com.usermanagement.model.*;
-import com.usermanagement.model.enums.Roles;
 import com.usermanagement.requests.CreateTeamRequest;
 import com.usermanagement.requests.UpdateRoleRequest;
 import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;

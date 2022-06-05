@@ -20,11 +20,13 @@ export class UserIsTeamAdminGuard implements CanActivate {
       this.snack.open(`Missing Persmissions for team, you get redirected to dashboard`, 'Close', snackBarConf);
       return this.router.navigate([state.url, '..']);
     }
+
     const team = this.userState.teamPrivs.find(t => t.teamId === teamId);
     if (!team) {
       this.snack.open(`Missing Persmissions for team, you get redirected to dashboard`, 'Close', snackBarConf);
       return this.router.navigate([state.url, '..']);
     }
+
     return team.privileges.includes('ADMIN');
   }
 
