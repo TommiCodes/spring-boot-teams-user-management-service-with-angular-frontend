@@ -1,6 +1,7 @@
 package com.usermanagement.service;
 
 import com.usermanagement.model.*;
+import com.usermanagement.model.enums.Roles;
 import com.usermanagement.model.specs.UserSpecs;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -76,11 +78,10 @@ public class UserService {
         userTeamService.save(userTeam);
     }
 
-    public void removeTeamFromUser(Long teamId, Long userId) {
+    public void removeUserFromTeam(Long teamId, Long userId) {
         Team team = teamService.findById(teamId);
         User user = findById(userId);
 
-        // TODO: Check if user is last ADMIN and if yes, then throw()
 
         UserTeamKey userTeamKey = UserTeamKey.builder()
                 .teamId(team.getId())
@@ -88,6 +89,15 @@ public class UserService {
                 .build();
 
         UserTeam userTeam = userTeamService.findById(userTeamKey);
+
+        // TODO: Check if user is last ADMIN and if yes, then throw()
+        List<UserTeam> adminList = team.getUsers().stream()
+                .filter(val -> val.getRole().getRole().equals(Roles.ADMIN))
+                .toList();
+
+        if (adminList.size() == 1 && adminList.contains(userTeam)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Last Admin in Team. User can not be removed");
+        }
 
         userTeamService.delete(userTeam);
     }

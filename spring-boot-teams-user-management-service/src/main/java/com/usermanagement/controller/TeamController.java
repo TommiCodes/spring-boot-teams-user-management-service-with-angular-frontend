@@ -7,15 +7,11 @@ import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.PagedModel;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,12 +50,12 @@ public class TeamController {
 
     @PreAuthorize("isTeamAdmin(#id)")
     @PostMapping("/teams/{id}/users/{userId}/leave")
-    public ResponseEntity<?> leaveTeam(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
+    public ResponseEntity<?> removeUserFromTeam(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
         // get the user by id (the user who wants to create the team), so he will get admin rights for the team
         User user = userService.findById(userId);
         Team team = teamService.findById(id);
 
-        userService.removeTeamFromUser(team.getId(), user.getId());
+        userService.removeUserFromTeam(team.getId(), user.getId());
         return ResponseEntity.ok("User left team");
     }
 
