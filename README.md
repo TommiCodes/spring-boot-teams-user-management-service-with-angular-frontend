@@ -1,6 +1,6 @@
 # spring-boot-teams-user-management-service-with-angular-frontend
 
-**Please Remember that this is a hobby project and done in the freetime**
+*Please Remember that this is a hobby project and done in the freetime*
 
 This project aims to show how we could handle the membership of a user in multiple teams, where the user has a ROLE for every Team where he is a member.  
 **A User can be a MEMBER or ADMIN in multiple Teams. The Roles are specific for the USER/TEAM relation.**  
