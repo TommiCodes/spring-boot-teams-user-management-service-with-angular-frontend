@@ -16,6 +16,7 @@ import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs';
 export class TeamsComponent implements OnInit, OnChanges {
 
   @Input() teamsPagedResponse!: TeamsPagedResponse | null;
+
   @Output() paginate: EventEmitter<Pageable> = new EventEmitter<Pageable>();
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
