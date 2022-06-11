@@ -2,7 +2,7 @@ package com.usermanagement.controller;
 
 import com.usermanagement.model.JoinRequest;
 import com.usermanagement.model.enums.JoinStatus;
-import com.usermanagement.requests.UpdateJoinTeamRequest;
+import com.usermanagement.model.requests.UpdateJoinTeamRequest;
 import com.usermanagement.service.JoinRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.BasePathAwareController;

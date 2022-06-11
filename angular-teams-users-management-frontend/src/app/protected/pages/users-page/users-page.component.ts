@@ -1,11 +1,10 @@
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { UserPagedResponse } from 'src/app/model/user.interfaces';
-import { Pageable } from 'src/app/model/interfaces';
+import { Component } from '@angular/core';
+import { UserPagedResponse } from 'src/app/models/user.interfaces';
+import { Pageable } from 'src/app/models/interfaces';
 
 @Component({
-  selector: 'app-users-page',
   templateUrl: './users-page.component.html',
   styleUrls: ['./users-page.component.scss']
 })

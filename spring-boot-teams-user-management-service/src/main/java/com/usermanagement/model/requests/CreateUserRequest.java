@@ -1,4 +1,4 @@
-package com.usermanagement.requests;
+package com.usermanagement.model.requests;
 
 import lombok.Builder;
 import lombok.Data;

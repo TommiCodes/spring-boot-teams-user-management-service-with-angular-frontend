@@ -2,7 +2,7 @@ import { TeamService } from '../../services/team-service/team.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { TeamsPagedResponse } from 'src/app/model/team.interfaces';
+import { TeamsPagedResponse } from 'src/app/models/team.interfaces';
 
 @Injectable({
   providedIn: 'root'

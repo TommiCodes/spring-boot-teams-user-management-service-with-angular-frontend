@@ -1,13 +1,13 @@
-import { UserTeam } from '../../../model/user-team.interfaces';
-import { JoinRequestPageResponse as JoinRequestPagedResponse } from './../../../model/join-request.interfaces';
+import { UserTeamRelation } from '../../../models/user-team-relation.interfaces';
+import { JoinRequestPageResponse as JoinRequestPagedResponse } from '../../../models/join-request.interfaces';
 import { JoinRequestService } from '../../services/join-request-service/join-request.service';
 import { UserState } from 'src/app/root-states/user.state';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Team } from 'src/app/model/team.interfaces';
+import { Team } from 'src/app/models/team.interfaces';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Pageable } from 'src/app/model/interfaces';
-import { UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
+import { Pageable } from 'src/app/models/interfaces';
+import { UserTeamRelationPagedResponse } from 'src/app/models/user-team-relation.interfaces';
 import {Observable, of, switchMap, tap} from "rxjs";
 
 @Component({
@@ -19,7 +19,7 @@ export class TeamProfileComponent implements OnInit, OnChanges{
 
   @Input() team!: Team | null;
 
-  @Input() members!: UserTeamPagedResponse | null;
+  @Input() members!: UserTeamRelationPagedResponse | null;
   @Output() paginateMembers: EventEmitter<Pageable> = new EventEmitter<Pageable>();
 
   @Input() joinRequests!: JoinRequestPagedResponse;
@@ -29,7 +29,7 @@ export class TeamProfileComponent implements OnInit, OnChanges{
   teamsAuths = this.userState.teamPrivs;
   isTeamAdmin: boolean = false;
   membersDisplayedCols: string[] = ['id', 'email', 'firstname', 'lastname'];
-  membersDataSource: MatTableDataSource<UserTeam> = new MatTableDataSource<UserTeam>();
+  membersDataSource: MatTableDataSource<UserTeamRelation> = new MatTableDataSource<UserTeamRelation>();
 
   userHasOpenTeamJoinRequest: boolean = true;
 
@@ -44,7 +44,7 @@ export class TeamProfileComponent implements OnInit, OnChanges{
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['members'].currentValue) {
-      this.membersDataSource.data = this.members!._embedded.userTeams;
+      this.membersDataSource.data = this.members!._embedded.userTeamRelations;
     }
   }
 

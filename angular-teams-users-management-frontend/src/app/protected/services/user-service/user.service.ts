@@ -1,11 +1,11 @@
-import { Pageable } from 'src/app/model/interfaces';
-import { snackBarConf } from 'src/app/model/consts';
+import { Pageable } from 'src/app/models/interfaces';
+import { snackBarConf } from 'src/app/models/consts';
 import { UserState } from './../../../root-states/user.state';
 import { Observable, tap } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User, UserPagedResponse } from 'src/app/model/user.interfaces';
+import { User, UserPagedResponse } from 'src/app/models/user.interfaces';
 
 @Injectable({
   providedIn: 'root',

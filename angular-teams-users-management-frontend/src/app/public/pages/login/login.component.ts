@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service/auth.service';
-
-export interface LoginForm {
-  email: string;
-  password: string;
-}
 
 @Component({
   selector: 'app-login',

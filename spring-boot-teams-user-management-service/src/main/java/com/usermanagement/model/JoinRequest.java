@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@Table(name = "join_requests")
+@Table(name = "JOIN_REQUESTS")
 @EntityListeners(AuditingEntityListener.class)
 public class JoinRequest extends RepresentationModel<JoinRequest> {
 

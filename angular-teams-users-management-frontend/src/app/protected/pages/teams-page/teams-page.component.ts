@@ -1,11 +1,10 @@
-import { Pageable } from './../../../model/interfaces';
+import { Pageable } from '../../../models/interfaces';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { TeamsPagedResponse } from './../../../model/team.interfaces';
+import { TeamsPagedResponse } from '../../../models/team.interfaces';
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-teams-page',
   templateUrl: './teams-page.component.html',
   styleUrls: ['./teams-page.component.scss']
 })

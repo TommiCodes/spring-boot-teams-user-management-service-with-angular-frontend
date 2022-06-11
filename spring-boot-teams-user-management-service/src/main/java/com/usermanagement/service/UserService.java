@@ -5,8 +5,8 @@ import com.usermanagement.model.enums.Roles;
 import com.usermanagement.model.specs.UserSpecs;
 import com.usermanagement.repository.RoleRepository;
 import com.usermanagement.repository.UserRepository;
-import com.usermanagement.requests.CreateUserRequest;
-import com.usermanagement.requests.UpdateUserRequest;
+import com.usermanagement.model.requests.CreateUserRequest;
+import com.usermanagement.model.requests.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,15 +17,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 @Transactional
 public class UserService {
+
     // Services
     private final TeamService teamService;
-    private final UserTeamService userTeamService;
+    private final UserTeamRelationService userTeamRelationService;
     private final AuthenticationService authenticationService;
     // Repositories
     private final UserRepository userRepository;
@@ -65,17 +65,17 @@ public class UserService {
     public void addTeamToUser(Long teamId, Long userId) {
         Team team = teamService.findById(teamId);
         User user = findById(userId);
-        // Role id = 2 is always the MEMBER Role
-        Role role = roleRepository.findById(2L).orElseThrow(() -> new RuntimeException("Not found"));
+        // Role for a new User is always the MEMBER Role
+        Role role = roleRepository.findByRole(Roles.MEMBER).orElseThrow(() -> new RuntimeException("Not found"));
 
-        UserTeam userTeam = userTeamService.build(user, team, role);
+        UserTeamRelation userTeamRelation = userTeamRelationService.build(user, team, role);
 
         // check if user already in team
-        if (findById(teamId).getTeams().contains(userTeam)) {
+        if (findById(teamId).getTeams().contains(userTeamRelation)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already in team");
         }
 
-        userTeamService.save(userTeam);
+        userTeamRelationService.save(userTeamRelation);
     }
 
     public void removeUserFromTeam(Long teamId, Long userId) {
@@ -83,23 +83,23 @@ public class UserService {
         User user = findById(userId);
 
 
-        UserTeamKey userTeamKey = UserTeamKey.builder()
+        UserTeamRelationKey userTeamRelationKey = UserTeamRelationKey.builder()
                 .teamId(team.getId())
                 .userId(user.getId())
                 .build();
 
-        UserTeam userTeam = userTeamService.findById(userTeamKey);
+        UserTeamRelation userTeamRelation = userTeamRelationService.findById(userTeamRelationKey);
 
-        // TODO: Check if user is last ADMIN and if yes, then throw()
-        List<UserTeam> adminList = team.getUsers().stream()
+        // Check if user is last ADMIN and if yes, then throw()
+        List<UserTeamRelation> adminList = team.getUsers().stream()
                 .filter(val -> val.getRole().getRole().equals(Roles.ADMIN))
                 .toList();
 
-        if (adminList.size() == 1 && adminList.contains(userTeam)) {
+        if (adminList.size() == 1 && adminList.contains(userTeamRelation)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Last Admin in Team. User can not be removed");
         }
 
-        userTeamService.delete(userTeam);
+        userTeamRelationService.delete(userTeamRelation);
     }
 
     public User create(CreateUserRequest createUserRequest) {
@@ -132,12 +132,12 @@ public class UserService {
         User user = findById(userId);
 
         // find the paged UserTeams
-        Page<UserTeam> userTeamPage = this.userTeamService.findAllByUserId(user.getId(), pageable);
+        Page<UserTeamRelation> userTeamPage = this.userTeamRelationService.findAllByUserId(user.getId(), pageable);
         // get the pageable
         Pageable userTeamPageable = userTeamPage.getPageable();
 
         // get the teams from the UserTeamsPage
-        List<Team> teamList = userTeamPage.stream().map(UserTeam::getTeam).toList();
+        List<Team> teamList = userTeamPage.stream().map(UserTeamRelation::getTeam).toList();
 
         // make a Page<Team> and return it
         return new PageImpl<>(teamList, userTeamPageable, teamList.size());

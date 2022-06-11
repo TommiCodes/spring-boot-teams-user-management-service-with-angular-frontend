@@ -1,6 +1,6 @@
-import { Pageable } from './../../../model/interfaces';
-import { TeamsPagedResponse } from './../../../model/team.interfaces';
-import { Team } from 'src/app/model/team.interfaces';
+import { Pageable } from '../../../models/interfaces';
+import { TeamsPagedResponse } from '../../../models/team.interfaces';
+import { Team } from 'src/app/models/team.interfaces';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';

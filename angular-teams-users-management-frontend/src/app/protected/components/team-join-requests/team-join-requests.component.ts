@@ -1,9 +1,8 @@
-import { JoinRequestService } from '../../services/join-request-service/join-request.service';
-import { JoinRequest, JoinStatus } from 'src/app/model/join-request.interfaces';
-import { JoinRequestPageResponse, UpdateJoinTeamRequest } from '../../../model/join-request.interfaces';
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { Team } from 'src/app/model/team.interfaces';
-import { Pageable } from 'src/app/model/interfaces';
+import {HandleJoinRequest, JoinRequest, JoinStatus} from 'src/app/models/join-request.interfaces';
+import { JoinRequestPageResponse, UpdateJoinTeamRequest } from '../../../models/join-request.interfaces';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Team } from 'src/app/models/team.interfaces';
+import { Pageable } from 'src/app/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -17,11 +16,12 @@ export class TeamJoinRequestsComponent implements OnChanges {
   @Input() team!: Team | null;
   @Input() joinRequests!: JoinRequestPageResponse | null;
   @Output() paginateJoinRequests: EventEmitter<Pageable> = new EventEmitter<Pageable>();
+  @Output() handleJoinRequestEvent: EventEmitter<HandleJoinRequest> = new EventEmitter<HandleJoinRequest>();
 
   membersDisplayedCols: string[] = ['id', 'user', 'joinStatus', 'team', 'actions'];
   dataSource: MatTableDataSource<JoinRequest> = new MatTableDataSource<JoinRequest>();
 
-  constructor(private joinRequestService: JoinRequestService) {}
+  joinStati = JoinStatus;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['joinRequests'].currentValue) {
@@ -36,18 +36,9 @@ export class TeamJoinRequestsComponent implements OnChanges {
     });
   }
 
-  accept(joinRequest: JoinRequest) {
-    const updateJoinRequest: UpdateJoinTeamRequest = {
-      joinStatus: JoinStatus.ACCEPTED
-    };
-    this.joinRequestService.handleJoinRequest(joinRequest, updateJoinRequest).subscribe();
-  }
-
-  decline(joinRequest: JoinRequest) {
-    const updateJoinRequest: UpdateJoinTeamRequest = {
-      joinStatus: JoinStatus.DECLINED
-    };
-    this.joinRequestService.handleJoinRequest(joinRequest, updateJoinRequest).subscribe();
+  handleJoinRequest(joinRequest: JoinRequest, joinStatus: JoinStatus) {
+    const updateJoinTeamRequest: UpdateJoinTeamRequest = {joinStatus};
+    this.handleJoinRequestEvent.emit({updateJoinTeamRequest, joinRequest});
   }
 
 }

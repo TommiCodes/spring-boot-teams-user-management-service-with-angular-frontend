@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "teams")
+@Table(name = "TEAMS")
 @RestResource()
 @EntityListeners(AuditingEntityListener.class)
 public class Team extends RepresentationModel<Team> {
@@ -36,7 +36,7 @@ public class Team extends RepresentationModel<Team> {
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private List<UserTeam> users;
+    private List<UserTeamRelation> users;
 
     // Bidirectional OneToMany
     @JsonIgnore

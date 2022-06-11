@@ -3,9 +3,8 @@ package com.usermanagement.config.annotations;
 import com.usermanagement.model.*;
 import com.usermanagement.model.enums.Privileges;
 import com.usermanagement.repository.JoinRequestRepository;
-import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
-import com.usermanagement.service.UserTeamService;
+import com.usermanagement.service.UserTeamRelationService;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
@@ -16,17 +15,17 @@ import java.util.List;
 public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
 
     private final TeamService teamService;
-    private final UserTeamService userTeamService;
+    private final UserTeamRelationService userTeamRelationService;
     private final JoinRequestRepository joinRequestRepository;
 
     private Object filterObject;
     private Object returnObject;
     private Object target;
 
-    public CustomMethodSecurityExpressionRoot(Authentication authentication, TeamService teamService, UserTeamService userTeamService, JoinRequestRepository joinRequestRepository) {
+    public CustomMethodSecurityExpressionRoot(Authentication authentication, TeamService teamService, UserTeamRelationService userTeamRelationService, JoinRequestRepository joinRequestRepository) {
         super(authentication);
         this.teamService = teamService;
-        this.userTeamService = userTeamService;
+        this.userTeamRelationService = userTeamRelationService;
         this.joinRequestRepository = joinRequestRepository;
     }
     @Override
@@ -81,13 +80,13 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         JoinRequest joinRequest = joinRequestRepository.findById(joinRequestId).orElseThrow(()-> new RuntimeException("not found"));
         UserDetails authUser = (UserDetails) this.getPrincipal();
 
-        UserTeamKey userTeamKey = UserTeamKey.builder()
+        UserTeamRelationKey userTeamRelationKey = UserTeamRelationKey.builder()
                 .teamId(joinRequest.getTeam().getId())
                 .userId(Long.parseLong(authUser.getUsername()))
                 .build();
 
         // if no userTeam is found, then an exception gets thrown
-        UserTeam userTeam = userTeamService.findById(userTeamKey);
+        UserTeamRelation userTeamRelation = userTeamRelationService.findById(userTeamRelationKey);
 
         // if the user is not admin of the team of the joinRequest, then deny access
         // if user is in the team and is admin, then return true
@@ -100,13 +99,13 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         UserDetails authUser = (UserDetails) this.getPrincipal();
         Team team = this.teamService.findById(teamId);
 
-        UserTeamKey userTeamKey = UserTeamKey.builder()
+        UserTeamRelationKey userTeamRelationKey = UserTeamRelationKey.builder()
                 .teamId(team.getId())
                 .userId(Long.parseLong(authUser.getUsername()))
                 .build();
 
-        UserTeam userTeam = userTeamService.findById(userTeamKey);
-        return userTeam.getRole().getPrivileges().stream().map(Privilege::getPrivilege).toList();
+        UserTeamRelation userTeamRelation = userTeamRelationService.findById(userTeamRelationKey);
+        return userTeamRelation.getRole().getPrivileges().stream().map(Privilege::getPrivilege).toList();
     }
 
 }

@@ -1,10 +1,10 @@
-import { UserPagedResponse } from './../../../model/user.interfaces';
-import { Team } from './../../../model/team.interfaces';
+import { UserPagedResponse } from '../../../models/user.interfaces';
+import { Team } from '../../../models/team.interfaces';
 import { Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Data, ActivatedRoute, Router } from '@angular/router';
-import { Pageable } from 'src/app/model/interfaces';
-import { UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
+import { Pageable } from 'src/app/models/interfaces';
+import { UserTeamRelationPagedResponse } from 'src/app/models/user-team-relation.interfaces';
 
 @Component({
   selector: 'app-team-profile-page',
@@ -14,7 +14,7 @@ import { UserTeamPagedResponse } from 'src/app/model/user-team.interfaces';
 export class TeamProfilePageComponent {
 
   team$: Observable<Team> = this.activatedRoute.data.pipe(map((data: Data) => data['team']));
-  teamMembers$: Observable<UserTeamPagedResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['teamMembers']));
+  teamMembers$: Observable<UserTeamRelationPagedResponse> = this.activatedRoute.data.pipe(map((data: Data) => data['teamMembers']));
 
   constructor(
     private activatedRoute: ActivatedRoute,

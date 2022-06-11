@@ -1,13 +1,9 @@
-import { Pageable } from 'src/app/model/interfaces';
-import { JoinRequestService } from './../../services/join-request-service/join-request.service';
-import { JoinRequestPageResponse } from './../../../model/join-request.interfaces';
+import { Pageable } from 'src/app/models/interfaces';
+import { JoinRequestService } from '../../services/join-request-service/join-request.service';
+import { JoinRequestPageResponse } from '../../../models/join-request.interfaces';
 import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
-import { Observable, of, tap } from 'rxjs';
+import { Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

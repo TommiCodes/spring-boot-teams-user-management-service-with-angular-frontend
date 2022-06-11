@@ -1,12 +1,12 @@
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { UserTeam } from 'src/app/model/user-team.interfaces';
-import { User } from 'src/app/model/user.interfaces';
+import { UserTeamRelation } from 'src/app/models/user-team-relation.interfaces';
+import { User } from 'src/app/models/user.interfaces';
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Role } from 'src/app/model/interfaces';
+import { Role } from 'src/app/models/interfaces';
 
 export interface DialogData {
-  userTeam: UserTeam;
+  userTeam: UserTeamRelation;
 }
 
 @Component({

@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 @EntityListeners(AuditingEntityListener.class)
 public class User extends RepresentationModel<User> {
 
@@ -58,7 +58,7 @@ public class User extends RepresentationModel<User> {
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private List<UserTeam> teams;
+    private List<UserTeamRelation> teams;
 
 
     /////////////////////////

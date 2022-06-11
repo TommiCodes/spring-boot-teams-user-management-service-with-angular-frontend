@@ -1,8 +1,8 @@
 package com.usermanagement.controller;
 
 import com.usermanagement.model.*;
-import com.usermanagement.requests.CreateTeamRequest;
-import com.usermanagement.requests.UpdateRoleRequest;
+import com.usermanagement.model.requests.CreateTeamRequest;
+import com.usermanagement.model.requests.UpdateRoleRequest;
 import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
@@ -62,14 +62,14 @@ public class TeamController {
     @PreAuthorize("isTeamAdmin(#teamId)")
     @PutMapping("/teams/{teamId}/users/{userId}/update-role")
     public ResponseEntity<?> updateRoleOfUser(@PathVariable("teamId") Long teamId, @PathVariable("userId") Long userId, @RequestBody UpdateRoleRequest role) {
-        UserTeam userTeam = teamService.updateRoleOfUser(teamId, userId, role.getRole());
-        return ResponseEntity.ok(userTeam);
+        UserTeamRelation userTeamRelation = teamService.updateRoleOfUser(teamId, userId, role.getRole());
+        return ResponseEntity.ok(userTeamRelation);
     }
 
 
     @GetMapping("/teams/{id}/users")
     public ResponseEntity<?> findAllUsersForTeam(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler pagedResourcesAssembler, PersistentEntityResourceAssembler persistentEntityResourceAssembler) {
-        Page<UserTeam> userPage = teamService.findAllUsersForTeam(id, pageable);
+        Page<UserTeamRelation> userPage = teamService.findAllUsersForTeam(id, pageable);
         return ResponseEntity.ok(pagedResourcesAssembler.toModel(userPage, persistentEntityResourceAssembler));
     }
 

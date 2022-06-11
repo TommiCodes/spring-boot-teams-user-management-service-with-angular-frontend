@@ -1,13 +1,12 @@
 package com.usermanagement.controller;
 
 import com.usermanagement.model.User;
-import com.usermanagement.requests.JwtAuthenticationResponse;
-import com.usermanagement.requests.LoginRequest;
+import com.usermanagement.model.requests.JwtAuthenticationResponse;
+import com.usermanagement.model.requests.LoginRequest;
 import com.usermanagement.service.AuthenticationService;
 import com.usermanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
-import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

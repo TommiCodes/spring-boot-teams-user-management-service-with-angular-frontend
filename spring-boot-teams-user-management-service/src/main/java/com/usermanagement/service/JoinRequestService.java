@@ -5,7 +5,7 @@ import com.usermanagement.model.enums.JoinStatus;
 import com.usermanagement.model.enums.Roles;
 import com.usermanagement.repository.JoinRequestRepository;
 import com.usermanagement.repository.RoleRepository;
-import com.usermanagement.requests.UpdateJoinTeamRequest;
+import com.usermanagement.model.requests.UpdateJoinTeamRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
 @Service
 @Transactional
 public class JoinRequestService {
+
     // Services
     private final UserService userService;
     private final TeamService teamService;
@@ -32,8 +32,6 @@ public class JoinRequestService {
     public void save(Long teamId, Long userId) {
         User user = userService.findById(userId);
         Team team = teamService.findById(teamId);
-        // The user has the default MEMBER role
-        Role role = roleRepository.findByRole(Roles.MEMBER).orElseThrow();
 
         // build join Request
         JoinRequest joinRequest = JoinRequest.builder()
@@ -76,9 +74,10 @@ public class JoinRequestService {
 
     // handle a join request
     public JoinRequest handle(Long id, UpdateJoinTeamRequest updateJoinTeamRequest) {
+        // first find joinRequest
         JoinRequest joinRequest = findById(id);
 
-        // if joinRequest in Database is not INQUIRY, then throw an Exc
+        // if joinRequest Status in Database is not INQUIRY, then throw an Exc
         if (joinRequest.getJoinStatus() != JoinStatus.INQUIRY) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Join Request alrady accepted/declined.");
         }

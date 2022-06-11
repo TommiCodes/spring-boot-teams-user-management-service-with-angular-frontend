@@ -10,6 +10,11 @@ export interface UpdateJoinTeamRequest {
   joinStatus: JoinStatus;
 }
 
+export interface HandleJoinRequest {
+  updateJoinTeamRequest: UpdateJoinTeamRequest;
+  joinRequest: JoinRequest;
+}
+
 export enum JoinStatus {
   'INQUIRY',
   'ACCEPTED',

@@ -1,11 +1,11 @@
-import { TeamService } from './../../services/team-service/team.service';
+import { TeamService } from '../../services/team-service/team.service';
 import { Injectable } from '@angular/core';
 import {
   Resolve,
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Team } from 'src/app/model/team.interfaces';
+import { Team } from 'src/app/models/team.interfaces';
 
 @Injectable({
   providedIn: 'root'

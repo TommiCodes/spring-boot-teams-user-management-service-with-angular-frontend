@@ -49,13 +49,15 @@
       <td mat-cell *matCellDef="let joinRequest"> {{joinRequest.team.name}} </td>
     </ng-container>
 
-    <!-- TODO: CHECK FOR ADMIN -->
     <!-- Action Column, e.g. Accept the JoinRequest or Decline it -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let joinRequest">
-        <button mat-button color="primary" (click)="this.accept(joinRequest)">Accept</button>
-        <button mat-button color="warn" (click)="this.decline(joinRequest)">Decline</button>
+        <span *ngIf="joinRequest.joinStatus === 'INQUIRY'; else alreadyEdited ">
+          <button mat-button color="primary" (click)="this.handleJoinRequest(joinRequest, joinStati.ACCEPTED)">Accept</button>
+          <button mat-button color="warn" (click)="this.handleJoinRequest(joinRequest, joinStati.DECLINED)">Decline</button>
+        </span>
+        <ng-template #alreadyEdited>Already Edited - no action available</ng-template>
       </td>
     </ng-container>
 

@@ -1,12 +1,12 @@
-import { UserService } from './../../services/user-service/user.service';
-import { UserPagedResponse } from 'src/app/model/user.interfaces';
+import { UserService } from '../../services/user-service/user.service';
+import { UserPagedResponse } from 'src/app/models/user.interfaces';
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

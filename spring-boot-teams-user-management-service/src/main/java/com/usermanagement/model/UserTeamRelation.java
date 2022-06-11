@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@Table(name = "user_team")
+@Table(name = "USER_TEAM_RELATION")
 @EntityListeners(AuditingEntityListener.class)
-public class UserTeam {
+public class UserTeamRelation {
 
     @EmbeddedId
-    private UserTeamKey id;
+    private UserTeamRelationKey id;
 
     // Use EAGER, so the User gets Loaded "into" the UserTeam
     @ManyToOne(fetch = FetchType.EAGER)

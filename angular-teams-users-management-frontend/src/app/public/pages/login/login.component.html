@@ -7,7 +7,7 @@
 
         <mat-form-field>
           <input type="email" matInput placeholder="Email" formControlName="email">
-          <!-- Here we can display error messages/hints for the user, if one of the Validators adds an error to the email 
+          <!-- Here we can display error messages/hints for the user, if one of the Validators adds an error to the email
            with the .touched check we only display the hints if the input was touched by the users -->
           <mat-error *ngIf="this.loginForm.get('email')?.touched && this.loginForm.get('email')?.hasError('required')">
             Email is required</mat-error>
@@ -30,4 +30,5 @@
       </form>
     </mat-card-content>
   </mat-card>
+  <p>Testuser: arnold@schwarzenegger.com Password: password123</p>
 </div>

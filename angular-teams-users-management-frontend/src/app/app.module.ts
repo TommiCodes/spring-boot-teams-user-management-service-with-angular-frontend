@@ -17,11 +17,6 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 // specify the key where the token is stored in the local storage
 export const LOCALSTORAGE_TOKEN_KEY = 'teams_management_app';
 
-// specify tokenGetter for the angular jwt package
-export function tokenGetter() {
-  return localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
-}
-
 @NgModule({
   declarations: [
     AppComponent

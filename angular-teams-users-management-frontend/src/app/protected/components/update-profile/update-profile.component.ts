@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Data, ActivatedRoute } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
-import { User } from 'src/app/model/user.interfaces';
+import { User } from 'src/app/models/user.interfaces';
 
 @Component({
   selector: 'app-update-profile',

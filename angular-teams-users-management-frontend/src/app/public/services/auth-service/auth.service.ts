@@ -1,5 +1,5 @@
-import { UserState } from './../../../root-states/user.state';
-import { LOCALSTORAGE_TOKEN_KEY } from './../../../app.module';
+import { UserState } from '../../../root-states/user.state';
+import { LOCALSTORAGE_TOKEN_KEY } from '../../../app.module';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
@@ -9,9 +9,9 @@ import {
   AuthenticationResponse,
   LoginRequest,
   RegisterRequest,
-} from '../../model/interfaces';
-import { snackBarConf } from 'src/app/model/consts';
-import { User } from 'src/app/model/user.interfaces';
+} from '../../models/interfaces';
+import { snackBarConf } from 'src/app/models/consts';
+import { User } from 'src/app/models/user.interfaces';
 
 @Injectable({
   providedIn: 'root',

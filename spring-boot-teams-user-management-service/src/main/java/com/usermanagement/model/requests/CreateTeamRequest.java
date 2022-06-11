@@ -1,4 +1,4 @@
-package com.usermanagement.requests;
+package com.usermanagement.model.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class CreateJoinTeamRequest {
+public class CreateTeamRequest {
 
-    private Long userId;
+    private String name;
 
 }

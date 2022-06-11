@@ -9,7 +9,10 @@
       </ng-template>
       <!-- Tab Content -->
       <div style="padding-top: 30px;">
-        <app-team-join-requests [joinRequests]="teamJoinRequests$ | async" [team]="team$ | async">
+        <app-team-join-requests
+          [joinRequests]="teamJoinRequests$ | async" [team]="team$ | async"
+          (handleJoinRequestEvent)="handleJoinRequest($event)"
+        >
         </app-team-join-requests>
       </div>
     </mat-tab>
@@ -20,7 +23,11 @@
         Manage Team Members
       </ng-template>
       <div style="padding-top: 30px;">
-        <app-team-member-management [team]="team$ | async" [teamMembers]="teamMembers$ | async">
+        <app-team-member-management
+          [team]="team$ | async"
+          [teamMembers]="teamMembers$ | async"
+          (removeUserEvent)="removeUser($event)"
+        >
         </app-team-member-management>
       </div>
     </mat-tab>

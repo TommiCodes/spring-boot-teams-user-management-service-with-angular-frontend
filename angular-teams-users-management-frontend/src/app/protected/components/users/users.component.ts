@@ -1,6 +1,6 @@
-import { User, UserPagedResponse } from 'src/app/model/user.interfaces';
+import { User, UserPagedResponse } from 'src/app/models/user.interfaces';
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { Pageable } from 'src/app/model/interfaces';
+import { Pageable } from 'src/app/models/interfaces';
 import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';

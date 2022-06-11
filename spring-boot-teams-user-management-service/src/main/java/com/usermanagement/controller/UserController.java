@@ -2,8 +2,8 @@ package com.usermanagement.controller;
 
 import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
-import com.usermanagement.requests.CreateUserRequest;
-import com.usermanagement.requests.UpdateUserRequest;
+import com.usermanagement.model.requests.CreateUserRequest;
+import com.usermanagement.model.requests.UpdateUserRequest;
 import com.usermanagement.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Computed, StateRepository } from '@angular-ru/ngxs/decorators';
 import { NgxsDataRepository } from '@angular-ru/ngxs/repositories';
 import { State } from '@ngxs/store';
-import { Auth, UserAuth } from '../model/interfaces';
+import { Auth, UserAuth } from '../models/interfaces';
 
 @StateRepository()
 @State({

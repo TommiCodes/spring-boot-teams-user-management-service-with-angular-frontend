@@ -1,7 +1,7 @@
 package com.usermanagement.config.security;
 
 import com.usermanagement.model.User;
-import com.usermanagement.model.UserTeam;
+import com.usermanagement.model.UserTeamRelation;
 import com.usermanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,14 +41,14 @@ public class MyUserDetailsService implements UserDetailsService {
                 .build();
     }
 
-    private List<? extends  GrantedAuthority> getAuthorities(List<UserTeam> userTeamList) {
-        return getGrantedAuthorities(getUserTeamRole(userTeamList));
+    private List<? extends  GrantedAuthority> getAuthorities(List<UserTeamRelation> userTeamRelationList) {
+        return getGrantedAuthorities(getUserTeamRole(userTeamRelationList));
     }
 
-    private List<String> getUserTeamRole(List<UserTeam> userTeams) {
+    private List<String> getUserTeamRole(List<UserTeamRelation> userTeamRelations) {
         List<String> userTeamRole = new ArrayList<>();
-         for (UserTeam userTeam : userTeams) {
-            userTeamRole.add(String.format("TEAM:%d_ROLE:%s", userTeam.getTeam().getId(), userTeam.getRole().getRole().name()));
+         for (UserTeamRelation userTeamRelation : userTeamRelations) {
+            userTeamRole.add(String.format("TEAM:%d_ROLE:%s", userTeamRelation.getTeam().getId(), userTeamRelation.getRole().getRole().name()));
         }
         return userTeamRole;
     }

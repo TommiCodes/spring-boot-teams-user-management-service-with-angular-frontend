@@ -16,44 +16,45 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 @Service
 @Transactional
-public class UserTeamService {
+public class UserTeamRelationService {
+
     // Repositories
     private final UserTeamRepository userTeamRepository;
 
     // find all UserTeams Relations by user.id - paged
-    public Page<UserTeam> findAllByUserId(Long userId, Pageable pageable) {
+    public Page<UserTeamRelation> findAllByUserId(Long userId, Pageable pageable) {
         return userTeamRepository.findAllByUserId(userId, pageable);
     }
 
     // find all UserTeams Relations by team.id - paged
-    public Page<UserTeam> findAllByTeamId(Long teamId, Pageable pageable) {
+    public Page<UserTeamRelation> findAllByTeamId(Long teamId, Pageable pageable) {
         return userTeamRepository.findAllByTeamId(teamId, pageable);
     }
 
     // get a relationship by UserTeamKey (user.id & team.id)
-    public UserTeam findById(UserTeamKey userTeamKey) {
-        return userTeamRepository.findById(userTeamKey).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
+    public UserTeamRelation findById(UserTeamRelationKey userTeamRelationKey) {
+        return userTeamRepository.findById(userTeamRelationKey).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
     }
 
     // save a user to a team
-    public UserTeam save(UserTeam userTeam) {
-        return this.userTeamRepository.save(userTeam);
+    public UserTeamRelation save(UserTeamRelation userTeamRelation) {
+        return this.userTeamRepository.save(userTeamRelation);
     }
 
     // remove a user from a team
-    public void delete(UserTeam userTeam) {
-        this.userTeamRepository.delete(userTeam);
+    public void delete(UserTeamRelation userTeamRelation) {
+        this.userTeamRepository.delete(userTeamRelation);
     }
 
     // helper to create a UserTeam
-    public UserTeam build(User user, Team team, Role role) {
-        UserTeamKey userTeamKey = UserTeamKey.builder()
+    public UserTeamRelation build(User user, Team team, Role role) {
+        UserTeamRelationKey userTeamRelationKey = UserTeamRelationKey.builder()
                 .userId(user.getId())
                 .teamId(team.getId())
                 .build();
 
-        return UserTeam.builder()
-                .id(userTeamKey)
+        return UserTeamRelation.builder()
+                .id(userTeamRelationKey)
                 .user(user)
                 .team(team)
                 .role(role)

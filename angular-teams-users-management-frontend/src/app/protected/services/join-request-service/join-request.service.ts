@@ -1,11 +1,11 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Pageable } from 'src/app/model/interfaces';
+import { Pageable } from 'src/app/models/interfaces';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { NewJoinRequest, JoinRequestPageResponse, UpdateJoinTeamRequest, JoinRequest } from './../../../model/join-request.interfaces';
+import { NewJoinRequest, JoinRequestPageResponse, UpdateJoinTeamRequest, JoinRequest } from '../../../models/join-request.interfaces';
 import {catchError, Observable, of, tap} from 'rxjs';
 import { UserState } from 'src/app/root-states/user.state';
 import { Injectable } from '@angular/core';
-import { snackBarConf } from 'src/app/model/consts';
+import { snackBarConf } from 'src/app/models/consts';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,7 @@ export class JoinRequestService {
     );
   }
 
+  /** The Admin can either accept or decline a join-request for a team **/
   handleJoinRequest(joinRequest: JoinRequest, updateRequest: UpdateJoinTeamRequest): Observable<string> {
     return this.http.put<string>(`/api/join-requests/${joinRequest.id}`, updateRequest);
   }

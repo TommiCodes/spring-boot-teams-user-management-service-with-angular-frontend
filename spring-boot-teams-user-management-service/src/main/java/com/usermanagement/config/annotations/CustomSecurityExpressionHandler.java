@@ -1,10 +1,8 @@
 package com.usermanagement.config.annotations;
 
-import com.usermanagement.model.JoinRequest;
 import com.usermanagement.repository.JoinRequestRepository;
-import com.usermanagement.service.JoinRequestService;
 import com.usermanagement.service.TeamService;
-import com.usermanagement.service.UserTeamService;
+import com.usermanagement.service.UserTeamRelationService;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
@@ -16,19 +14,19 @@ public class CustomSecurityExpressionHandler extends DefaultMethodSecurityExpres
 
     private final AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
     private final TeamService teamService;
-    private final UserTeamService userTeamService;
+    private final UserTeamRelationService userTeamRelationService;
     private final JoinRequestRepository joinRequestRepository;
 
-    public CustomSecurityExpressionHandler(TeamService teamService, UserTeamService userTeamService, JoinRequestRepository joinRequestRepository) {
+    public CustomSecurityExpressionHandler(TeamService teamService, UserTeamRelationService userTeamRelationService, JoinRequestRepository joinRequestRepository) {
         this.teamService = teamService;
-        this.userTeamService = userTeamService;
+        this.userTeamRelationService = userTeamRelationService;
         this.joinRequestRepository = joinRequestRepository;
     }
 
     @Override
     protected MethodSecurityExpressionOperations createSecurityExpressionRoot(
             Authentication authentication, MethodInvocation invocation) {
-        CustomMethodSecurityExpressionRoot root = new CustomMethodSecurityExpressionRoot(authentication, this.teamService, this.userTeamService, this.joinRequestRepository);
+        CustomMethodSecurityExpressionRoot root = new CustomMethodSecurityExpressionRoot(authentication, this.teamService, this.userTeamRelationService, this.joinRequestRepository);
         root.setPermissionEvaluator(getPermissionEvaluator());
         root.setTrustResolver(this.trustResolver);
         root.setRoleHierarchy(getRoleHierarchy());

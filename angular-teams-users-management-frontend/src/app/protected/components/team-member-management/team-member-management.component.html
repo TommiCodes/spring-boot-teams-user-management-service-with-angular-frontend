@@ -55,7 +55,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let member">
-        <button mat-button (click)="removeUser(member)">Remove User</button>
+        <button mat-button (click)="this.removeUserEvent.emit(member)">Remove User</button>
         <button mat-button (click)="openDialog(member)">Edit User</button>
       </td>
     </ng-container>

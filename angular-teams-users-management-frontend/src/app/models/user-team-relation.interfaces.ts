@@ -1,8 +1,8 @@
-import { User } from 'src/app/model/user.interfaces';
+import { User } from 'src/app/models/user.interfaces';
 import { Page, Role } from "./interfaces"
 
 
-export interface UserTeam {
+export interface UserTeamRelation {
   role: {
     role: Role
   };
@@ -14,9 +14,9 @@ export interface UserTeam {
   }
 }
 
-export interface UserTeamPagedResponse {
+export interface UserTeamRelationPagedResponse {
   _embedded: {
-    userTeams: UserTeam[];
+    userTeamRelations: UserTeamRelation[];
   };
   _links: {
     self: {

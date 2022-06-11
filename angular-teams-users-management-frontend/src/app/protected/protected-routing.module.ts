@@ -1,6 +1,6 @@
 import { UsersResolver } from './resolvers/users-resolver/users.resolver';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
-import { UserIsTeamAdminGuard } from './../guards/user-is-team-admin-guard/user-is-team-admin.guard';
+import { UserIsTeamAdminGuard } from '../guards/user-is-team-admin-guard/user-is-team-admin.guard';
 import { TeamAdminPageComponent } from './pages/team-admin-page/team-admin-page.component';
 import { TeamJoinRequestsResolver } from './resolvers/team-join-requests-resolver/team-join-requests.resolver';
 import { TeamMembersResolver } from './resolvers/team-members-resolver/team-members.resolver';
@@ -16,7 +16,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { OwnTeamsResolver } from './resolvers/own-teams-resolver/own-teams.resolver';
 
-// Routes for child Module (protectedModule). Since protected module is lazy loaded in in the
+// Routes for child Module (protectedModule). Since protected module is lazy loaded in the
 // app-routing.module the full path is `/protected/dashboard`
 const routes: Routes = [
   {
@@ -60,7 +60,8 @@ const routes: Routes = [
       {
         path: 'teams/:id/admin',
         component: TeamAdminPageComponent,
-        runGuardsAndResolvers: 'pathParamsChange',
+        // needed for page reload & loading new data, e.g. after removing a user from the team
+        runGuardsAndResolvers: 'always',
         canActivate: [UserIsTeamAdminGuard],
         resolve: {
           team: TeamResolver,

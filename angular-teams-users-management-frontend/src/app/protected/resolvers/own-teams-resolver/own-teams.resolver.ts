@@ -10,7 +10,9 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class OwnTeamsResolver implements Resolve<boolean> {
+
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return of(true);
   }
+
 }

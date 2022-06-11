@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { snackBarConf } from 'src/app/model/consts';
+import { snackBarConf } from 'src/app/models/consts';
 
 @Injectable({
   providedIn: 'root'

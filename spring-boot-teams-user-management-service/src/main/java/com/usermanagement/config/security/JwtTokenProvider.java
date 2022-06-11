@@ -97,8 +97,8 @@ public class JwtTokenProvider {
      * } ...
      * ]
      **/
-    private List<TeamAuthority> getAuthorities(List<UserTeam> userTeams) {
-        return userTeams.stream()
+    private List<TeamAuthority> getAuthorities(List<UserTeamRelation> userTeamRelations) {
+        return userTeamRelations.stream()
                 .map(userTeam -> new TeamAuthority(
                         userTeam.getTeam().getId(),
                         userTeam.getRole().getPrivileges().stream()

@@ -2,14 +2,13 @@ package com.usermanagement;
 
 import com.usermanagement.model.Privilege;
 import com.usermanagement.model.Role;
-import com.usermanagement.model.Team;
 import com.usermanagement.model.User;
 import com.usermanagement.model.enums.Privileges;
 import com.usermanagement.model.enums.Roles;
 import com.usermanagement.repository.PrivilegeRepository;
 import com.usermanagement.repository.RoleRepository;
-import com.usermanagement.requests.CreateTeamRequest;
-import com.usermanagement.requests.CreateUserRequest;
+import com.usermanagement.model.requests.CreateTeamRequest;
+import com.usermanagement.model.requests.CreateUserRequest;
 import com.usermanagement.service.TeamService;
 import com.usermanagement.service.UserService;
 import lombok.AllArgsConstructor;
@@ -34,7 +33,7 @@ public class Initializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         // Init User
-        User arnold = createUser("ArnoldTester", "Arnold", "Schwarzenegger", "u", "arnold@schwarzenegger.com");
+        User arnold = createUser("ArnoldTester", "Arnold", "Schwarzenegger", "password123", "arnold@schwarzenegger.com");
         User dorian = createUser("DorianTester", "Dorian", "Yates", "PasswordToHash123", "dorian@yates.com");
 
         // Create Roles and Privileges
@@ -73,16 +72,6 @@ public class Initializer implements CommandLineRunner {
         teamService.create(CreateTeamRequest.builder().name("Mailand").build(), dorian);
         teamService.create(CreateTeamRequest.builder().name("Rom").build(), dorian);
         teamService.create(CreateTeamRequest.builder().name("City").build(), dorian);
-
-        // Add Users to Teams
-/*
-        userService.addTeamToUser(manu.getId(), arnold.getId());
-        userService.addTeamToUser(manu.getId(), dorian.getId());
-        userService.addTeamToUser(chelsea.getId(), dorian.getId());
-
-*/
-        // Remove user from team
-/*        userService.removeTeamFromUser(manu.getId(), arnold.getId());*/
 
     }
 
