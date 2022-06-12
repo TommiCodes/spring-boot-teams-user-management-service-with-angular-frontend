@@ -32,7 +32,7 @@ export class UserService {
     let params = new HttpParams();
 
     params = params.set('page', pageable.number);
-    params = params.set('sort', pageable.size);
+    params = params.set('size', pageable.size);
 
     if (usernameSearchString !== null && usernameSearchString !== undefined) {
       params = params.set('username', usernameSearchString);

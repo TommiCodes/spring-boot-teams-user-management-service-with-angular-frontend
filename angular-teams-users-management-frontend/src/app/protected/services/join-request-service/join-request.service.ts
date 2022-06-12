@@ -42,7 +42,7 @@ export class JoinRequestService {
   getJoinRequestsByTeamId(teamId: number, pageable: Pageable): Observable<JoinRequestPageResponse> {
     let params = new HttpParams();
     params = params.set('page', pageable.number);
-    params = params.set('sort', pageable.size);
+    params = params.set('size', pageable.size);
     // Add projection param, so that Spring will return the projection, so that we can use the user and team object for the reuqest
     params = params.set('projection', 'details');
 

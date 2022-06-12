@@ -58,7 +58,7 @@ export class TeamService {
   getTeamMembersByTeamId(id: number, pageable: Pageable): Observable<UserTeamRelationPagedResponse> {
     let params = new HttpParams();
     params = params.set('page', pageable.number);
-    params = params.set('sort', pageable.size);
+    params = params.set('size', pageable.size);
 
     params = params.set('projection', 'users');
 
@@ -69,7 +69,7 @@ export class TeamService {
     let params = new HttpParams();
 
     params = params.set('page', pageable.number);
-    params = params.set('sort', pageable.size);
+    params = params.set('size', pageable.size);
 
     if (teamNameSearchString !== null && teamNameSearchString !== undefined) {
       params = params.set('name', teamNameSearchString);
